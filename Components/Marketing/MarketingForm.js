@@ -14,19 +14,18 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  DrawerContent,
-  FormHelperText,
+  DrawerContent, 
   FormErrorMessage,
   DrawerCloseButton,
 } from "@chakra-ui/react";
 const schema = {
-  name: {
+  url_link: {
     isEmpty: false,
     min: 1,
-    message: "A valid department name is required",
+    message: "A valid link is required",
   },
 };
-const DepartmentForm = ({
+const MarketingForm = ({
   mode,
   open,
   reset,
@@ -40,16 +39,16 @@ const DepartmentForm = ({
   initial_data,
 }) => {
   const toast = useToast();
-  const [title, setTitle] = useState("Add Department");
+  const [title, setTitle] = useState("Add Marketing");
   const [formState, setFormState] = useState({
-    values: { id: "", name: "", description: "" },
+    values: { id: "", url_link: "", description: "" },
     touched: {},
     errors: {},
   });
   const { touched, errors, values, isValid } = formState;
   useEffect(() => {
     if (mode === "Edit") {
-      setTitle("Edit Department");
+      setTitle("Edit Marketing");
       let shouldSetData = typeof initial_data !== "undefined" ? true : false;
       if (shouldSetData) {
         const data = initial_data;
@@ -58,7 +57,7 @@ const DepartmentForm = ({
           values: {
             ...state.values,
             id: data && data._id,
-            name: data && data.name,
+            url_link: data && data.url_link,
             description: data && data.description,
           },
         }));
@@ -70,7 +69,7 @@ const DepartmentForm = ({
         values: {
           ...prev.values,
           id: "",
-          name: "",
+          url_link: "",
           description: "",
         },
       }));
@@ -80,7 +79,7 @@ const DepartmentForm = ({
     const errors = dataHero.validate(schema, values);
     setFormState((formState) => ({
       ...formState,
-      isValid: errors.name.error || exist ? false : true,
+      isValid: errors.url_link.error   ? false : true,
       errors: errors || {},
     }));
   }, [values]);
@@ -157,7 +156,7 @@ const DepartmentForm = ({
       values: {
         ...prev.values,
         id: "",
-        name: "",
+        url_link: "",
         description: "",
       },
       touched: {},
@@ -182,30 +181,24 @@ const DepartmentForm = ({
             <DrawerBody>
               <Stack spacing="24px">
                 <Box>
-                  <FormControl isRequired my="3" isInvalid={hasError("name") || exist}>
-                    <FormLabel htmlFor="name">Department name</FormLabel>
+                  <FormControl isRequired my="3" isInvalid={hasError("url_link") }>
+                    <FormLabel htmlFor="url_link">Url Link</FormLabel>
                     <Input
                       type="text"
-                      value={values.name || ""}
+                      value={values.url_link || ""}
                       ref={firstField}
-                      name="name"
-                      id="name"
+                      name="url_link"
+                      id="url_link"
                       onChange={handleChange}
-                      placeholder="Department name"
+                      placeholder="Marketing Url Link"
                     />
                     <FormErrorMessage>
-                      {hasError("name")
-                        ? errors.name && errors.name.message
+                      {hasError("url_link")
+                        ? errors.url_link && errors.url_link.message
                         : null}
                     
                     </FormErrorMessage>
-                    <FormHelperText color={checking ? "blue" : "red"}>
-                    {exist
-                          ? message
-                          : checking
-                          ? "checking server for duplicate"
-                          : null}
-                    </FormHelperText>
+                   
                   </FormControl>
                 </Box>
 
@@ -235,7 +228,7 @@ const DepartmentForm = ({
                 Cancel
               </Button>
               <Button
-                disabled={!isValid || sending || exist}
+                disabled={!isValid || sending }
                 colorScheme="blue"
                 onClick={handleSubmit}
                 isLoading={sending}
@@ -250,7 +243,7 @@ const DepartmentForm = ({
                 }}
                 _focus={{}}
               >
-                Save Department
+                Save Marketing
               </Button>
             </DrawerFooter>
           </DrawerContent>
@@ -260,4 +253,4 @@ const DepartmentForm = ({
   );
 };
 
-export default DepartmentForm;
+export default MarketingForm;

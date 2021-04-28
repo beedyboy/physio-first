@@ -4,11 +4,11 @@ import { IconButton, Wrap, WrapItem } from "@chakra-ui/react";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import { MdEdit, MdDelete } from "react-icons/md";
 
-const DepartmentList = ({ data, setMode, removeData, rowData, toggle }) => {
+const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
   const columns = [
     {
-      name: "Name",
-      selector: "name",
+      name: "Link",
+      selector: "url_link",
       sortable: true,
     },
     {
@@ -33,7 +33,7 @@ const DepartmentList = ({ data, setMode, removeData, rowData, toggle }) => {
             <IconButton
               variant="outline"
               colorScheme="teal"
-              aria-label="Edit Department"
+              aria-label="Edit Marketing"
               fontSize="20px"
               icon={<MdEdit />}
               onClick={(e) => editData(e, row)}
@@ -43,7 +43,7 @@ const DepartmentList = ({ data, setMode, removeData, rowData, toggle }) => {
             <IconButton
               variant="outline"
               colorScheme="teal"
-              aria-label="Edit Department"
+              aria-label="Edit Marketing"
               fontSize="20px"
               icon={<MdDelete />}
               onClick={(key) => {
@@ -71,7 +71,7 @@ const DepartmentList = ({ data, setMode, removeData, rowData, toggle }) => {
     <Fragment>
       <PerfectScrollBar>
         <DataTable
-          title="Department List"
+          title="Marketing List"
           columns={columns}
           data={data}
           pagination={true}
@@ -82,4 +82,4 @@ const DepartmentList = ({ data, setMode, removeData, rowData, toggle }) => {
   );
 };
 
-export default DepartmentList;
+export default MarketingList;

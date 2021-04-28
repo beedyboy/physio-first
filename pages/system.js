@@ -15,6 +15,8 @@ import Layout from "../templates/Private/Layout";
 import Help from "../views/system/Help";
 import Branch from "../views/system/Branch";
 import Category from "../views/system/Category";
+import Department from "../views/system/Department";
+import Marketing from "../views/system/Marketing";
 
 function system(props) {
   return (
@@ -28,6 +30,8 @@ function system(props) {
             <Tab>Help</Tab>
             <Tab>Branch</Tab>
             <Tab>Category</Tab>
+            <Tab>Department</Tab>
+            <Tab>Marketing</Tab>
             <Tab isDisabled>Three</Tab>
           </TabList>
           <TabPanels>
@@ -39,6 +43,12 @@ function system(props) {
             </TabPanel>
             <TabPanel>
               <Category />
+            </TabPanel>
+            <TabPanel>
+              <Department />
+            </TabPanel>
+            <TabPanel>
+              <Marketing />
             </TabPanel>
             <TabPanel>3</TabPanel>
           </TabPanels>

@@ -1,5 +1,5 @@
-import DB from "../../models";
-import connectDB from "../../services/database";
+import DB from "../../../models";
+import connectDB from "../../../services/database";
 connectDB();
 
 export default async (req, res) => {

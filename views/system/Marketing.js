@@ -96,11 +96,9 @@ function Marketing() {
         mode={mode}
         open={isOpen}
         saved={saved}
-        error={error}
-        exist={exist}
+        error={error} 
         message={message}
-        sending={sending}
-        checking={checking}
+        sending={sending} 
         handleClose={onClose} 
         initial_data={rowData}
         reset={resetProperty}
