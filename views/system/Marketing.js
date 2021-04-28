@@ -21,13 +21,11 @@ function Marketing() {
   const { marketingStore } = useMobxStores();
   const {
     error,
-    saved,
-    exist,
+    saved, 
     message,
     removed,
     sending,
-    links,
-    checking, 
+    links, 
     resetProperty,
     getLinks,
     addLink,

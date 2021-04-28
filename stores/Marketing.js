@@ -1,13 +1,11 @@
 import { makeObservable, observable, action, computed } from "mobx";
 import backend from "../services/APIService";
 class Marketing {
-  error = false;
-  exist = false;
+  error = false; 
   saved = false;
   loading = false;
   removed = false;
-  sending = false;
-  checking = false;
+  sending = false; 
   links = [];
   message = "";
 
@@ -15,10 +13,8 @@ class Marketing {
     makeObservable(this, {
       message: observable,
       sending: observable,
-      removed: observable,
-      checking: observable,
-      error: observable,
-      exist: observable,
+      removed: observable, 
+      error: observable, 
       info: computed,
       stats: computed, 
       loading: observable,

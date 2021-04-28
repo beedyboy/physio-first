@@ -4,12 +4,13 @@ import Category from './Category';
 import Department from './Department'; 
 import User from './User';
 import Marketing from './Marketing';
-// import Assess from './general_assess';
+import SubCategory from './SubCategory';
 
 export default {
     Branch,
     Category,
     Department, 
     User,
-    Marketing
+    Marketing,
+    SubCategory
 };

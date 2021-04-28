@@ -1,6 +1,6 @@
 import { makeObservable, observable, action, computed } from "mobx";  
 import backend from "../services/APIService"; 
-class Category {
+class SubCategory {
   error = false; 
   exist = false;
   saved = false;
@@ -8,7 +8,7 @@ class Category {
   removed = false;
   sending = false;
   checking = false; 
-  category = [];
+  subcategory = [];
   message = "";
  
   constructor() {
@@ -21,29 +21,29 @@ class Category {
       exist: observable,
       info: computed,
       stats: computed,
-      categorySelect: computed,
+      subcategorySelect: computed,
       loading: observable,
-      category: observable,
-      confirmName: action,
-      createCategory: action,
-      updateCategory: action,
+      subcategory: observable,
+      confirmRow: action,
+      addSubCat: action,
+      updateSubCat: action,
       removeCategory: action,
       resetProperty: action,
     });
   }
 
-  getCategories = () => {
+  getSubCategories = () => {
     this.loading = true;
-    backend.get("category").then((res) => {
-      this.category = res.data;
+    backend.get("subcategory").then((res) => {
+      this.subcategory = res.data;
       this.loading = false;
     });
   };
-  confirmName = (category) => { 
+  confirmRow = (subcategory) => { 
     try {
       this.checking = true;
       this.exist = false;
-      backend.get(`category/${category}`).then((res) => {
+      backend.get(`subcategory/${subcategory}`).then((res) => {
         this.checking = false;
         if (res.status === 200) { 
           this.message = res.data.message;
@@ -61,13 +61,13 @@ class Category {
       }
     }
   };
-  createCategory = (data) => {
+  addSubCat = (data) => {
     try {
       this.sending = true;
-      backend.post("category", data).then((res) => {
+      backend.post("subcategory", data).then((res) => {
         this.sending = false;
         if (res.status === 201) {
-          this.getCategories();
+          this.getSubCategories();
           this.message = res.data.message;
           this.saved = true;
         } else {
@@ -84,13 +84,13 @@ class Category {
     }
   };
 
-  updateCategory = (data) => {
+  updateSubCat = (data) => {
     try {
       this.sending = true;
-      backend.put("category", data).then((res) => {
+      backend.put("subcategory", data).then((res) => {
         this.sending = false;
         if (res.status === 200) {
-          this.getCategories();
+          this.getSubCategories();
           this.message = res.data.message;
           this.saved = true;
         } else {
@@ -110,12 +110,12 @@ class Category {
       console.log({error});
     }
   };
-  removeCategory = (category) => {
+  removeCategory = (id) => {
     try {
       this.removed = false;
-      backend.delete(`category/${category}`).then((res) => {
+      backend.delete(`subcategory/${id}`).then((res) => {
         if (res.status === 200) {
-          this.getCategories();
+          this.getSubCategories();
           this.message = res.data.message;
           this.removed = true;
         } else {
@@ -134,20 +134,20 @@ class Category {
     this[key] = value;
   };
   get info() {
-    return Object.keys(this.category || {}).map((key) => ({
-      ...this.category[key],
+    return Object.keys(this.subcategory || {}).map((key) => ({
+      ...this.subcategory[key],
       uid: key,
     }));
   }
   get stats() {
-    return this.category.length;
+    return this.subcategory.length;
   }
-  get categorySelect() {
-    return Object.keys(this.category || {}).map((key) => ({
-      value: this.category[key]._id,
-      label: this.category[key].name,
+  get subcategorySelect() {
+    return Object.keys(this.subcategory || {}).map((key) => ({
+      value: this.subcategory[key]._id,
+      label: this.subcategory[key].name,
     }));
   }
 }
 
-export default Category;
+export default SubCategory;
