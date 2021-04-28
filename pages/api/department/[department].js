@@ -4,7 +4,7 @@ connectDB();
 
 export default async (req, res) => {
   switch (req.method) {
-    case "POST":
+    case "GET":
       await departmentExist(req, res);
       break;
     case "DELETE":

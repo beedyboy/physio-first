@@ -27,7 +27,7 @@ class SubCategory {
       confirmRow: action,
       addSubCat: action,
       updateSubCat: action,
-      removeCategory: action,
+      deleteSubCat: action,
       resetProperty: action,
     });
   }
@@ -39,11 +39,15 @@ class SubCategory {
       this.loading = false;
     });
   };
-  confirmRow = (subcategory) => { 
+  confirmRow = (cat_id, sub_name) => { 
     try {
       this.checking = true;
       this.exist = false;
-      backend.get(`subcategory/${subcategory}`).then((res) => {
+      const data = {
+        cat_id,
+        sub_name
+      }
+      backend.post(`subcategory/${sub_name}`, data).then((res) => {
         this.checking = false;
         if (res.status === 200) { 
           this.message = res.data.message;
@@ -110,7 +114,7 @@ class SubCategory {
       console.log({error});
     }
   };
-  removeCategory = (id) => {
+  deleteSubCat = (id) => {
     try {
       this.removed = false;
       backend.delete(`subcategory/${id}`).then((res) => {
