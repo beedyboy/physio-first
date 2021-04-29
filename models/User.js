@@ -9,9 +9,11 @@ const userSchema = new mongoose.Schema(
     },
     firstname: {
       type: String,
+      required: true,
     },
     lastname: {
       type: String,
+      required: true,
     },
     email: {
       type: String,
@@ -22,7 +24,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
     },
-    phone_number: {
+    phone: {
       type: String,
     },
     address: {
@@ -46,6 +48,7 @@ const userSchema = new mongoose.Schema(
     },
     staffId: {
       type: String,
+      required: true,
       maxlength: 30,
     },
     pre_contract: {

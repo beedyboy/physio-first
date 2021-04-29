@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Container } from "@chakra-ui/react";
 import Menus from "./Components/Menus";
 import MobileNav from "./Components/MobileNav";
 
@@ -16,7 +16,7 @@ const MobileLayout = (props) => {
       <Flex direction="column">
         <Box w="100px"></Box>
         <Box flex="1" as="section" px="1.2rem" pt="48px" pb="32px">
-          {children}
+          <Container maxW="xl">{children}</Container>
         </Box>
       </Flex>
       <Box

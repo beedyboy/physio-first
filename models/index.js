@@ -5,12 +5,14 @@ import Department from './Department';
 import User from './User';
 import Marketing from './Marketing';
 import SubCategory from './SubCategory';
+import Leave from './Leave';
 
 export default {
+    User,
     Branch,
+    Leave,
     Category,
     Department, 
-    User,
     Marketing,
     SubCategory
 };

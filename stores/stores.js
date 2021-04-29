@@ -8,6 +8,7 @@ import Category from "./Category";
 import Department from "./Department";
 import Marketing from "./Marketing";
 import SubCategory from "./SubCategory";
+import Leave from "./Leave";
 
 const isServer = typeof window === "undefined";
 // enableStaticRendering(isServer);
@@ -21,7 +22,8 @@ export function getStores(
     categoryStore: {},
     departmentStores: {},
     marketingStore: {},
-    // serviceStore: {},
+    subCategoryStore: {},
+    leaveStore: {},
   }
 ) {
   if (isServer) {
@@ -29,9 +31,10 @@ export function getStores(
       userStore: new User(initialData.userStore),
       branchStore: new Branch(initialData.branchStore),
       categoryStore: new Category(initialData.categoryStore),
-      departmentStores: new Department(initialData.departmentStores),
+      departmentStore: new Department(initialData.departmentStore),
       marketingStore: new Marketing(initialData.marketingStore),
       subCategoryStore: new SubCategory(initialData.subCategoryStore),
+      leaveStore: new Leave(initialData.leaveStore),
     };
   }
   if (!store) {
@@ -39,9 +42,10 @@ export function getStores(
       userStore: new User(initialData.userStore),
       branchStore: new Branch(initialData.branchStore),
       categoryStore: new Category(initialData.categoryStore),
-      departmentStores: new Department(initialData.departmentStores),
+      departmentStore: new Department(initialData.departmentStore),
       marketingStore: new Marketing(initialData.marketingStore),
       subCategoryStore: new SubCategory(initialData.subCategoryStore),
+      leaveStore: new Leave(initialData.leaveStore),
     };
   }
   return store;

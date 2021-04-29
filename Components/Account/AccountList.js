@@ -2,21 +2,36 @@ import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
 import { IconButton, Wrap, WrapItem } from "@chakra-ui/react";
 import PerfectScrollBar from "react-perfect-scrollbar";
+import Link from "next/link";
 import { MdEdit, MdDelete } from "react-icons/md";
 
-const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
+const AccountList = ({ data, setMode, removeData, rowData, toggle }) => {
   const columns = [
     {
-      name: "Link",
-      selector: "url_link",
+      name: "Fullname",
+      sortable: true,
+      cell: (row) => (
+        <Fragment>
+          <Link to={`/staff/${row.id}/view`}>
+            {row.firstname + " " + row.lastname}
+          </Link>
+        </Fragment>
+      ),
+    },
+    {
+      name: "Email",
+      selector: "email",
       sortable: true,
     },
     {
-      name: "Description",
-      selector: "description",
-      wrap: true,
+      name: "Staff ID",
+      selector: "staffId",
       sortable: true,
-      hidden: "sm",
+    },
+    {
+      name: "Phone",
+      selector: "phone",
+      sortable: true,
     },
     {
       name: "Created",
@@ -33,7 +48,7 @@ const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
             <IconButton
               variant="outline"
               colorScheme="teal"
-              aria-label="Edit Marketing"
+              aria-label="Edit Account"
               fontSize="20px"
               icon={<MdEdit />}
               onClick={(e) => editData(e, row)}
@@ -43,11 +58,11 @@ const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
             <IconButton
               variant="outline"
               colorScheme="teal"
-              aria-label="Edit Marketing"
+              aria-label="Edit Account"
               fontSize="20px"
               icon={<MdDelete />}
               onClick={(key) => {
-                if (window.confirm("Delete this link?")) {
+                if (window.confirm("Delete this Account?")) {
                   deleteData(row._id);
                 }
               }}
@@ -71,7 +86,7 @@ const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
     <Fragment>
       <PerfectScrollBar>
         <DataTable
-          title="Marketing List"
+          title="Account List"
           columns={columns}
           data={data}
           pagination={true}
@@ -82,4 +97,4 @@ const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
   );
 };
 
-export default MarketingList;
+export default AccountList;

@@ -1,6 +1,6 @@
 import { makeObservable, observable, action, computed } from "mobx";  
 import backend from "../services/APIService"; 
-class SubCategory {
+class Leave {
   error = false; 
   exist = false;
   saved = false;
@@ -8,7 +8,7 @@ class SubCategory {
   removed = false;
   sending = false;
   checking = false; 
-  subcategory = [];
+  leaves = [];
   message = "";
  
   constructor() {
@@ -18,35 +18,32 @@ class SubCategory {
       removed: observable, 
       checking: observable,  
       error: observable,
-      exist: observable, 
+      exist: observable,
+      info: computed,
       stats: computed,
-      subcategorySelect: computed,
+      categorySelect: computed,
       loading: observable,
-      subcategory: observable,
-      confirmRow: action,
-      addSubCat: action,
-      updateSubCat: action,
-      deleteSubCat: action,
+      leaves: observable,
+      confirmName: action,
+      addLeave: action,
+      updateLeave: action,
+      removeCategory: action,
       resetProperty: action,
     });
   }
 
-  getSubCategories = () => {
+  getLeaves = () => {
     this.loading = true;
-    backend.get("subcategory").then((res) => {
-      this.subcategory = res.data;
+    backend.get("leave").then((res) => {
+      this.leaves = res.data;
       this.loading = false;
     });
   };
-  confirmRow = (cat_id, sub_name) => { 
+  confirmName = (leave) => { 
     try {
       this.checking = true;
       this.exist = false;
-      const data = {
-        cat_id,
-        sub_name
-      }
-      backend.post(`subcategory/${sub_name}`, data).then((res) => {
+      backend.get(`leave/${leave}`).then((res) => {
         this.checking = false;
         if (res.status === 200) { 
           this.message = res.data.message;
@@ -64,13 +61,13 @@ class SubCategory {
       }
     }
   };
-  addSubCat = (data) => {
+  addLeave = (data) => {
     try {
       this.sending = true;
-      backend.post("subcategory", data).then((res) => {
+      backend.post("leave", data).then((res) => {
         this.sending = false;
         if (res.status === 201) {
-          this.getSubCategories();
+          this.getLeaves();
           this.message = res.data.message;
           this.saved = true;
         } else {
@@ -87,13 +84,13 @@ class SubCategory {
     }
   };
 
-  updateSubCat = (data) => {
+  updateLeave = (data) => {
     try {
       this.sending = true;
-      backend.put("subcategory", data).then((res) => {
+      backend.put("leave", data).then((res) => {
         this.sending = false;
         if (res.status === 200) {
-          this.getSubCategories();
+          this.getLeaves();
           this.message = res.data.message;
           this.saved = true;
         } else {
@@ -113,12 +110,12 @@ class SubCategory {
       console.log({error});
     }
   };
-  deleteSubCat = (id) => {
+  removeCategory = (leave) => {
     try {
       this.removed = false;
-      backend.delete(`subcategory/${id}`).then((res) => {
+      backend.delete(`leave/${leave}`).then((res) => {
         if (res.status === 200) {
-          this.getSubCategories();
+          this.getLeaves();
           this.message = res.data.message;
           this.removed = true;
         } else {
@@ -136,16 +133,21 @@ class SubCategory {
   resetProperty = (key, value) => {
     this[key] = value;
   };
- 
-  get stats() {
-    return this.subcategory.length;
+  get info() {
+    return Object.keys(this.leave || {}).map((key) => ({
+      ...this.leave[key],
+      uid: key,
+    }));
   }
-  get subcategorySelect() {
-    return Object.keys(this.subcategory || {}).map((key) => ({
-      value: this.subcategory[key]._id,
-      label: this.subcategory[key].name,
+  get stats() {
+    return this.leave.length;
+  }
+  get categorySelect() {
+    return Object.keys(this.leave || {}).map((key) => ({
+      value: this.leave[key]._id,
+      label: this.leave[key].name,
     }));
   }
 }
 
-export default SubCategory;
+export default Leave;

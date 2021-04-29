@@ -10,7 +10,7 @@ import Marketing from "../views/system/Marketing";
 import SubCategory from "../views/system/SubCategory";
 import Leave from "../views/system/Leave";
 
-function system(props) {
+function admin(props) {
   return (
     <>
       <Head>
@@ -56,4 +56,4 @@ function system(props) {
   );
 }
 
-export default system;
+export default admin;

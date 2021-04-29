@@ -4,36 +4,31 @@ connectDB();
 
 export default async (req, res) => {
   switch (req.method) {
-    case "POST":
-      await subExist(req, res);
+    case "GET":
+      await LeaveExist(req, res);
       break;
     case "DELETE":
-      await removeSubCategory(req, res);
+      await removeLeave(req, res);
       break;
   }
 };
 
-const subExist = async (req, res) => {
+const LeaveExist = async (req, res) => {
   try {
-    const { cat_id, sub_name } = req.body;
-    console.log(req.body) 
-    const subRegex = new RegExp(sub_name, "i");
-    const check_record = await DB.SubCategory.findOne({
-      cat_id: cat_id,
-      sub_name: subRegex
-    });
-    console.log({check_record})
+    const { id } = req.query;
+    const nameRegex = new RegExp(id, "i");
+    const check_record = await DB.Leave.findOne({ leave_type: nameRegex });
     const exist = check_record ? true : false;
-    const message = check_record ? "Duplicate record not allowed" : null;
+    const message = check_record ? "Duplicate leave not allowed" : null;
     res.status(200).json({ exist, message });
   } catch (err) {
     console.log(err);
   }
 };
 
-const removeSubCategory = async (req, res) => {
-  const { id } = req.query;
-  await DB.SubCategory.findByIdAndRemove(id, (err, doc) => {
+const removeLeave = async (req, res) => {
+  const {  id } = req.query;
+  await DB.Leave.findByIdAndRemove(id, (err, doc) => {
     if (err) {
       return res.status(400).send({
         message: "Invalid details",
@@ -41,7 +36,7 @@ const removeSubCategory = async (req, res) => {
       });
     } else {
       return res.status(200).json({
-        message: "Record Deleted Successfully",
+        message: "Leave Record Deleted Successfully",
       });
     }
   }).catch((err) => {

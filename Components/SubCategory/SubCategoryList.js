@@ -8,7 +8,12 @@ const SubCategoryList = ({ data, setMode, removeData, rowData, toggle }) => {
   const columns = [
     {
       name: "Name",
-      selector: "name",
+      selector: "sub_name",
+      sortable: true,
+    },
+    {
+      name: "Category",
+      selector: "cat_id.name",
       sortable: true,
     },
     {

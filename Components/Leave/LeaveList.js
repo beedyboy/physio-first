@@ -4,11 +4,11 @@ import { IconButton, Wrap, WrapItem } from "@chakra-ui/react";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import { MdEdit, MdDelete } from "react-icons/md";
 
-const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
+const LeaveList = ({ data, setMode, removeData, rowData, toggle }) => {
   const columns = [
     {
-      name: "Link",
-      selector: "url_link",
+      name: "Type",
+      selector: "leave_type",
       sortable: true,
     },
     {
@@ -33,7 +33,7 @@ const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
             <IconButton
               variant="outline"
               colorScheme="teal"
-              aria-label="Edit Marketing"
+              aria-label="Edit Leave"
               fontSize="20px"
               icon={<MdEdit />}
               onClick={(e) => editData(e, row)}
@@ -43,11 +43,11 @@ const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
             <IconButton
               variant="outline"
               colorScheme="teal"
-              aria-label="Edit Marketing"
+              aria-label="Edit Leave"
               fontSize="20px"
               icon={<MdDelete />}
               onClick={(key) => {
-                if (window.confirm("Delete this link?")) {
+                if (window.confirm("Delete this Leave?")) {
                   deleteData(row._id);
                 }
               }}
@@ -71,7 +71,7 @@ const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
     <Fragment>
       <PerfectScrollBar>
         <DataTable
-          title="Marketing List"
+          title="Leave List"
           columns={columns}
           data={data}
           pagination={true}
@@ -82,4 +82,4 @@ const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
   );
 };
 
-export default MarketingList;
+export default LeaveList;

@@ -8,41 +8,36 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
-import SubCategoryList from "../../Components/SubCategory/SubCategoryList";
+import LeaveList from "../../Components/Leave/LeaveList";
 import { useMobxStores } from "../../stores/stores";
-import SubCategoryForm from "../../Components/SubCategory/SubCategoryForm";
+import LeaveForm from "../../Components/Leave/LeaveForm";
 
 import { MdAdd } from "react-icons/md";
-function SubCategory() {
+function Leave() {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
   const [rowData, setRowData] = useState();
-  const { subCategoryStore, categoryStore } = useMobxStores();
-  const { 
-    category, 
-    getCategories, 
-  } = categoryStore;
+  const { leaveStore } = useMobxStores();
   const {
     error,
     saved,
     exist,
     message,
     removed,
-    sending, 
-    subcategory,
+    sending,
+    leaves,
     checking,
-    confirmRow,
+    confirmName,
     resetProperty,
-    getSubCategories,
-    addSubCat,
-    updateSubCat,
-    deleteSubCat,
-  } = subCategoryStore;
+    getLeaves,
+    addLeave,
+    updateLeave,
+    removeLeave,
+  } = leaveStore;
 
   useEffect(() => {
-    getCategories();
-    getSubCategories();
+    getLeaves();
   }, []);
 
   useEffect(() => {
@@ -62,7 +57,7 @@ function SubCategory() {
     };
   }, [removed]);
 
-  const newCategory = () => {
+  const newLeave = () => {
     setMode("Add");
     onOpen();
   };
@@ -77,28 +72,28 @@ function SubCategory() {
         overflow="hidden"
       >
         <Box d="flex" justifyContent="space-between">
-          <Heading mb={4}>SubCategory</Heading>
+          <Heading mb={4}>Leave</Heading>
 
           <Button
             leftIcon={<MdAdd />}
             colorScheme="teal"
             p="2rem"
-            onClick={newCategory}
+            onClick={newLeave}
           >
             Add New
           </Button>
         </Box>
         <Box>
-          <SubCategoryList
-            data={subcategory}
+          <LeaveList
+            data={leaves}
             setMode={setMode}
             toggle={onOpen}
-            removeData={deleteSubCat}
+            removeData={removeLeave}
             rowData={setRowData}
           />
         </Box>
       </Flex>
-      <SubCategoryForm
+      <LeaveForm
         mode={mode}
         open={isOpen}
         saved={saved}
@@ -107,16 +102,15 @@ function SubCategory() {
         message={message}
         sending={sending}
         checking={checking}
-        confirm={confirmRow}
-        categories={category}
         handleClose={onClose}
+        confirm={confirmName}
         initial_data={rowData}
         reset={resetProperty}
-        addSubCat={addSubCat}
-        updateSubCat={updateSubCat}
+        addLeave={addLeave}
+        updateLeave={updateLeave}
       />
     </Fragment>
   );
 }
 
-export default observer(SubCategory);
+export default observer(Leave);
