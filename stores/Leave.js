@@ -16,6 +16,7 @@ class Leave {
       message: observable,
       sending: observable, 
       removed: observable, 
+      saved: observable,  
       checking: observable,  
       error: observable,
       exist: observable,

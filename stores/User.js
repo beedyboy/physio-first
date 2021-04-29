@@ -4,34 +4,35 @@ import Utility from "../services/UtilityService";
 
 class User {
   user = [];
-  loading = false;
-  onError = false;
-  onSuccess = false;
-  sending = false;
-  errMesssage = "";
+  error = false; 
+  exist = false;
   saved = false;
-  successMsg = "";
+  loading = false;
+  removed = false;
+  sending = false;
+  checking = false; 
   users = [];
 
   constructor() {
     makeObservable(this, {
       user: observable,
-      loading: observable,
-      onError: observable,
-      sending: observable,
-      saved: observable,
-      onSuccess: observable,
-      successMsg: observable,
-      errMesssage: observable,
+      message: observable,
+      sending: observable, 
+      removed: observable, 
+      checking: observable,  
+      error: observable,
+      exist: observable,
+      saved: observable,  
       users: observable,
       login: action,
       logout: action,
       addStaff: action,
       getUsers: action,
       removeStaff: action,
-      editStaff: action,
-      resetAction: action,
+      updateStaff: action, 
       resetProperty: action,
+      confirmEmail: action,
+      setRole: action,
       loginReset: action,
     });
   }
@@ -40,7 +41,7 @@ class User {
     this.loading = true;
     try {
       backend
-        .get("admins")
+        .get("account")
         .then((res) => {
           this.loading = false;
           if (res.data.status) {
@@ -61,14 +62,36 @@ class User {
     }
   };
 
+  confirmEmail = (email) => { 
+    try {
+      this.checking = true;
+      this.exist = false;
+      backend.get(`account/${email}`).then((res) => {
+        this.checking = false;
+        if (res.status === 200) { 
+          this.message = res.data.message;
+          this.exist = res.data.exist; 
+        } else {
+          this.message = res.data.error;
+          this.error = true;
+        }
+      });
+    } catch (err) {
+      if (err.response.status === 500) {
+        console.log("There was a problem with the server");
+      } else {
+        console.log(err.response.data.msg);
+      }
+    }
+  };
+
   login = (data) => {
     this.loading = true;
     backend
       .post("admins/login", data)
       .then((res) => {
         this.loading = false;
-        if (res.data.status) {
-          this.onSuccess = true;
+        if (res.data.status) { 
           this.successMsg = "Log In Successful";
           this.user = res.data.data.user;
           Utility.save("token", res.data.data.token);
@@ -115,87 +138,106 @@ class User {
       Utility.clear();
     } catch (error) {}
   };
-
+ 
   addStaff = (data) => {
-    this.sending = true;
-    this.saved = false;
     try {
-      backend.post("admins", data).then((res) => {
+      this.sending = true;
+      backend.post("account", data).then((res) => {
         this.sending = false;
-        if (res.data.status) {
-          this.saved = true;
-          this.error = false;
-          this.successMsg = res.data.message;
+        if (res.status === 201) {
           this.getUsers();
-          console.log(res.data.message);
+          this.message = res.data.message;
+          this.saved = true;
+        } else {
+          this.message = res.data.error;
+          this.error = true;
         }
       });
+    } catch (err) {
+      if (err.response.status === 500) {
+        console.log("There was a problem with the server");
+      } else {
+        console.log(err.response.data.msg);
+      }
+    }
+  };
+ 
+  updateStaff = (data) => {
+    try {
+      this.sending = true;
+      backend.put("account", data).then((res) => {
+        this.sending = false;
+        if (res.status === 200) {
+          this.getUsers();
+          this.message = res.data.message;
+          this.saved = true;
+        } else {
+          this.message = res.data.error;
+          this.error = true;
+        }
+      }).catch((err) => {
+        this.sending = false;
+        console.log({err});
+      if(err && err.response) {
+      console.log('status', err.response.status)
+      }
+      })
     } catch (error) {
-      console.log(error.response);
+      
       this.sending = false;
-      this.saved = false;
-      this.error = true;
-      this.errMesssage = error.response
-        ? error.response.data.message
-        : "Network Connection seems slow.";
+      console.log({error});
     }
   };
 
-  removeStaff = (adminId) => {
-    this.loading = false;
+  setRole = (data) => {
     try {
-      backend.delete(`admins/remove/${adminId}`).then((res) => {
-        if (res.data.status) {
-          this.loading = false;
-          this.error = false;
-          this.successMsg = res.data.message;
+      this.sending = true;
+      backend.post("account/auth", data).then((res) => {
+        this.sending = false;
+        if (res.status === 200) {
           this.getUsers();
-        }
-      });
-    } catch (error) {
-      console.log(error.response);
-      this.loading = false;
-      this.error = true;
-      this.errMesssage = error.response
-        ? error.response.data.message
-        : "Network Connection seems slow.";
-    }
-  };
-
-  editStaff = (data) => {
-    this.loading = false;
-    this.saved = false;
-    try {
-      backend.put("admins", data).then((res) => {
-        this.loading = false;
-        if (res.data.status) {
+          this.message = res.data.message;
           this.saved = true;
-          this.error = false;
-          this.successMsg = res.data.message;
+        } else {
+          this.message = res.data.error;
+          this.error = true;
+        }
+      }).catch((err) => {
+        this.sending = false;
+        console.log({err});
+      if(err && err.response) {
+      console.log('status', err.response.status)
+      }
+      })
+    } catch (error) {
+      
+      this.sending = false;
+      console.log({error});
+    }
+  };
+  removeStaff = (id) => {
+    try {
+      this.removed = false;
+      backend.delete(`account/${id}`).then((res) => {
+        if (res.status === 200) {
           this.getUsers();
+          this.message = res.data.message;
+          this.removed = true;
+        } else {
+          this.message = res.data.error;
+          this.error = true;
+          this.removed = false;
         }
       });
     } catch (error) {
-      console.log(error.response);
-      this.loading = false;
-      this.error = true;
-      this.saved = false;
-      this.errMesssage = error.response
-        ? error.response.data.message
-        : "Network Connection seems slow.";
+      this.removed = false;
+      console.log(error);
     }
   };
-
+ 
   resetProperty = (key, value) => {
     this[key] = value;
-  };
-  resetAction = () => {
-    this.errMesssage = "";
-    this.successMsg = "";
-    this.onError = false;
-    this.onSuccess = false;
-    this.loading = false;
-  };
+  }; 
 }
 
 export default User;

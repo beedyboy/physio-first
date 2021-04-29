@@ -57,9 +57,9 @@ const AccountForm = ({
   sending,
   message,
   checking,
-  addSubCat,
+   addStaff,
   branches,
-  updateSubCat,
+  updateStaff,
   handleClose,
   initial_data,
 }) => {
@@ -197,7 +197,7 @@ const AccountForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     mode === "Add"
-      ? createStaff(values)
+      ? addStaff(values)
       : updateStaff(values);
   };
   const resetForm = () => {

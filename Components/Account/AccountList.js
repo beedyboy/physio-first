@@ -1,6 +1,15 @@
 import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
-import { IconButton, Wrap, WrapItem } from "@chakra-ui/react";
+import { IconButton, Wrap, WrapItem,   Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuIcon,
+  MenuCommand,
+  MenuDivider } from "@chakra-ui/react";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import Link from "next/link";
 import { MdEdit, MdDelete } from "react-icons/md";
@@ -30,7 +39,7 @@ const AccountList = ({ data, setMode, removeData, rowData, toggle }) => {
     },
     {
       name: "Phone",
-      selector: "phone",
+      selector: "phone_number",
       sortable: true,
     },
     {
@@ -43,32 +52,58 @@ const AccountList = ({ data, setMode, removeData, rowData, toggle }) => {
       name: "Actions",
       sortable: true,
       cell: (row) => (
-        <Wrap spacing="20px">
-          <WrapItem>
-            <IconButton
-              variant="outline"
-              colorScheme="teal"
-              aria-label="Edit Account"
-              fontSize="20px"
-              icon={<MdEdit />}
-              onClick={(e) => editData(e, row)}
-            />
-          </WrapItem>
-          <WrapItem>
-            <IconButton
-              variant="outline"
-              colorScheme="teal"
-              aria-label="Edit Account"
-              fontSize="20px"
-              icon={<MdDelete />}
-              onClick={(key) => {
+        <Menu>
+  <MenuButton
+    as={IconButton}
+    aria-label="Options"
+    icon={<HamburgerIcon />}
+    variant="outline"
+  />
+  <MenuList>
+    <MenuItem icon={<AddIcon />} command="⌘T">
+      New Tab
+    </MenuItem>
+    <MenuItem icon={<ExternalLinkIcon />} command="⌘N">
+      New Window
+    </MenuItem>
+    <MenuItem  onClick={(e) => editData(e, row)} icon={<MdEdit />} command="⌘E">
+     Edit
+    </MenuItem>
+    <MenuItem icon={<MdDelete />} command="⌘⇧D"  onClick={(key) => {
                 if (window.confirm("Delete this Account?")) {
                   deleteData(row._id);
                 }
-              }}
-            />
-          </WrapItem>
-        </Wrap>
+              }}>
+    Delete
+    </MenuItem>
+  </MenuList>
+</Menu>
+        // <Wrap spacing="20px">
+        //   <WrapItem>
+        //     <IconButton
+        //       variant="outline"
+        //       colorScheme="teal"
+        //       aria-label="Edit Account"
+        //       fontSize="20px"
+        //       icon={<MdEdit />}
+        //       onClick={(e) => editData(e, row)}
+        //     />
+        //   </WrapItem>
+        //   <WrapItem>
+            // <IconButton
+            //   variant="outline"
+            //   colorScheme="teal"
+            //   aria-label="Edit Account"
+            //   fontSize="20px"
+            //   icon={<MdDelete />}
+              // onClick={(key) => {
+              //   if (window.confirm("Delete this Account?")) {
+              //     deleteData(row._id);
+              //   }
+              // }}
+            // />
+        //   </WrapItem>
+        // </Wrap>
       ),
     },
   ];
