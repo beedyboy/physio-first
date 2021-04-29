@@ -4,7 +4,7 @@ dotenv.config();
 
 function connectDB() {
   if (mongoose.connections[0].readyState) {
-    console.log("alredy connected");
+    console.log("already connected");
     return;
   }
   mongoose.connect(process.env.DEV_DATABASE_URL, {

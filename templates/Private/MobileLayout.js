@@ -16,7 +16,7 @@ const MobileLayout = (props) => {
       <Flex direction="column">
         <Box w="100px"></Box>
         <Box flex="1" as="section" px="1.2rem" pt="48px" pb="32px">
-          <Container maxW="xl">{children}</Container>
+          <Container maxW="container.xl">{children}</Container>
         </Box>
       </Flex>
       <Box

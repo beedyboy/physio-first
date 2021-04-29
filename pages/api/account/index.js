@@ -11,15 +11,15 @@ export default async (req, res) => {
       await addAccount(req, res);
       break;
     case "PUT":
-      await updateSub(req, res);
+      await updateAccount(req, res);
       break;
   }
 };
 
 const allStaff = async (req, res) => {
   try {
-    const categories = await DB.User.find({}).populate("email", "name -_id");
-    res.status(200).json(categories);
+    const accounts = await DB.User.find({}).populate("branch", "name -_id");
+    res.status(200).json(accounts);
   } catch (err) {
     console.log(err);
   }
@@ -39,8 +39,7 @@ const addAccount = async (req, res) => {
     if (
       !email ||
       !firstname ||
-      !lastname ||
-      !phone_number ||
+      !lastname || 
       !staffId ||
       !branch
     ) {
@@ -61,7 +60,7 @@ const addAccount = async (req, res) => {
     res.status(500).json({ error: "internal server error" });
   }
 };
-const updateSub = async (req, res) => {
+const updateAccount = async (req, res) => {
   const data = req.body;
   const emailRegex = new RegExp(data.email, "i");
   const check_record = await DB.User.findOne({

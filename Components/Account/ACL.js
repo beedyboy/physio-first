@@ -47,7 +47,7 @@ const ACL = ({
     if (shouldSetPriviledges) {
       const data = initial_data && initial_data.acl;
       const id = initial_data && initial_data._id;
-      let data;
+      // let data;
       // data = JSON.parse(acl);
       setPriviledges((state) => ({
         ...state,

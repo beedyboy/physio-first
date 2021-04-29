@@ -4,7 +4,7 @@ connectDB();
 
 export default async (req, res) => {
   switch (req.method) {
-    case "POST":
+    case "GET":
       await userExist(req, res);
       break;
     case "DELETE":
@@ -15,11 +15,11 @@ export default async (req, res) => {
 
 const userExist = async (req, res) => {
   try {
-    const { email } = req.query; 
+    const { id: email } = req.query; 
     const regex = new RegExp(email, "i");
     const check_record = await DB.User.findOne({email: regex
     });
-    console.log({check_record})
+    console.log({email})
     const exist = check_record ? true : false;
     const message = check_record ? "Duplicate record not allowed" : null;
     res.status(200).json({ exist, message });

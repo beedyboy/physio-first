@@ -54,6 +54,7 @@ class department {
         }
       });
     } catch (err) {
+      this.checking = false;
       if (err.response.status === 500) {
         console.log("There was a problem with the server");
       } else {

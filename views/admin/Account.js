@@ -8,18 +8,20 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
-import AccountList from "../../Components/ Account/ AccountList";
 import { useMobxStores } from "../../stores/stores";
-import AccountForm from "../../Components/ Account/ AccountForm";
 
 import { MdAdd } from "react-icons/md";
+import ACL from "../../Components/Account/ACL";
+import AccountForm from "../../Components/Account/AccountForm";
+import AccountList from "../../Components/Account/AccountList";
+import ModalWidget from "../../widgets/ModalWidget";
 const Account = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
   const [modal, setModal] = useState({
-    login: false, 
-    role: false
+    login: false,
+    role: false,
   });
   const [rowData, setRowData] = useState();
   const { userStore, branchStore } = useMobxStores();
@@ -37,11 +39,11 @@ const Account = () => {
     resetProperty,
     getUsers,
     addStaff,
-    addStaff,
+    updateStaff,
     setRole,
-     removeStaff,
+    removeStaff,
   } = userStore;
- const { role } = modal;
+  const { role } = modal;
 
   useEffect(() => {
     getBranches();
@@ -73,15 +75,15 @@ const Account = () => {
   const toggleModal = (id) => {
     setModal((state) => ({
       ...state,
-      [id]: !modal[id];
-    }))
-    if(acl === false) { 
-    setACL(true);  
+      [id]: !modal[id],
+    }));
+    if (acl === false) {
+      setACL(true);
     } else {
       setACL(false);
-      setId(0);  
+      setId(0);
     }
-  }
+  };
 
   return (
     <Fragment>
@@ -109,7 +111,7 @@ const Account = () => {
             data={users}
             setMode={setMode}
             toggle={onOpen}
-            removeData={ removeStaff}
+            removeData={removeStaff}
             rowData={setRowData}
           />
         </Box>
@@ -131,17 +133,22 @@ const Account = () => {
         addStaff={addStaff}
         updateStaff={updateStaff}
       />
-      <ModalWidget id="role"  toggle={toggleModal}>
-        <ACL open={modal.role}
+      <ModalWidget id="role" toggle={toggleModal}>
+        <ACL
+          open={role}
           saved={saved}
-        error={error}
-        exist={exist}
-        message={message}
-        sending={sending} 
-        reset={resetProperty} assignRole={setRole} toggle={toggleModal} initial_data={rowData} />
+          error={error}
+          exist={exist}
+          message={message}
+          sending={sending}
+          reset={resetProperty}
+          assignRole={setRole}
+          toggle={toggleModal}
+          initial_data={rowData}
+        />
       </ModalWidget>
     </Fragment>
   );
-}
+};
 
 export default observer(Account);
