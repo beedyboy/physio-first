@@ -129,7 +129,7 @@ const Account = () => {
         initial_data={rowData}
         reset={resetProperty}
         addStaff={addStaff}
-        addStaff={addStaff}
+        updateStaff={updateStaff}
       />
       <ModalWidget id="role"  toggle={toggleModal}>
         <ACL open={modal.role}
