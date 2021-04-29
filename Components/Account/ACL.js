@@ -43,8 +43,11 @@ const ACL = ({
 
   useEffect(() => {
     let shouldSetPriviledges =
-      typeof initial_data !== "undefined" ? true : false;
-    if (shouldSetPriviledges) {
+      typeof initial_data !== "undefined" && initial_data.acl ? true : false;
+     const test = !("acl" in initial_data);
+      // console.log('acl', initial_data.acl )
+      console.log({test })
+    if ( test === false) {
       const data = initial_data && initial_data.acl;
       const id = initial_data && initial_data._id;
       // let data;

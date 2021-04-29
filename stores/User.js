@@ -1,4 +1,4 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, computed } from "mobx";
 import backend from "../services/APIService";
 import Utility from "../services/UtilityService";
 
@@ -36,6 +36,7 @@ class User {
       confirmEmail: action,
       setRole: action,
       loginReset: action,
+      info: computed
     });
   }
 
@@ -47,20 +48,22 @@ class User {
         .get("account")
         .then((res) => {
           this.loading = false;
-          if (res.data === 200) {
+          if (res.status === 200) {
             this.error = false;
             this.users = res.data;
             console.log("store", res.data);
           }
         })
         .catch((err) => {
+          console.log({err})
           this.loading = false;
           this.error = true;
-          this.errMesssage = err.response
-            ? "faild to load FAQs"
+          this.message = err.response
+            ? "failed to load users"
             : "Network Connection seems slow.";
         });
     } catch (error) {
+      console.log({error})
       console.log(error.response);
     }
   };
@@ -245,7 +248,12 @@ class User {
       console.log(error);
     }
   };
-
+  get info() {
+    return Object.keys(this.users || {}).map((key) => ({
+      ...this.users[key],
+      uid: key,
+    }));
+  }
   resetProperty = (key, value) => {
     this[key] = value;
   };

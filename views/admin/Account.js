@@ -77,12 +77,7 @@ const Account = () => {
       ...state,
       [id]: !modal[id],
     }));
-    if (acl === false) {
-      setACL(true);
-    } else {
-      setACL(false);
-      setId(0);
-    }
+    
   };
 
   return (
@@ -113,6 +108,7 @@ const Account = () => {
             toggle={onOpen}
             removeData={removeStaff}
             rowData={setRowData}
+            setModal={toggleModal}
           />
         </Box>
       </Flex>
@@ -133,9 +129,8 @@ const Account = () => {
         addStaff={addStaff}
         updateStaff={updateStaff}
       />
-      <ModalWidget id="role" toggle={toggleModal}>
-        <ACL
-          open={role}
+      <ModalWidget  open={role} id="role" toggle={toggleModal}>
+        <ACL 
           saved={saved}
           error={error}
           exist={exist}

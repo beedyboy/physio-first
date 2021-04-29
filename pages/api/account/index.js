@@ -19,7 +19,7 @@ export default async (req, res) => {
 const allStaff = async (req, res) => {
   try {
     const accounts = await DB.User.find({}).populate("branch", "name -_id");
-    res.status(200).json(accounts);
+    return res.status(200).json(accounts);
   } catch (err) {
     console.log(err);
   }

@@ -18,8 +18,7 @@ const userExist = async (req, res) => {
     const { id: email } = req.query; 
     const regex = new RegExp(email, "i");
     const check_record = await DB.User.findOne({email: regex
-    });
-    console.log({email})
+    }); 
     const exist = check_record ? true : false;
     const message = check_record ? "Duplicate record not allowed" : null;
     res.status(200).json({ exist, message });

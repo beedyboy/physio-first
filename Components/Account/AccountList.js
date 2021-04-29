@@ -1,28 +1,31 @@
 import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
-import { IconButton, Wrap, WrapItem,   Menu,
+import {
+  IconButton,
+  Wrap,
+  WrapItem,
+  Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
+  MenuItemOption, 
   MenuIcon,
-  MenuCommand,
-  MenuDivider } from "@chakra-ui/react";
+  MenuCommand, 
+} from "@chakra-ui/react";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import Link from "next/link";
-import { MdEdit, MdDelete } from "react-icons/md";
+import { MdEdit, MdDelete  } from "react-icons/md";
+import { GrTasks } from "react-icons/gr";
 
-const AccountList = ({ data, setMode, removeData, rowData, toggle }) => {
+const AccountList = ({ data, setMode, setModal, removeData, rowData, toggle }) => { 
   const columns = [
     {
       name: "Fullname",
       sortable: true,
       cell: (row) => (
         <Fragment>
-          <Link to={`/staff/${row.id}/view`}>
-            {row.firstname + " " + row.lastname}
+          <Link href={`/staff/${row.id}/view`}>
+           <a> {row.firstname + " " + row.lastname}</a>
           </Link>
         </Fragment>
       ),
@@ -53,31 +56,41 @@ const AccountList = ({ data, setMode, removeData, rowData, toggle }) => {
       sortable: true,
       cell: (row) => (
         <Menu>
-  <MenuButton
-    as={IconButton}
-    aria-label="Options"
-    icon={<HamburgerIcon />}
-    variant="outline"
-  />
-  <MenuList>
-    <MenuItem icon={<AddIcon />} command="⌘T">
-      New Tab
-    </MenuItem>
-    <MenuItem icon={<ExternalLinkIcon />} command="⌘N">
-      New Window
-    </MenuItem>
-    <MenuItem  onClick={(e) => editData(e, row)} icon={<MdEdit />} command="⌘E">
-     Edit
-    </MenuItem>
-    <MenuItem icon={<MdDelete />} command="⌘⇧D"  onClick={(key) => {
+          <MenuButton
+            as={IconButton}
+            aria-label="Options"
+            icon={<GrTasks />}
+            variant="outline"
+          />
+          <MenuList>
+            
+            <MenuItem
+              onClick={(e) => assignACL(e, row)}
+              icon={<MdEdit />}
+              command="⌘E"
+            >
+              Set Role
+            </MenuItem>
+            <MenuItem
+              onClick={(e) => editData(e, row)}
+              icon={<MdEdit />}
+              command="⌘E"
+            >
+              Edit
+            </MenuItem>
+            <MenuItem
+              icon={<MdDelete />}
+              command="⌘⇧D"
+              onClick={(key) => {
                 if (window.confirm("Delete this Account?")) {
                   deleteData(row._id);
                 }
-              }}>
-    Delete
-    </MenuItem>
-  </MenuList>
-</Menu>
+              }}
+            >
+              Delete
+            </MenuItem>
+          </MenuList>
+        </Menu>
         // <Wrap spacing="20px">
         //   <WrapItem>
         //     <IconButton
@@ -90,18 +103,18 @@ const AccountList = ({ data, setMode, removeData, rowData, toggle }) => {
         //     />
         //   </WrapItem>
         //   <WrapItem>
-            // <IconButton
-            //   variant="outline"
-            //   colorScheme="teal"
-            //   aria-label="Edit Account"
-            //   fontSize="20px"
-            //   icon={<MdDelete />}
-              // onClick={(key) => {
-              //   if (window.confirm("Delete this Account?")) {
-              //     deleteData(row._id);
-              //   }
-              // }}
-            // />
+        // <IconButton
+        //   variant="outline"
+        //   colorScheme="teal"
+        //   aria-label="Edit Account"
+        //   fontSize="20px"
+        //   icon={<MdDelete />}
+        // onClick={(key) => {
+        //   if (window.confirm("Delete this Account?")) {
+        //     deleteData(row._id);
+        //   }
+        // }}
+        // />
         //   </WrapItem>
         // </Wrap>
       ),
@@ -112,6 +125,11 @@ const AccountList = ({ data, setMode, removeData, rowData, toggle }) => {
     setMode("Edit");
     rowData(row);
     toggle(true);
+  };
+  const assignACL = (e, row) => {
+    e.persist();
+    rowData(row); 
+    setModal('role');
   };
   const deleteData = (id) => {
     removeData(id);
