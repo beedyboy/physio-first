@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { useMobxStores } from "../../stores/stores";
+import Link from "next/link";
 const schema = {
   password: {
     isEmpty: false,
@@ -204,8 +205,10 @@ const ResetPassword = (props) => {
                 </Stack>
               </form>
               <Box>
-                <Link to="/login" className="ml-auto mb-0 text-sm">
+                <Link href="/auth/login">
+                  <a>
                   Back to login
+                  </a>
                 </Link>
               </Box>
             </Flex>
