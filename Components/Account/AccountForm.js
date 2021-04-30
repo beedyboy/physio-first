@@ -53,6 +53,7 @@ const AccountForm = ({
   saved,
   error,
   exist,
+  action,
   confirm,
   sending,
   message,
@@ -153,7 +154,7 @@ const AccountForm = ({
     }
   };
   useEffect(() => {
-    if (saved === true) {
+    if (saved === true && action === "newStaff") {
       toast({
         title: "Server Response.",
         description: message,
@@ -174,7 +175,7 @@ const AccountForm = ({
   }, [saved]);
 
   useEffect(() => {
-    if (error === true) {
+    if (error === true && action === "newStaffError") {
       toast({
         title: "Server Response.",
         description: message,

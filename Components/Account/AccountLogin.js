@@ -28,6 +28,7 @@ const schema = {
 };
 const AccountLogin = ({
   reset,
+  action,
   saved,
   error,
   sending,
@@ -97,7 +98,7 @@ const AccountLogin = ({
   };
 
   useEffect(() => {
-    if (saved === true) {
+    if (saved === true && action === "hasLogin") {
       toast({
         title: "Server Response.",
         description: message,
@@ -118,7 +119,7 @@ const AccountLogin = ({
   }, [saved]);
 
   useEffect(() => {
-    if (error === true) {
+    if (error === true && action === "hasLoginError") {
       toast({
         title: "Server Response.",
         description: message,
@@ -140,6 +141,47 @@ const AccountLogin = ({
     e.preventDefault();
     createLogin(values);
   };
+  useEffect(() => {
+    if (saved === true && action === "hasLogin") {
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+      resetForm();
+      toggle('login');
+    }
+    return () => {
+      reset("saved", false);
+      reset("action", "");
+      reset("message", "");
+      resetForm();
+       toggle('login'); 
+    };
+  }, [saved, action]);
+
+  useEffect(() => {
+    if (error === true) {
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+    return () => {
+      reset("error", false);
+      reset("message", "");
+      resetForm();
+       toggle('login'); 
+    };
+  }, [error]);
+
   const resetForm = () => {
     setFormState((prev) => ({
       ...prev,

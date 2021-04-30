@@ -31,6 +31,7 @@ const Account = () => {
     error,
     saved,
     exist,
+    action,
     message,
     removed,
     sending,
@@ -116,6 +117,7 @@ const Account = () => {
       <AccountForm
         mode={mode}
         open={isOpen}
+        action={action}
         saved={saved}
         error={error}
         exist={exist}
@@ -139,6 +141,7 @@ const Account = () => {
         <ACL
           saved={saved}
           error={error}
+          action={action}
           message={message}
           sending={sending}
           reset={resetProperty}
@@ -159,6 +162,7 @@ const Account = () => {
           message={message}
           sending={sending}
           reset={resetProperty}
+          action={action}
           createLogin={setLogin}
           toggle={toggleModal}
           initial_data={rowData}

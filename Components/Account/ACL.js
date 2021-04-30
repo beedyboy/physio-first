@@ -18,6 +18,7 @@ import { toJS } from "mobx";
 const AccountLogin = ({
   reset,
   saved,
+  action,
   error, 
   sending,
   message,
@@ -43,16 +44,12 @@ const AccountLogin = ({
   });
 
   useEffect(() => {
-    // let shouldSetPriviledges =
-    //   typeof initial_data !== "undefined" && initial_data.acl ? true : false;
-    const test = toJS(initial_data && initial_data.acl); 
+      const test = toJS(initial_data && initial_data.acl); 
       const id = initial_data && initial_data._id;
       setId(id);
     if (test && test.length > 0) {
       const data = initial_data && initial_data.acl[0];
-      // let data;
-      // data = JSON.parse(acl);
-      setPriviledges((state) => ({
+        setPriviledges((state) => ({
         ...state,
         asset: {
           add: (data && data.asset.add) || false,
@@ -135,11 +132,11 @@ const AccountLogin = ({
   };
 
   useEffect(() => {
-    if (saved === true) {
+    if (saved === true && action === "hasRole") {
       toast({
         title: "Server Response.",
         description: message,
-        status: "success",
+        status: "warning",
         duration: 9000,
         isClosable: true,
         position: "top-right",
@@ -156,7 +153,7 @@ const AccountLogin = ({
   }, [saved]);
 
   useEffect(() => {
-    if (error === true) {
+    if (error === true && action === "hasRoleError") {
       toast({
         title: "Server Response.",
         description: message,

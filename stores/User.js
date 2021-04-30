@@ -13,11 +13,13 @@ class User {
   checking = false;
   message = "";
   users = [];
+  action = null;
 
 
   constructor() {
     makeObservable(this, {
       message: observable,
+      action: observable, 
       user: observable, 
       sending: observable,
       removed: observable,
@@ -96,9 +98,11 @@ class User {
         this.sending = false;
         if (res.status === 201) {
           this.getUsers();
-          this.message = res.data.message;
+          this.message = res.data.message; 
+          this.action = "newStaff"
           this.saved = true;
         } else {
+          this.action = "newStaffError"
           this.message = res.data.error;
           this.error = true;
         }
@@ -123,10 +127,12 @@ class User {
         .then((res) => {
           this.sending = false;
           if (res.status === 200) {
+            this.action = "newStaff"
             this.getUsers();
             this.message = res.data.message;
             this.saved = true;
           } else {
+            this.action = "newStaffError"
             this.message = res.data.error;
             this.error = true;
           }
@@ -154,8 +160,10 @@ class User {
           if (res.status === 200) {
             this.getUsers();
             this.message = res.data.message;
+            this.action = "hasRole"
             this.saved = true;
           } else {
+            this.action = "hasRoleError"
             this.message = res.data.error;
             this.error = true;
           }
@@ -183,8 +191,10 @@ class User {
           if (res.status === 200) {
             this.getUsers();
             this.message = res.data.message;
+            this.action = "hasLogin"
             this.saved = true;
           } else {
+            this.action = "hasLoginError"
             this.message = res.data.error;
             this.error = true;
           }
