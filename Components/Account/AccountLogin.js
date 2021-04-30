@@ -11,9 +11,21 @@ import {
   FormLabel,
   InputGroup,
   FormControl,
+  FormErrorMessage,
   InputRightElement,
 } from "@chakra-ui/react";
-
+const schema = {
+  email: {
+    email: true,
+    min: 10,
+    message: "A valid email is required",
+  },
+  password: {
+    min: 5,
+    isEmpty: false,
+    message: "a minimum of 5 character password is required",
+  },
+};
 const AccountLogin = ({
   reset,
   saved,
@@ -58,7 +70,7 @@ const AccountLogin = ({
       }));
     };
   }, [initial_data]);
-  const { values, isValid, touched } = formState;
+  const { values, isValid, errors, touched } = formState;
 
   useEffect(() => {
     const errors = dataHero.validate(schema, values);
