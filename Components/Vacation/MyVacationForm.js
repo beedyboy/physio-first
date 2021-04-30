@@ -45,7 +45,7 @@ const MyVacationForm = ({
   sending,
   message, 
   leaves,
-  updateSubCat,
+   createVacation,
   handleClose, 
 }) => {
   const dateFormat = "YYYY/MM/DD";
@@ -132,7 +132,7 @@ const MyVacationForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateSubCat(formState.values);
+     createVacation(values);
   };
   
   const resetForm = () => {
