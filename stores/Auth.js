@@ -1,6 +1,6 @@
-import { makeObservable, observable, action, computed } from "mobx";
-import backend from "../services/APIService";
-import Utility from "../.next/static/chunks/pages/admin";
+import { makeObservable, observable, action } from "mobx";
+import backend from "../services/APIService"; 
+import Utility from "../services/UtilityService";
 
 class AuthStore {
   error = null;
@@ -11,13 +11,14 @@ class AuthStore {
   sending = false;
   requestSent = false;
   passwordChanged = false;
-  close = false;
+  isAuthenticated = false;
   action = null;
 
   constructor() {
     makeObservable(this, {
       action: observable,
       error: observable,
+      isAuthenticated: observable,
       requestSent: observable,
       passwordChanged: observable,
       sending: observable,
@@ -25,6 +26,7 @@ class AuthStore {
       link: observable,
       errMessage: observable,
       action: observable,
+      login: action,
       requestInstruction: action,
       resetProperty: action,
       resetPasswordNow: action,
@@ -58,18 +60,20 @@ class AuthStore {
     });
   };
 
-  login = (Admin) => {
+  login = (data) => {
     this.sending = true;
     this.error = null;
-    backend.post("auth/login", Admin).then((res) => {
+    backend.post("auth/login", data).then((res) => {
       this.sending = false;
-      if (res.data.status === 200) {
-        Utility.save("name", res.data.staff[0].lastname);
+      if (res.status === 201) {
+        Utility.save("name", res.data.user.lastname);
         Utility.save("staff_token", res.data.token);
-        Utility.save("acl", res.data.staff[0].acl);
+        Utility.save("acl", res.data.user.acl);
+        this.message = res.data.message;
         this.isAuthenticated = true;
       } else {
-        Beedy("error", res.data.msg);
+       
+        this.message = res.data.error;
       }
     });
   };

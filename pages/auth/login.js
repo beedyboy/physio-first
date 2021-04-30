@@ -1,8 +1,25 @@
 import React, { useState, useEffect } from "react";
 import dataHero from "data-hero";
 import Head from "next/head";
-import { Heading, Box, Text, Button } from "@chakra-ui/react"; 
+import { useRouter } from "next/router";
+import {
+  Box,
+  Flex,
+  Text,
+  Input,
+  Stack,
+  Center,
+  Button,
+  Heading,
+  useToast,
+  FormLabel,
+  InputGroup,
+  FormControl,
+  FormErrorMessage,
+  InputRightElement,
+} from "@chakra-ui/react";
 import Link from "next/link";
+import { useMobxStores } from "../../stores/stores";
 const schema = {
   email: {
     email: true,
@@ -16,7 +33,12 @@ const schema = {
   },
 };
 function Login() {
-
+  const router = useRouter();
+  const toast = useToast();
+  const { authStore } = useMobxStores();
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
+  const { isAuthenticated, resetProperty, login, message, sending } = authStore;
   const [formState, setFormState] = useState({
     isValid: false,
     values: {
@@ -26,20 +48,19 @@ function Login() {
     touched: {},
     errors: {},
   });
+  const { values, isValid, errors, touched } = formState;
 
   useEffect(() => {
-    const errors = dataHero.validate(schema, formState.values);
-
+    const errors = dataHero.validate(schema, values);
     setFormState((formState) => ({
       ...formState,
       isValid: errors.email.error || errors.password.error ? false : true,
       errors: errors || {},
     }));
-  }, [formState.values]);
+  }, [values]);
 
   const handleChange = (event) => {
     event.persist();
-
     setFormState((formState) => ({
       ...formState,
       values: {
@@ -58,17 +79,29 @@ function Login() {
 
   const handleSignIn = (event) => {
     event.preventDefault();
-    login(formState.values);
-    // isAuthenticated === true ? history.push('/'): null;
+    login(formState.values); 
   };
-  const { from } = props.location.state || { from: { pathname: "/dashboard" } };
-  if (isAuthenticated === true) {
-    return <Redirect to={from} />;
-  }
+ 
+  useEffect(() => {
+    if (isAuthenticated) {
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+      router.push("/");
+    }
+    return () => {
+      resetProperty("isAuthenticated", false);
+      resetProperty("message", "");
+    };
+  }, [isAuthenticated]);
 
-  const hasError = (field) => {
-    return formState.touched[field] && formState.errors[field].error;
-  };
+  const hasError = (field) => touched[field] && errors[field].error;
+
   return (
     <>
       <Head>
@@ -79,59 +112,71 @@ function Login() {
           <Center w="50vw" h="100vh">
             <Flex direction="column" w="40vw">
               <Box>
-                <Heading as="h4">Reset password</Heading>
+                <Heading as="h4">Welcome back</Heading>
               </Box>
               <Box mt="2">
-                <Text>Enter new password</Text>
+                <Text>Enter password</Text>
               </Box>
-              <form mt="1" onSubmit={handleSubmit}>
+              <form mt="1" onSubmit={handleSignIn}>
                 <Stack spacing={4} marginBottom="1rem">
-                  <FormControl isRequired isInvalid={hasError("password")}>
-                    <FormLabel htmlFor="password">Password</FormLabel>
-                    <Input
-                      focusBorderColor="main.500"
-                      type="password"
-                      name="password"
-                      id="password"
-                      onChange={handleChange}
-                      value={formState.values.password || ""}
-                      placeholder="Enter a valid password"
-                    />
-                    <FormErrorMessage>
-                      {hasError("password")
-                        ? formState.errors.password &&
-                          formState.errors.password.message
-                        : null}
-                    </FormErrorMessage>
-                  </FormControl>
+                  <Box>
+                    <FormControl
+                      isRequired
+                      my="3"
+                      isInvalid={hasError("email")}
+                    >
+                      <FormLabel htmlFor="email">Email</FormLabel>
+                      <Input
+                        type="email"
+                        value={values.email || ""}
+                        name="email"
+                        id="email"
+                        onChange={handleChange}
+                        placeholder="Email"
+                      />
+                      <FormErrorMessage>
+                        {hasError("email")
+                          ? errors.email && errors.email.message
+                          : null}
+                      </FormErrorMessage>
+                    </FormControl>
+                  </Box>
 
-                  <FormControl isRequired isInvalid={hasError("newpassword")}>
-                    <FormLabel htmlFor="newpassword">
-                      Confirm Password
-                    </FormLabel>
-                    <Input
-                      focusBorderColor="main.500"
-                      type="password"
-                      name="newpassword"
-                      id="newpassword"
-                      onChange={handleChange}
-                      value={formState.values.newpassword || ""}
-                      placeholder="Enter a valid password"
-                    />
-                    <FormErrorMessage>
-                      {hasError("newpassword")
-                        ? formState.errors.newpassword &&
-                          formState.errors.newpassword.message
-                        : null}
-                    </FormErrorMessage>
-                    <Text mt={"1rem"} mr={"23rem"} color="red">
-                      {matchedTxt}
-                    </Text>
-                  </FormControl>
+                  <Box>
+                    <FormControl
+                      isRequired
+                      my="3"
+                      isInvalid={hasError("password")}
+                    >
+                      <FormLabel htmlFor="password">Password</FormLabel>
+                      <InputGroup size="md">
+                        <Input
+                          pr="4.5rem"
+                          value={values.password || ""}
+                          name="password"
+                          id="password"
+                          onChange={handleChange}
+                          type={show ? "text" : "password"}
+                          placeholder="Enter password"
+                        />
+                        <InputRightElement width="4.5rem">
+                          <Button h="1.75rem" size="sm" onClick={handleClick}>
+                            {show ? "Hide" : "Show"}
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+
+                      <FormErrorMessage>
+                        {hasError("password")
+                          ? errors.password && errors.password.message
+                          : null}
+                      </FormErrorMessage>
+                    </FormControl>
+                  </Box>
 
                   <Button
                     type="submit"
-                    disabled={!formState.isValid || !matched}
+                    disabled={!isValid || sending}
                     isLoading={sending}
                     loadingText="Please wait.."
                     colorScheme="core.main"

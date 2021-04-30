@@ -1,5 +1,5 @@
 import DB from "../../../models";
-import connectDB from "../../../services/database";
+import connectDB from "../../../services/database"; 
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 
