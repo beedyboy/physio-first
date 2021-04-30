@@ -71,13 +71,24 @@ const AccountList = ({
             </MenuButton>
 
             <MenuList>
-              <MenuItem onClick={(e) => assignACL(e, row)} icon={<GiKeyLock />}>
+              <MenuItem
+                onClick={(e) => setActionData(e, row, "role")}
+                icon={<GiKeyLock />}
+              >
                 Set Role
               </MenuItem>
-              <MenuItem onClick={(e) => assignACL(e, row)} icon={<CgLogIn />}>
-                Set Login
-              </MenuItem>
-              <MenuItem onClick={(e) => assignACL(e, row)} icon={<GrIntegration />}>
+              {row.can_login ? null : (
+                <MenuItem
+                  onClick={(e) => setActionData(e, row, "login")}
+                  icon={<CgLogIn />}
+                >
+                  Set Login
+                </MenuItem>
+              )}
+              <MenuItem
+                onClick={(e) => setActionData(e, row, "onboard")}
+                icon={<GrIntegration />}
+              >
                 Onboard
               </MenuItem>
               <MenuItem onClick={(e) => editData(e, row)} icon={<MdEdit />}>
@@ -105,10 +116,10 @@ const AccountList = ({
     rowData(row);
     toggle(true);
   };
-  const assignACL = (e, row) => {
+  const setActionData = (e, row, action) => {
     e.persist();
     rowData(row);
-    setModal("role");
+    setModal(action);
   };
   const deleteData = (id) => {
     removeData(id);

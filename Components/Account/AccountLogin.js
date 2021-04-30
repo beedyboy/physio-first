@@ -1,135 +1,84 @@
 import React, { useEffect, useState, Fragment } from "react";
-import dataHero from "data-hero";
+import dataHero from "data-hero"; 
 import {
-  Box, 
+  Box,
+  Wrap,
   Stack,
   Button,
-  Select,
-  useToast, 
-  Wrap,
+  useToast,
   WrapItem,
   FormLabel,
-  FormControl, 
-  Flex,
-  Checkbox,
+  InputGroup,
+  FormControl,
+  InputRightElement,
 } from "@chakra-ui/react";
-import { toJS } from "mobx";
 
-const ACL = ({
+const AccountLogin = ({
   reset,
   saved,
-  error, 
+  error,
   sending,
   message,
-  assignRole,
+  createLogin,
   toggle,
   initial_data,
 }) => {
   const toast = useToast();
-  const [uid, setId] = useState();
-  const [priviledges, setPriviledges] = useState({
-    asset: { add: false, view: false, del: false, modify: false },
-    branch: { add: false, view: false, del: false },
-    category: { add: false, view: false, del: false },
-    company: { manage: false },
-    department: { add: false, view: false, del: false },
-    leave: { add: false, view: false, del: false },
-    pos: { sell: false, view: false, modify: false },
-    product: { add: false, view: false, del: false },
-    staff: { add: false, view: false, del: false, modify: false },
-    stock: { add: false, view: false, del: false },
-    ticket: { create: false, manage: false },
-    report: { manage: false },
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
+  const [formState, setFormState] = useState({
+    values: { id: "", email: "", password: "" },
+    touched: {},
+    errors: {},
   });
-
   useEffect(() => {
-    // let shouldSetPriviledges =
-    //   typeof initial_data !== "undefined" && initial_data.acl ? true : false;
-    const test = toJS(initial_data && initial_data.acl); 
-      const id = initial_data && initial_data._id;
-      setId(id);
-    if (test && test.length > 0) {
-      const data = initial_data && initial_data.acl[0];
-      // let data;
-      // data = JSON.parse(acl);
-      setPriviledges((state) => ({
+    let shouldSetData = typeof initial_data !== "undefined" ? true : false;
+    if (shouldSetData) {
+      const data = initial_data;
+      setFormState((state) => ({
         ...state,
-        asset: {
-          add: (data && data.asset.add) || false,
-          view: (data && data.asset.view) || false,
-          del: (data && data.asset.del) || false,
-          modify: (data && data.asset.modify) || false,
-        },
-        branch: {
-          add: (data && data.branch.add) || false,
-          view: (data && data.branch.view) || false,
-          del: (data && data.branch.del) || false,
-        },
-        category: {
-          add: (data && data.category.add) || false,
-          view: (data && data.category.view) || false,
-          del: (data && data.category.del) || false,
-        },
-        company: {
-          manage: (data && data.company.manage) || false,
-        },
-        department: {
-          add: (data && data.department.add) || false,
-          view: (data && data.department.view) || false,
-          del: (data && data.department.del) || false,
-        },
-        leave: {
-          add: (data && data.leave && data.leave.add) || false,
-          view: (data && data.leave && data.leave.view) || false,
-          del: (data && data.leave && data.leave.del) || false,
-        },
-        pos: {
-          sell: (data && data.pos.sell) || false,
-          view: (data && data.pos.view) || false,
-          modify: (data && data.pos.modify) || false,
-        },
-        product: {
-          add: (data && data.product.add) || false,
-          view: (data && data.product.view) || false,
-          del: (data && data.product.del) || false,
-        },
-        staff: {
-          add: (data && data.staff.add) || false,
-          view: (data && data.staff.view) || false,
-          del: (data && data.staff.del) || false,
-          modify: (data && data.staff.modify) || false,
-        },
-        stock: {
-          add: (data && data.stock.add) || false,
-          view: (data && data.stock.view) || false,
-          del: (data && data.stock.del) || false,
-        },
-        ticket: {
-          create: (data && data.ticket.create) || false,
-          manage: (data && data.ticket.manage) || false,
-        },
-        report: {
-          manage: (data && data.report.manage) || false,
+        values: {
+          ...state.values,
+          id: data && data._id,
+          email: data && data.email,
+          password: data && data.password,
         },
       }));
     }
-  }, [initial_data]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const roleData = {
-      priviledges,
-      id: uid,
+    return () => {
+      setFormState((prev) => ({
+        ...prev,
+        values: {
+          ...prev.values,
+          id: "",
+          email: "",
+          password: "",
+        },
+      }));
     };
-    assignRole(roleData);
-  };
-  const handleRoleChange = (event, role) => {
-    event.persist();
-    setPriviledges((formState) => ({
+  }, [initial_data]);
+  const { values, isValid, touched } = formState;
+
+  useEffect(() => {
+    const errors = dataHero.validate(schema, values);
+    setFormState((formState) => ({
       ...formState,
-      [role]: {
-        ...formState[role],
-        [event.target.name]: event.target.checked,
+      isValid: errors.email.error || errors.password.error ? false : true,
+      errors: errors || {},
+    }));
+  }, [values]);
+
+  const handleChange = (event) => {
+    event.persist();
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        [event.target.name]: event.target.value,
+      },
+      touched: {
+        ...formState.touched,
+        [event.target.name]: true,
       },
     }));
   };
@@ -145,13 +94,13 @@ const ACL = ({
         position: "top-right",
       });
       resetForm();
-      toggle('role');
+      toggle("role");
     }
     return () => {
       reset("saved", false);
       reset("message", "");
       resetForm();
-      toggle('role');
+      toggle("role");
     };
   }, [saved]);
 
@@ -170,447 +119,92 @@ const ACL = ({
       reset("error", false);
       reset("message", "");
       resetForm();
-      toggle('role');
+      toggle("role");
     };
   }, [error]);
 
-  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createLogin(values);
+  };
   const resetForm = () => {
-    setPriviledges((prev) => ({
+    setFormState((prev) => ({
       ...prev,
-      values: {
-        ...prev.values,
-        asset: { add: false, view: false, del: false, modify: false },
-        branch: { add: false, view: false, del: false },
-        category: { add: false, view: false, del: false },
-        company: { manage: false },
-        department: { add: false, view: false, del: false },
-        leave: { add: false, view: false, del: false },
-        pos: { sell: false, view: false, modify: false },
-        product: { add: false, view: false, del: false },
-        staff: { add: false, view: false, del: false, modify: false },
-        stock: { add: false, view: false, del: false },
-        ticket: { create: false, manage: false },
-        report: { manage: false },
+      values: { ...prev.values, id: "", email: "", password: "" },
+      touched: {
+        ...formState.touched,
+        email: false,
+        password: false,
       },
+      errors: {},
     }));
   };
+  const hasError = (field) => touched[field] && errors[field].error;
+
   return (
     <Fragment>
-      {/* <Flex direction="column" align="space-between" justifyContent="space-between"> */}
       <Stack spacing="24px">
         <Box>
-          <FormControl id="asset">
-            <FormLabel>Asset</FormLabel>
-            <Wrap spacing="20px">
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.asset.add || false}
-                  name="add"
-                  onChange={(event) => handleRoleChange(event, "asset")}
-                >
-                  Add
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.asset.view || false}
-                  name="view"
-                  onChange={(event) => handleRoleChange(event, "asset")}
-                >
-                  View
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.asset.del || false}
-                  name="del"
-                  onChange={(event) => handleRoleChange(event, "asset")}
-                >
-                  Del
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.asset.modify || false}
-                  name="modify"
-                  onChange={(event) => handleRoleChange(event, "asset")}
-                >
-                  Modify
-                </Checkbox>
-              </WrapItem>
-            </Wrap>
-          </FormControl>
-        </Box>
-    
-        
-        <Box>
-          <FormControl id="branch">
-            <FormLabel>Branch</FormLabel>
-            <Wrap spacing="20px">
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.branch.add || false}
-                  name="add"
-                  onChange={(event) => handleRoleChange(event, "branch")}
-                >
-                  Add
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.branch.view || false}
-                  name="view"
-                  onChange={(event) => handleRoleChange(event, "branch")}
-                >
-                  View
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.branch.del || false}
-                  name="del"
-                  onChange={(event) => handleRoleChange(event, "branch")}
-                >
-                  Del
-                </Checkbox>
-              </WrapItem> 
-            </Wrap>
-          </FormControl>
-        </Box>
-    
-        
-        <Box>
-          <FormControl id="category">
-            <FormLabel>Category</FormLabel>
-            <Wrap spacing="20px">
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.category.add || false}
-                  name="add"
-                  onChange={(event) => handleRoleChange(event, "category")}
-                >
-                  Add
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.category.view || false}
-                  name="view"
-                  onChange={(event) => handleRoleChange(event, "category")}
-                >
-                  View
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.category.del || false}
-                  name="del"
-                  onChange={(event) => handleRoleChange(event, "category")}
-                >
-                  Del
-                </Checkbox>
-              </WrapItem> 
-            </Wrap>
-          </FormControl>
-        </Box>
-    
-        
-        <Box>
-          <FormControl id="company">
-            <FormLabel>Company</FormLabel>
-            <Wrap spacing="20px">
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.company.manage || false}
-                  name="manage"
-                  onChange={(event) => handleRoleChange(event, "company")}
-                >
-                  Manage
-                </Checkbox>
-              </WrapItem> 
-                 </Wrap>
-          </FormControl>
-        </Box>
-    
-        
-        <Box>
-          <FormControl id="department">
-            <FormLabel>Department</FormLabel>
-            <Wrap spacing="20px">
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.department.add || false}
-                  name="add"
-                  onChange={(event) => handleRoleChange(event, "department")}
-                >
-                  Add
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.department.view || false}
-                  name="view"
-                  onChange={(event) => handleRoleChange(event, "department")}
-                >
-                  View
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.department.del || false}
-                  name="del"
-                  onChange={(event) => handleRoleChange(event, "department")}
-                >
-                  Del
-                </Checkbox>
-              </WrapItem> 
-            </Wrap>
-          </FormControl>
-        </Box>
-    
-        
-        <Box>
-          <FormControl id="leave">
-            <FormLabel>Vacation</FormLabel>
-            <Wrap spacing="20px">
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.leave.add || false}
-                  name="add"
-                  onChange={(event) => handleRoleChange(event, "leave")}
-                >
-                  Add
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.leave.view || false}
-                  name="view"
-                  onChange={(event) => handleRoleChange(event, "leave")}
-                >
-                  View
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.leave.del || false}
-                  name="del"
-                  onChange={(event) => handleRoleChange(event, "leave")}
-                >
-                  Del
-                </Checkbox>
-              </WrapItem> 
-            </Wrap>
-          </FormControl>
-        </Box>
-    
-        
-        <Box>
-          <FormControl id="pos">
-            <FormLabel>POS</FormLabel>
-            <Wrap spacing="20px">
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.pos.sell || false}
-                  name="sell"
-                  onChange={(event) => handleRoleChange(event, "pos")}
-                >
-                  Sell
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.pos.view || false}
-                  name="view"
-                  onChange={(event) => handleRoleChange(event, "pos")}
-                >
-                  View
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.pos.modify || false}
-                  name="modify"
-                  onChange={(event) => handleRoleChange(event, "pos")}
-                >
-                  Modify
-                </Checkbox>
-              </WrapItem> 
-            </Wrap>
-          </FormControl>
-        </Box>
-    
-        <Box>
-          <FormControl id="product">
-            <FormLabel>Products</FormLabel>
-            <Wrap spacing="20px">
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.product.add || false}
-                  name="add"
-                  onChange={(event) => handleRoleChange(event, "product")}
-                >
-                  Add
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.product.view || false}
-                  name="view"
-                  onChange={(event) => handleRoleChange(event, "product")}
-                >
-                  View
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.product.del || false}
-                  name="del"
-                  onChange={(event) => handleRoleChange(event, "product")}
-                >
-                  Del
-                </Checkbox>
-              </WrapItem> 
-            </Wrap>
-          </FormControl>
-        </Box>
-    
-    
-        <Box>
-          <FormControl id="staff">
-            <FormLabel>Staff</FormLabel>
-            <Wrap spacing="20px">
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.staff.add || false}
-                  name="add"
-                  onChange={(event) => handleRoleChange(event, "staff")}
-                >
-                  Add
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.staff.view || false}
-                  name="view"
-                  onChange={(event) => handleRoleChange(event, "staff")}
-                >
-                  View
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.staff.del || false}
-                  name="del"
-                  onChange={(event) => handleRoleChange(event, "staff")}
-                >
-                  Del
-                </Checkbox>
-              </WrapItem> 
-            </Wrap>
-          </FormControl>
-        </Box>
-    
-    
-        <Box>
-          <FormControl id="stock">
-            <FormLabel>Stock</FormLabel>
-            <Wrap spacing="20px">
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.stock.add || false}
-                  name="add"
-                  onChange={(event) => handleRoleChange(event, "stock")}
-                >
-                  Add
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.stock.view || false}
-                  name="view"
-                  onChange={(event) => handleRoleChange(event, "stock")}
-                >
-                  View
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.stock.del || false}
-                  name="del"
-                  onChange={(event) => handleRoleChange(event, "stock")}
-                >
-                  Del
-                </Checkbox>
-              </WrapItem> 
-            </Wrap>
-          </FormControl>
-        </Box>
-    
-    
-    
-        <Box>
-          <FormControl id="ticket">
-            <FormLabel>Ticket</FormLabel>
-            <Wrap spacing="20px">
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.ticket.create || false}
-                  name="create"
-                  onChange={(event) => handleRoleChange(event, "ticket")}
-                >
-                  Create
-                </Checkbox>
-              </WrapItem>
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.ticket.manage || false}
-                  name="manage"
-                  onChange={(event) => handleRoleChange(event, "ticket")}
-                >
-                  Manage
-                </Checkbox>
-              </WrapItem>
+          <FormControl isDisabled isRequired isReadOnly my="3" isInvalid={hasError("email")}>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <Input
+              type="email"
+              value={values.email || ""}
+              name="email"
+              id="email"
+              onChange={handleChange}
+              placeholder="Email"
+            />
+            <FormErrorMessage>
+              {hasError("email") ? errors.email && errors.email.message : null}
+            </FormErrorMessage>
              
-            </Wrap>
           </FormControl>
         </Box>
-    
-    
+
         <Box>
-          <FormControl id="report">
-            <FormLabel>Report</FormLabel>
-            <Wrap spacing="20px">
-              
-              <WrapItem>
-                <Checkbox
-                  isChecked={priviledges.report.view || false}
-                  name="manage"
-                  onChange={(event) => handleRoleChange(event, "report")}
-                >
-                  Manage
-                </Checkbox>
-              </WrapItem>
-             
-            </Wrap>
+          <FormControl isRequired my="3" isInvalid={hasError("password")}>
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <InputGroup size="md">
+              <Input
+                pr="4.5rem"
+                value={values.password || ""}
+                name="password"
+                id="password"
+                onChange={handleChange}
+                type={show ? "text" : "password"}
+                placeholder="Enter password"
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  {show ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+
+            <FormErrorMessage>
+              {hasError("password")
+                ? errors.password && errors.password.message
+                : null}
+            </FormErrorMessage>
           </FormControl>
         </Box>
-    <Box>
-      <Wrap spacing="20px">
-        <WrapItem>
-        <Button
+
+        <Box mt={1} align="right">
+          <Wrap spacing="20px">
+            <WrapItem>
+              <Button
                 variant="outline"
                 disabled={sending}
                 mr={3}
-                onClick={() => toggle('role')}
+                onClick={() => toggle("login")}
               >
                 Cancel
-              </Button> 
-        </WrapItem>
-        <WrapItem>
-        <Button
-                disabled={sending}
+              </Button>
+            </WrapItem>
+            <WrapItem>
+              <Button
+                disabled={sending || !isValid}
                 colorScheme="blue"
                 onClick={handleSubmit}
                 isLoading={sending}
@@ -627,12 +221,12 @@ const ACL = ({
               >
                 Save Account
               </Button>
-        </WrapItem>
-      </Wrap>
-    </Box>
+            </WrapItem>
+          </Wrap>
+        </Box>
       </Stack>
     </Fragment>
   );
 };
 
-export default ACL;
+export default AccountLogin;

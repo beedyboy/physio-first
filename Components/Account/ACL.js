@@ -596,7 +596,7 @@ const AccountLogin = ({
             </Wrap>
           </FormControl>
         </Box>
-    <Box>
+    <Box mt={1} align="right">
       <Wrap spacing="20px">
         <WrapItem>
         <Button

@@ -15,6 +15,7 @@ import ACL from "../../Components/Account/ACL";
 import AccountForm from "../../Components/Account/AccountForm";
 import AccountList from "../../Components/Account/AccountList";
 import ModalWidget from "../../widgets/ModalWidget";
+import AccountLogin from "../../Components/Account/AccountLogin";
 const Account = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,6 +42,7 @@ const Account = () => {
     addStaff,
     updateStaff,
     setRole,
+    setLogin,
     removeStaff,
   } = userStore;
   const { role, login } = modal;
@@ -77,7 +79,6 @@ const Account = () => {
       ...state,
       [id]: !modal[id],
     }));
-    
   };
 
   return (
@@ -129,10 +130,15 @@ const Account = () => {
         addStaff={addStaff}
         updateStaff={updateStaff}
       />
-      <ModalWidget title="Assign Roles" open={role} id="role" toggle={toggleModal}>
-        <ACL 
+      <ModalWidget
+        title="Assign Roles"
+        open={role}
+        id="role"
+        toggle={toggleModal}
+      >
+        <ACL
           saved={saved}
-          error={error} 
+          error={error}
           message={message}
           sending={sending}
           reset={resetProperty}
@@ -141,14 +147,19 @@ const Account = () => {
           initial_data={rowData}
         />
       </ModalWidget>
-      <ModalWidget title="Set Login" open={login} id="login" toggle={toggleModal}>
-        <AccountLogin 
+      <ModalWidget
+        title="Set Login"
+        open={login}
+        id="login"
+        toggle={toggleModal}
+      >
+        <AccountLogin
           saved={saved}
-          error={error} 
+          error={error}
           message={message}
           sending={sending}
           reset={resetProperty}
-          assignRole={setRole}
+          createLogin={setLogin}
           toggle={toggleModal}
           initial_data={rowData}
         />
