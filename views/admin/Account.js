@@ -129,11 +129,10 @@ const Account = () => {
         addStaff={addStaff}
         updateStaff={updateStaff}
       />
-      <ModalWidget  open={role} id="role" toggle={toggleModal}>
+      <ModalWidget title="Assign Roles" open={role} id="role" toggle={toggleModal}>
         <ACL 
           saved={saved}
-          error={error}
-          exist={exist}
+          error={error} 
           message={message}
           sending={sending}
           reset={resetProperty}

@@ -1,19 +1,15 @@
 import React, { useEffect, useState, Fragment } from "react";
 import dataHero from "data-hero";
 import {
-  Box,
-  Input,
+  Box, 
   Stack,
   Button,
   Select,
-  useToast,
-  Textarea,
+  useToast, 
   Wrap,
   WrapItem,
   FormLabel,
-  FormControl,
-  FormHelperText,
-  FormErrorMessage,
+  FormControl, 
   Flex,
   Checkbox,
 } from "@chakra-ui/react";
@@ -22,14 +18,14 @@ import { toJS } from "mobx";
 const ACL = ({
   reset,
   saved,
-  error,
-  exist,
+  error, 
   sending,
   message,
   assignRole,
   toggle,
   initial_data,
 }) => {
+  const toast = useToast();
   const [id, setId] = useState();
   const [priviledges, setPriviledges] = useState({
     asset: { add: false, view: false, del: false, modify: false },
@@ -138,6 +134,48 @@ const ACL = ({
       },
     }));
   };
+
+  useEffect(() => {
+    if (saved === true) {
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+      resetForm();
+      toggle('role');
+    }
+    return () => {
+      reset("saved", false);
+      reset("message", "");
+      resetForm();
+      toggle('role');
+    };
+  }, [saved]);
+
+  useEffect(() => {
+    if (error === true) {
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+    return () => {
+      reset("error", false);
+      reset("message", "");
+      resetForm();
+      toggle('role');
+    };
+  }, [error]);
+
+  
   const resetForm = () => {
     setPriviledges((prev) => ({
       ...prev,
@@ -559,7 +597,40 @@ const ACL = ({
             </Wrap>
           </FormControl>
         </Box>
-    
+    <Box>
+      <Wrap>
+        <WrapItem>
+        <Button
+                variant="outline"
+                disabled={sending}
+                mr={3}
+                onClick={() => toggle('role')}
+              >
+                Cancel
+              </Button> 
+        </WrapItem>
+        <WrapItem>
+        <Button
+                disabled={sending}
+                colorScheme="blue"
+                onClick={handleSubmit}
+                isLoading={sending}
+                bg="brand.mainAccent"
+                color="brand.white"
+                variant="ghost"
+                _hover={{
+                  borderColor: "brand.mainAccent",
+                  bg: "brand.white",
+                  color: "brand.mainAccent",
+                  boxShadow: "md",
+                }}
+                _focus={{}}
+              >
+                Save Account
+              </Button>
+        </WrapItem>
+      </Wrap>
+    </Box>
       </Flex>
     </Fragment>
   );
