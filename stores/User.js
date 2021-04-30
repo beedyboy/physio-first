@@ -50,8 +50,7 @@ class User {
           this.loading = false;
           if (res.status === 200) {
             this.error = false;
-            this.users = res.data;
-            console.log("store", res.data);
+            this.users = res.data; 
           }
         })
         .catch((err) => {
@@ -202,7 +201,7 @@ class User {
   };
 
   setRole = (data) => {
-    try {
+    try { 
       this.sending = true;
       backend
         .post("account/auth", data)

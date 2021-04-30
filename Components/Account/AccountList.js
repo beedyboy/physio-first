@@ -1,23 +1,24 @@
 import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
-import {
-  IconButton,
-  Wrap,
-  WrapItem,
+import { 
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
-  MenuItemOption, 
-  MenuIcon,
-  MenuCommand, 
+  MenuItem, 
 } from "@chakra-ui/react";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import Link from "next/link";
-import { MdEdit, MdDelete  } from "react-icons/md";
+import { MdEdit, MdDelete } from "react-icons/md";
 import { GrTasks } from "react-icons/gr";
 
-const AccountList = ({ data, setMode, setModal, removeData, rowData, toggle }) => { 
+const AccountList = ({
+  data,
+  setMode,
+  setModal,
+  removeData,
+  rowData,
+  toggle,
+}) => {
   const columns = [
     {
       name: "Fullname",
@@ -25,7 +26,7 @@ const AccountList = ({ data, setMode, setModal, removeData, rowData, toggle }) =
       cell: (row) => (
         <Fragment>
           <Link href={`/staff/${row.id}/view`}>
-           <a> {row.firstname + " " + row.lastname}</a>
+            <a> {row.firstname + " " + row.lastname}</a>
           </Link>
         </Fragment>
       ),
@@ -48,39 +49,45 @@ const AccountList = ({ data, setMode, setModal, removeData, rowData, toggle }) =
     {
       name: "Created",
       selector: "createdAt",
-      sortable: true,
-      right: true,
+      sortable: true, 
+      hide: 'md'
     },
     {
       name: "Actions",
       sortable: true,
       cell: (row) => (
-        <Menu>
-          <MenuButton
-            as={IconButton}
-            aria-label="Options"
-            icon={<GrTasks />}
+        <Fragment>
+           <Menu h="60"  placement="right">
+          <MenuButton 
+            px={4}
+            py={2}
+            transition="all 0.2s"
+            borderRadius="md"
+            borderWidth="1px"
+            _hover={{ bg: "gray.400" }}
+            _expanded={{ bg: "blue.400" }}
+            _focus={{ boxShadow: "outline" }}
+            // rightIcon={<GrTasks />}
             variant="outline"
-          />
-          <MenuList>
-            
-            <MenuItem
-              onClick={(e) => assignACL(e, row)}
-              icon={<MdEdit />}
-              command="⌘E"
-            >
+          >
+            Actions <GrTasks />
+          </MenuButton>
+        
+        <MenuList>
+        <MenuItem onClick={(e) => assignACL(e, row)} icon={<MdEdit />}>
               Set Role
             </MenuItem>
-            <MenuItem
-              onClick={(e) => editData(e, row)}
-              icon={<MdEdit />}
-              command="⌘E"
-            >
+            <MenuItem onClick={(e) => assignACL(e, row)} icon={<MdEdit />}>
+              Set Login
+            </MenuItem>
+             <MenuItem onClick={(e) => assignACL(e, row)} icon={<MdEdit />}>
+              Onboard
+            </MenuItem>
+            <MenuItem onClick={(e) => editData(e, row)} icon={<MdEdit />}>
               Edit
             </MenuItem>
             <MenuItem
               icon={<MdDelete />}
-              command="⌘⇧D"
               onClick={(key) => {
                 if (window.confirm("Delete this Account?")) {
                   deleteData(row._id);
@@ -91,32 +98,9 @@ const AccountList = ({ data, setMode, setModal, removeData, rowData, toggle }) =
             </MenuItem>
           </MenuList>
         </Menu>
-        // <Wrap spacing="20px">
-        //   <WrapItem>
-        //     <IconButton
-        //       variant="outline"
-        //       colorScheme="teal"
-        //       aria-label="Edit Account"
-        //       fontSize="20px"
-        //       icon={<MdEdit />}
-        //       onClick={(e) => editData(e, row)}
-        //     />
-        //   </WrapItem>
-        //   <WrapItem>
-        // <IconButton
-        //   variant="outline"
-        //   colorScheme="teal"
-        //   aria-label="Edit Account"
-        //   fontSize="20px"
-        //   icon={<MdDelete />}
-        // onClick={(key) => {
-        //   if (window.confirm("Delete this Account?")) {
-        //     deleteData(row._id);
-        //   }
-        // }}
-        // />
-        //   </WrapItem>
-        // </Wrap>
+         
+       
+       </Fragment>
       ),
     },
   ];
@@ -128,8 +112,8 @@ const AccountList = ({ data, setMode, setModal, removeData, rowData, toggle }) =
   };
   const assignACL = (e, row) => {
     e.persist();
-    rowData(row); 
-    setModal('role');
+    rowData(row);
+    setModal("role");
   };
   const deleteData = (id) => {
     removeData(id);

@@ -13,18 +13,16 @@ export default async (req, res) => {
   }
 };
   
-const setRoles = async (req, res) => {
-  const { priviledges: acl, id } = req.body; 
-  
+const setRoles = async (req, res) => { 
+  const { priviledges: acl, id } = req.body;  
+  // const acl = JSON.parse(priviledges);
+  console.log({acl})
     await DB.User.findById(id, (error, doc) => {
       if (!error) {
         
-        doc.firstname = data.firstname;
-        doc.lastname = data.lastname; 
+        doc.acl = acl; 
         doc.save();
-        res.status(200).json({
-          exist,
-          check_record,
+        res.status(200).json({ 
           message: "Role updated successfully",
         });
       } else {

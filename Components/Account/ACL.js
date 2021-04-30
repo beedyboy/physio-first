@@ -26,7 +26,7 @@ const ACL = ({
   initial_data,
 }) => {
   const toast = useToast();
-  const [id, setId] = useState();
+  const [uid, setId] = useState();
   const [priviledges, setPriviledges] = useState({
     asset: { add: false, view: false, del: false, modify: false },
     branch: { add: false, view: false, del: false },
@@ -43,14 +43,13 @@ const ACL = ({
   });
 
   useEffect(() => {
-    let shouldSetPriviledges =
-      typeof initial_data !== "undefined" && initial_data.acl ? true : false;
-    const test = toJS(initial_data && initial_data.acl);
-
-    if (test && test.length > 0) {
-      const data = initial_data && initial_data.acl;
+    // let shouldSetPriviledges =
+    //   typeof initial_data !== "undefined" && initial_data.acl ? true : false;
+    const test = toJS(initial_data && initial_data.acl); 
       const id = initial_data && initial_data._id;
       setId(id);
+    if (test && test.length > 0) {
+      const data = initial_data && initial_data.acl[0];
       // let data;
       // data = JSON.parse(acl);
       setPriviledges((state) => ({
@@ -118,11 +117,11 @@ const ACL = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
+    const roleData = {
       priviledges,
-      id,
+      id: uid,
     };
-    assignRole(data);
+    assignRole(roleData);
   };
   const handleRoleChange = (event, role) => {
     event.persist();
@@ -198,12 +197,12 @@ const ACL = ({
   };
   return (
     <Fragment>
-      <Flex direction="column">
-
+      {/* <Flex direction="column" align="space-between" justifyContent="space-between"> */}
+      <Stack spacing="24px">
         <Box>
           <FormControl id="asset">
             <FormLabel>Asset</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.asset.add || false}
@@ -248,7 +247,7 @@ const ACL = ({
         <Box>
           <FormControl id="branch">
             <FormLabel>Branch</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.branch.add || false}
@@ -284,7 +283,7 @@ const ACL = ({
         <Box>
           <FormControl id="category">
             <FormLabel>Category</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.category.add || false}
@@ -320,7 +319,7 @@ const ACL = ({
         <Box>
           <FormControl id="company">
             <FormLabel>Company</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.company.manage || false}
@@ -338,7 +337,7 @@ const ACL = ({
         <Box>
           <FormControl id="department">
             <FormLabel>Department</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.department.add || false}
@@ -374,7 +373,7 @@ const ACL = ({
         <Box>
           <FormControl id="leave">
             <FormLabel>Vacation</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.leave.add || false}
@@ -410,7 +409,7 @@ const ACL = ({
         <Box>
           <FormControl id="pos">
             <FormLabel>POS</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.pos.sell || false}
@@ -445,7 +444,7 @@ const ACL = ({
         <Box>
           <FormControl id="product">
             <FormLabel>Products</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.product.add || false}
@@ -481,7 +480,7 @@ const ACL = ({
         <Box>
           <FormControl id="staff">
             <FormLabel>Staff</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.staff.add || false}
@@ -517,7 +516,7 @@ const ACL = ({
         <Box>
           <FormControl id="stock">
             <FormLabel>Stock</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.stock.add || false}
@@ -554,7 +553,7 @@ const ACL = ({
         <Box>
           <FormControl id="ticket">
             <FormLabel>Ticket</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.ticket.create || false}
@@ -582,7 +581,7 @@ const ACL = ({
         <Box>
           <FormControl id="report">
             <FormLabel>Report</FormLabel>
-            <Wrap>
+            <Wrap spacing="20px">
               
               <WrapItem>
                 <Checkbox
@@ -598,7 +597,7 @@ const ACL = ({
           </FormControl>
         </Box>
     <Box>
-      <Wrap>
+      <Wrap spacing="20px">
         <WrapItem>
         <Button
                 variant="outline"
@@ -631,7 +630,7 @@ const ACL = ({
         </WrapItem>
       </Wrap>
     </Box>
-      </Flex>
+      </Stack>
     </Fragment>
   );
 };
