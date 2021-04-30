@@ -113,6 +113,7 @@ const AccountLogin = ({
     return () => {
       reset("saved", false);
       reset("message", "");
+      reset("action", "");
       resetForm();
       toggle("role");
     };
@@ -152,6 +153,7 @@ const AccountLogin = ({
         position: "top-right",
       });
       resetForm();
+      reset("action", "");
       toggle('login');
     }
     return () => {
@@ -164,7 +166,7 @@ const AccountLogin = ({
   }, [saved, action]);
 
   useEffect(() => {
-    if (error === true) {
+    if (error === true && action === "hasLoginError") {
       toast({
         title: "Server Response.",
         description: message,
@@ -177,6 +179,7 @@ const AccountLogin = ({
     return () => {
       reset("error", false);
       reset("message", "");
+      reset("action", "");
       resetForm();
        toggle('login'); 
     };

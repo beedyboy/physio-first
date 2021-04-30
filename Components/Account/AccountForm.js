@@ -169,6 +169,7 @@ const AccountForm = ({
     return () => {
       reset("saved", false);
       reset("message", "");
+      reset("action", "");
       resetForm();
       handleClose();
     };
@@ -188,6 +189,7 @@ const AccountForm = ({
     return () => {
       reset("error", false);
       reset("message", "");
+      reset("action", "");
       resetForm();
       handleClose();
     };
