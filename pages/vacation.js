@@ -7,19 +7,19 @@ import MyVacations from "../Components/Vacation/MyVacations";
 import MyVacationForm from "../Components/Vacation/MyVacationForm";
 
 function Vacation(props) {
-  const { leaveStore } = useMobxStores();
+  const { leaveStore, vacationStore } = useMobxStores();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { leaves, getLeaves } = leaveStore;
   const {
-    vacations,
     error,
     saved,
-    message,
     sending,
-    getMyApplications,
-    createVacation,
+    message,
     resetProperty,
-  } = branchStore;
+    createVacation,
+    myApplications,
+    getMyApplications,
+  } = vacationStore;
   useEffect(() => {
     getLeaves();
     getMyApplications();
@@ -55,7 +55,7 @@ function Vacation(props) {
             </Button>
           </Box>
           <Box>
-            <MyVacations data={vacations} />
+            <MyVacations data={myApplications} />
           </Box>
         </Flex>
       </Layout>

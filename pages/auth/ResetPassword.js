@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import dataHero from "data-hero";
-import { Link } from "react-router-dom";
 // localhost:3000/#/reset-password/fe05cf0d76293e33f668e220cbedf35870b07491f8d2e9573043987191135558/2
 import {
   Box,
@@ -14,10 +13,10 @@ import {
   FormLabel,
   FormErrorMessage,
   Center,
+  useToast,
 } from "@chakra-ui/react";
-import AuthStore from "../../stores/Auth";
-import { useAlert } from "react-alert";
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
+import { useMobxStores } from "../../stores/stores";
 const schema = {
   password: {
     isEmpty: false,
@@ -29,8 +28,8 @@ const schema = {
   },
 };
 const ResetPassword = (props) => {
-  const alert = useAlert();
-  const store = useContext(AuthStore);
+  const toast = useToast();
+  const { authStore } = useMobxStores();
   const {
     sending,
     message,
@@ -72,7 +71,7 @@ const ResetPassword = (props) => {
 
   const { values } = formState;
   useEffect(() => {
-    const errors = dataHero.validate(schema, formState.values); 
+    const errors = dataHero.validate(schema, formState.values);
     setFormState((formState) => ({
       ...formState,
       isValid: errors.password.error ? false : true,
@@ -85,7 +84,7 @@ const ResetPassword = (props) => {
   }, [values.newpassword, values.password]);
 
   const handleChange = (event) => {
-    event.persist(); 
+    event.persist();
     setFormState((formState) => ({
       ...formState,
       values: {
@@ -97,12 +96,11 @@ const ResetPassword = (props) => {
         [event.target.name]: true,
       },
     }));
-   
   };
 
-  const confirmMatch = () => { 
-    if (values.password === values.newpassword) { 
-     setMatchedTxt("")
+  const confirmMatch = () => {
+    if (values.password === values.newpassword) {
+      setMatchedTxt("");
       setMatched(true);
     } else {
       setMatchedTxt("Password does not match");
@@ -112,7 +110,14 @@ const ResetPassword = (props) => {
 
   useEffect(() => {
     if (passwordChanged) {
-      alert.success(message);
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
     }
     return () => {
       resetProperty("passwordChanged", false);
@@ -125,11 +130,10 @@ const ResetPassword = (props) => {
     resetPasswordNow(formState.values);
   };
 
-
   const hasError = (field) =>
     formState.touched[field] && formState.errors[field].error;
 
-  const isMatched = () =>  formState.touched['newpassword'] && matched === false;
+  const isMatched = () => formState.touched["newpassword"] && matched === false;
 
   return (
     <>
@@ -177,14 +181,14 @@ const ResetPassword = (props) => {
                       value={formState.values.newpassword || ""}
                       placeholder="Enter a valid password"
                     />
-                    <FormErrorMessage> 
+                    <FormErrorMessage>
                       {hasError("newpassword")
                         ? formState.errors.newpassword &&
                           formState.errors.newpassword.message
-                        : null} 
+                        : null}
                     </FormErrorMessage>
                     <Text mt={"1rem"} mr={"23rem"} color="red">
-                    {matchedTxt}
+                      {matchedTxt}
                     </Text>
                   </FormControl>
 
@@ -200,10 +204,10 @@ const ResetPassword = (props) => {
                 </Stack>
               </form>
               <Box>
-                          <Link to="/login" className="ml-auto mb-0 text-sm">
-                            Back to login
-                          </Link>
-                        </Box>
+                <Link to="/login" className="ml-auto mb-0 text-sm">
+                  Back to login
+                </Link>
+              </Box>
             </Flex>
           </Center>
         </Box>

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import dataHero from "data-hero";
 import {
   Box,
@@ -12,10 +12,10 @@ import {
   FormLabel,
   FormErrorMessage,
   Center,
+  useToast,
 } from "@chakra-ui/react";
-import AuthStore from "../../stores/Auth";
-import { useAlert } from "react-alert";
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
+import { useMobxStores } from "../../stores/stores";
 const schema = {
   email: {
     email: true,
@@ -24,15 +24,15 @@ const schema = {
   },
 };
 const RequestRecovery = () => {
-  const alert = useAlert();
-  const store = useContext(AuthStore);
+  const toast = useToast();
+  const { authStore } = useMobxStores();
   const {
     sending,
     message,
     resetProperty,
     requestInstruction,
     requestSent,
-  } = store;
+  } = authStore;
   const [formState, setFormState] = useState({
     isValid: false,
     values: {
@@ -53,7 +53,14 @@ const RequestRecovery = () => {
 
   useEffect(() => {
     if (requestSent) {
-      alert.success(message);
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
     }
     return () => {
       resetProperty("requestSent", false);

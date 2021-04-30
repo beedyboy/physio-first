@@ -1,17 +1,14 @@
 import React from "react";
 import Head from "next/head"; 
-import { Heading, Box, Text, Button } from "@chakra-ui/react"
-import Layout from "../templates/Private/Layout";
+import { Heading, Box, Text, Button } from "@chakra-ui/react" 
 
-function Dashboard() {
+function Login() {
 	return (
 		<>
 			<Head>
-				<title>Core App | Dashboard</title>
+				<title>Core App | Login</title>
 			</Head>
-		 <Layout>
-     // Example from paystack.com
-
+		 {/* <Layout> 
 <Box maxW="32rem">
   <Heading mb={4}>Modern online and offline payments for Africa</Heading>
   <Text fontSize="xl">
@@ -22,9 +19,9 @@ function Dashboard() {
     Create a free account
   </Button>
 </Box>
-     </Layout>
+     </Layout> */}
 		</>
 	);
 }
 
-export default Dashboard;
+export default Login;

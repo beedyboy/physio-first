@@ -13,12 +13,14 @@ class Vacation {
 
   constructor() {
     makeObservable(this, {
+      saved: observable,
+      error: observable,
       message: observable,
       sending: observable,
-      error: observable,
+      loading: observable,
+      history: observable,
       application: observable,
       applications: observable,
-      history: observable,
       myApplications: observable,
       createVacation: action,
       getApplications: action,
@@ -31,7 +33,7 @@ class Vacation {
   getMyApplications = () => {
     this.loading = true;
     backend.get("vacation").then((res) => {
-      this.vacations = res.data;
+      this.myApplications = res.data;
       this.loading = false;
     });
   };

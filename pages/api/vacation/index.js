@@ -5,47 +5,47 @@ connectDB();
 export default async (req, res) => {
   switch (req.method) {
     case "GET":
-      await getAllLeaves(req, res);
+      await getAllVacations(req, res);
       break;
     case "POST":
-      await saveLeave(req, res);
+      await saveVacation(req, res);
       break;
     case "PUT":
-      await updateLeave(req, res);
+      await updateVacation(req, res);
       break;
   }
 };
 
-const getAllLeaves = async (req, res) => {
+const getAllVacations = async (req, res) => {
   try {
-    const categories = await DB.Leave.find({});
+    const categories = await DB.Vacation.find({});
     res.status(200).json(categories);
   } catch (err) {
     console.log(err);
   }
 };
 
-const saveLeave = async (req, res) => {
-  const { leave_type, allowed_days, description } = req.body;
+const saveVacation = async (req, res) => {
+  const { Vacation_type, allowed_days, description } = req.body;
   try {
-    if (!leave_type) {
+    if (!Vacation_type) {
       return res.status(422).json({ error: "Please add all the fields" });
     }
-    const Leave = await DB.Leave({
-      leave_type,
+    const Vacation = await DB.Vacation({
+      Vacation_type,
       allowed_days,
       description,
     }).save();
-    res.status(201).json({ message: "New Leave type added successfully" });
+    res.status(201).json({ message: "New Vacation type added successfully" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "internal server error" });
   }
 };
-const updateLeave = async (req, res) => {
+const updateVacation = async (req, res) => {
   const data = req.body;
-  const leave_typeRegex = new RegExp(data.leave_type, "i");
-  const check_record = await DB.Leave.findOne({ leave_type: leave_typeRegex });
+  const Vacation_typeRegex = new RegExp(data.Vacation_type, "i");
+  const check_record = await DB.Vacation.findOne({ Vacation_type: Vacation_typeRegex });
   const exist = check_record
     ? check_record && check_record._id.toString() === data.id
       ? false
@@ -53,10 +53,10 @@ const updateLeave = async (req, res) => {
     : false;
 
   if (exist === false) {
-    await DB.Leave.findById(data.id, (error, doc) => {
+    await DB.Vacation.findById(data.id, (error, doc) => {
       if (!error) {
-        if (check_record.leave_type !== data.leave_type) {
-          doc.leave_type = data.leave_type;
+        if (check_record.Vacation_type !== data.Vacation_type) {
+          doc.Vacation_type = data.Vacation_type;
         }
         doc.allowed_days = data.allowed_days;
         doc.description = data.description;
@@ -65,15 +65,15 @@ const updateLeave = async (req, res) => {
         res.status(200).json({
           exist,
           check_record,
-          message: "Leave updated successfully",
+          message: "Vacation updated successfully",
         });
       } else {
-        return res.status(422).json({ error: "Error updating Leave" });
+        return res.status(422).json({ error: "Error updating Vacation" });
       }
     });
   } else {
     return res.status(422).json({
-      error: "Duplicate Leave leave_type is not allowed",
+      error: "Duplicate Vacation Vacation_type is not allowed",
     });
   }
 };
