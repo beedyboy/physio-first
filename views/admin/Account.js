@@ -43,7 +43,7 @@ const Account = () => {
     setRole,
     removeStaff,
   } = userStore;
-  const { role } = modal;
+  const { role, login } = modal;
 
   useEffect(() => {
     getBranches();
@@ -131,6 +131,18 @@ const Account = () => {
       />
       <ModalWidget title="Assign Roles" open={role} id="role" toggle={toggleModal}>
         <ACL 
+          saved={saved}
+          error={error} 
+          message={message}
+          sending={sending}
+          reset={resetProperty}
+          assignRole={setRole}
+          toggle={toggleModal}
+          initial_data={rowData}
+        />
+      </ModalWidget>
+      <ModalWidget title="Set Login" open={login} id="login" toggle={toggleModal}>
+        <AccountLogin 
           saved={saved}
           error={error} 
           message={message}

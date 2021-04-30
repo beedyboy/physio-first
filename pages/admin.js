@@ -16,10 +16,14 @@ function admin(props) {
           <TabList>
             <Tab>Help</Tab>
             <Tab>Staff</Tab>
+            <Tab>Vacations</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
               <Help />
+            </TabPanel>
+            <TabPanel>
+              <Account />
             </TabPanel>
             <TabPanel>
               <Account />

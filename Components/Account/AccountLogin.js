@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { toJS } from "mobx";
 
-const AccountLogin = ({
+const ACL = ({
   reset,
   saved,
   error, 
@@ -635,4 +635,4 @@ const AccountLogin = ({
   );
 };
 
-export default AccountLogin;
+export default ACL;
