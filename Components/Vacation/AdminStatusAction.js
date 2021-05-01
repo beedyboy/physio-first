@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import dataHero from "data-hero";
 import {
-  Box, 
+  Box,
   Stack,
   Button,
   Drawer,
@@ -14,7 +14,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  DrawerContent, 
+  DrawerContent,
   FormErrorMessage,
   DrawerCloseButton,
 } from "@chakra-ui/react";
@@ -22,53 +22,48 @@ const schema = {
   status: {
     isEmpty: false,
     min: 1,
-    message: "Category is required",
-  },
-  sub_name: {
-    isEmpty: false,
-    min: 1,
-    message: "Name is required",
+    message: "status is required",
   },
 };
-const AdminStatusAction = ({ 
+const AdminStatusAction = ({
   open,
   reset,
   saved,
-  error, 
+  error,
   sending,
-  message, 
+  message,
   updateApp,
   handleClose,
   initial_data,
 }) => {
-  const toast = useToast(); 
+  const toast = useToast();
   const [formState, setFormState] = useState({
-    values: { id: "", status: "",  remark: "" },
+    values: { id: "", status: "", remark: "" },
     touched: {},
     errors: {},
   });
   const { touched, errors, values, isValid } = formState;
-  useEffect(() => { 
-      let shouldSetData = typeof initial_data !== "undefined" ? true : false;
-      if (shouldSetData) {
-        const data = initial_data;
-        setFormState((state) => ({
-          ...state,
-          values: {
-            ...state.values,
-            id: data && data._id,
-            status: data && data.status, 
-            remark: data && data.remark,
-          },
-        }));
-      } 
+  useEffect(() => {
+    let shouldSetData = typeof initial_data !== "undefined" ? true : false;
+    if (shouldSetData) {
+      const data = initial_data;
+      setFormState((state) => ({
+        ...state,
+        values: {
+          ...state.values,
+          id: data && data._id,
+          status: data && data.status,
+          remark: data && data.remark,
+        },
+      }));
+    }
     return () => {
       setFormState((prev) => ({
         ...prev,
         values: {
           ...prev.values,
           id: "",
-          status: "", 
+          status: "",
           remark: "",
         },
       }));
@@ -78,7 +73,7 @@ const AdminStatusAction = ({
     const errors = dataHero.validate(schema, values);
     setFormState((formState) => ({
       ...formState,
-      isValid: errors.status.error  ? false : true,
+      isValid: errors.status.error ? false : true,
       errors: errors || {},
     }));
   }, [values]);
@@ -135,7 +130,7 @@ const AdminStatusAction = ({
         ...formState.touched,
         [event.target.name]: true,
       },
-    })); 
+    }));
   };
   const hasError = (field) => touched[field] && errors[field].error;
 
@@ -149,7 +144,7 @@ const AdminStatusAction = ({
       values: {
         ...prev.values,
         id: "",
-        status: "", 
+        status: "",
         remark: "",
       },
       touched: {},
@@ -188,9 +183,8 @@ const AdminStatusAction = ({
                       id="status"
                       onChange={handleChange}
                     >
-                      <option value="Accepted">Accept</option> 
+                      <option value="Accepted">Accept</option>
                       <option value="Rejected">Reject</option>
-                      
                     </Select>
 
                     <FormErrorMessage>
@@ -200,7 +194,7 @@ const AdminStatusAction = ({
                     </FormErrorMessage>
                   </FormControl>
                 </Box>
- 
+
                 <Box>
                   <FormControl my="3">
                     <FormLabel htmlFor="remark">Remark</FormLabel>
@@ -227,7 +221,7 @@ const AdminStatusAction = ({
                 Cancel
               </Button>
               <Button
-                disabled={!isValid || sending }
+                disabled={!isValid || sending}
                 colorScheme="blue"
                 onClick={handleSubmit}
                 isLoading={sending}
