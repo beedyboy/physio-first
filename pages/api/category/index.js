@@ -41,17 +41,17 @@ const saveCategory = async (req, res) => {
     res.status(500).json({ error: "internal server error" });
   }
 };
-const updateCategory = async (req, res) => { 
-  const data = req.body;  
+const updateCategory = async (req, res) => {
+  const data = req.body;
   const nameRegex = new RegExp(data.name, "i");
-  const check_record = await DB.Category.findOne({ name: nameRegex });  
+  const check_record = await DB.Category.findOne({ name: nameRegex });
+  console.log({ check_record });
   const exist = check_record
     ? check_record && check_record._id.toString() === data.id
       ? false
       : true
     : false;
 
-    
   if (exist === false) {
     await DB.Category.findById(data.id, (error, doc) => {
       if (!error) {
@@ -71,9 +71,8 @@ const updateCategory = async (req, res) => {
       }
     });
   } else {
-    return res.status(422).json({ 
+    return res.status(422).json({
       error: "Duplicate category name is not allowed",
     });
   }
- 
 };

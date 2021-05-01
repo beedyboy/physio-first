@@ -187,6 +187,7 @@ const AdminStatusAction = ({
                     >
                       <option value="Accepted">Accept</option>
                       <option value="Rejected">Reject</option>
+                      <option value="Pending">Pending</option>
                     </Select>
 
                     <FormErrorMessage>

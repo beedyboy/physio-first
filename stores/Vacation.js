@@ -109,6 +109,7 @@ class Vacation {
       this.sending = true;
       this.action = "";
       backend.put("application", data).then((res) => {
+        console.log({res})
         this.sending = false;
         if (res.status === 200) {
           this.getMyApplications();
@@ -119,8 +120,13 @@ class Vacation {
           this.message = res.data.error;
           this.error = true;
         }
-      });
+      }).catch((error) => {
+        this.sending = false;
+        console.log({error})
+      })
     } catch (err) {
+      this.sending = false;
+      console.log({err})
       if (err.response && err.response.status === 500) {
         console.log("There was a problem with the server");
       } else {

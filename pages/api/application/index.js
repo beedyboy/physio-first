@@ -1,6 +1,6 @@
 import DB from "../../../models";
 import connectDB from "../../../services/database";
-import Authenticated from "../../../helpers/Authenticated"; 
+import Authenticated from "../../../helpers/Authenticated";
 connectDB();
 
 export default async (req, res) => {
@@ -27,22 +27,20 @@ const getAllVacations = Authenticated(async (req, res) => {
 
 const updateVacation = Authenticated(async (req, res) => {
   const data = req.body;
-  console.log({data});
+  console.log('app status', data.id)
   try {
-    await DB.Vacation.findById(data.id, (error, doc) => {
-      if (!error) {
-        doc.remark = data.remark;
-        doc.status = data.status;
-        doc.save();
-        res.status(200).json({
-          message: `Application ${status} successfully`,
-        });
-      } else {
-        return res.status(422).json({ error: "Error updating application" });
-      }
-    });
+    let appData = {}; 
+    if (data.remark) appData.remark = data.remark;
+    // if (data.status) appData.status = data.status;
+
+    const record = await DB.Vacation.findByIdAndUpdate(data.id, appData); 
+    if (record) {
+      res.status(200).json({ message: `Application ${status} successfully` });
+    } else {
+      res.status(422).json({ error: "Error updating application" });
+    }
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "internal server error" });
+    console.log({err});
+    res.status(500).json({ error: "internal server error!" });
   }
 });
