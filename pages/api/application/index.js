@@ -26,19 +26,20 @@ const getAllVacations = Authenticated(async (req, res) => {
 });
 
 const updateVacation = Authenticated(async (req, res) => {
-  const data = req.body;
-  console.log('app status', data.id)
+  const data = req.body; 
   try {
     let appData = {}; 
     if (data.remark) appData.remark = data.remark;
-    // if (data.status) appData.status = data.status;
+    if (data.status) appData.status = data.status;
 
-    const record = await DB.Vacation.findByIdAndUpdate(data.id, appData); 
-    if (record) {
-      res.status(200).json({ message: `Application ${status} successfully` });
+    await DB.Vacation.findByIdAndUpdate(data.id, appData, {new:true}, (err, record) => {
+       if (record) {
+      res.status(200).json({ message: `Application ${data.status} successfully` });
     } else {
       res.status(422).json({ error: "Error updating application" });
     }
+    }); 
+   
   } catch (err) {
     console.log({err});
     res.status(500).json({ error: "internal server error!" });

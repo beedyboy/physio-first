@@ -43,6 +43,7 @@ const saveCategory = async (req, res) => {
 };
 const updateCategory = async (req, res) => {
   const data = req.body;
+  console.log(data.name)
   const nameRegex = new RegExp(data.name, "i");
   const check_record = await DB.Category.findOne({ name: nameRegex });
   console.log({ check_record });
@@ -55,9 +56,11 @@ const updateCategory = async (req, res) => {
   if (exist === false) {
     await DB.Category.findById(data.id, (error, doc) => {
       if (!error) {
-        if (check_record.name !== data.name) {
-          doc.name = data.name;
-        }
+        // if (check_record && check_record.name !== data.name) {
+        //   doc.name = data.name;
+        // } 
+         doc.name = data.name;
+       
         doc.description = data.description;
         doc.status = data.status;
         doc.save();
