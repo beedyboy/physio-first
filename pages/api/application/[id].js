@@ -5,30 +5,27 @@ connectDB();
 export default async (req, res) => {
   switch (req.method) {
     case "GET":
-      await LeaveExist(req, res);
+      await getById(req, res);
       break;
     case "DELETE":
-      await removeLeave(req, res);
+      await removeApp(req, res);
       break;
   }
 };
 
-const LeaveExist = async (req, res) => {
+const getById = async (req, res) => {
   try {
-    const { id } = req.query;
-    const nameRegex = new RegExp(id, "i");
-    const check_record = await DB.Leave.findOne({ leave_type: nameRegex });
-    const exist = check_record ? true : false;
-    const message = check_record ? "Duplicate leave not allowed" : null;
-    res.status(200).json({ exist, message });
+    const { id } = req.query; 
+    const check_record = await DB.Vacation.findById(id) 
+    res.status(200).json(check_record);
   } catch (err) {
     console.log(err);
   }
 };
 
-const removeLeave = async (req, res) => {
+const removeApp = async (req, res) => {
   const {  id } = req.query;
-  await DB.Leave.findByIdAndRemove(id, (err, doc) => {
+  await DB.Vacation.findByIdAndRemove(id, (err, doc) => {
     if (err) {
       return res.status(400).send({
         message: "Invalid details",
@@ -36,7 +33,7 @@ const removeLeave = async (req, res) => {
       });
     } else {
       return res.status(200).json({
-        message: "Leave Record Deleted Successfully",
+        message: "Vacation Record Deleted Successfully",
       });
     }
   }).catch((err) => {

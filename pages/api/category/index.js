@@ -42,8 +42,7 @@ const saveCategory = async (req, res) => {
   }
 };
 const updateCategory = async (req, res) => { 
-  const data = req.body; 
-  console.log({ data });
+  const data = req.body;  
   const nameRegex = new RegExp(data.name, "i");
   const check_record = await DB.Category.findOne({ name: nameRegex });  
   const exist = check_record

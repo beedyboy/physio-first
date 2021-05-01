@@ -4,6 +4,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Layout from "../templates/Private/Layout";
 import Help from "../views/admin/Help";
 import Account from "../views/admin/Account";
+import Vacation from "../views/admin/Vacation";
 
 function admin(props) {
   return (
@@ -16,7 +17,7 @@ function admin(props) {
           <TabList>
             <Tab>Help</Tab>
             <Tab>Staff</Tab>
-            <Tab>Vacations</Tab>
+            <Tab>Vacation</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -26,7 +27,7 @@ function admin(props) {
               <Account />
             </TabPanel>
             <TabPanel>
-              <Account />
+              <Vacation />
             </TabPanel>
           </TabPanels>
         </Tabs>

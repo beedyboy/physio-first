@@ -8,8 +8,7 @@ const DesktopLayout = (props) => {
   return (
     <Fragment>
       <Flex w="100%">
-        {/* <Box w="250px" h="100%" top="0" bottom="0" as="aside" bg="tomato"> */}
-        <Box
+         <Box
           as="nav"
           aria-label="Main Navigation"
           pos="sticky"

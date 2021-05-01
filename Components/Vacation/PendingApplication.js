@@ -1,29 +1,37 @@
 import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
-import { IconButton, Wrap, WrapItem } from "@chakra-ui/react";
 import PerfectScrollBar from "react-perfect-scrollbar";
-import { MdEdit, MdDelete } from "react-icons/md";
+import { IconButton, Wrap, WrapItem } from "@chakra-ui/react";
+import Link from "next/link";
 
-const CategoryList = ({ data, setMode, removeData, rowData, toggle }) => {
+const PendingApplication = ({ data, removeData, rowData, toggle }) => {
   const columns = [
     {
-      name: "Name",
-      selector: "name",
+      name: "Type",
+      selector: "leave.leave_type",
       sortable: true,
     },
     {
-      name: "Description",
-      selector: "description",
-      wrap: true,
+      name: "Fullname",
       sortable: true,
-      hidden: "md",
+      cell: (row) => (
+        <Fragment>
+          <Link href={`/staff/${row._id}`}>
+            <a> {row.staff.firstname + " " + row.staff.lastname}</a>
+          </Link>
+        </Fragment>
+      ),
     },
     {
-      name: "Created",
-      selector: "createdAt",
+      name: "Start date",
+      selector: "leave_start_date",
       sortable: true,
-      hidden: 'md',
     },
+    {
+      name: "End date",
+      selector: "leave_end_date",
+      sortable: true,
+    }, 
     {
       name: "Actions",
       sortable: true,
@@ -33,7 +41,7 @@ const CategoryList = ({ data, setMode, removeData, rowData, toggle }) => {
             <IconButton
               variant="outline"
               colorScheme="teal"
-              aria-label="Edit Category"
+              aria-label="Edit Vacation"
               fontSize="20px"
               icon={<MdEdit />}
               onClick={(e) => editData(e, row)}
@@ -43,11 +51,11 @@ const CategoryList = ({ data, setMode, removeData, rowData, toggle }) => {
             <IconButton
               variant="outline"
               colorScheme="teal"
-              aria-label="Delete Category"
+              aria-label="Delete Vacation"
               fontSize="20px"
               icon={<MdDelete />}
               onClick={(key) => {
-                if (window.confirm("Delete this category?")) {
+                if (window.confirm("Delete this Vacation?")) {
                   deleteData(row._id);
                 }
               }}
@@ -58,20 +66,18 @@ const CategoryList = ({ data, setMode, removeData, rowData, toggle }) => {
     },
   ];
   const editData = (e, row) => {
-    e.persist();
-    setMode("Edit");
+    e.persist(); 
     rowData(row);
     toggle(true);
   };
   const deleteData = (id) => {
     removeData(id);
   };
-
   return (
     <Fragment>
       <PerfectScrollBar>
         <DataTable
-          title="Category List"
+          title="Pending List"
           columns={columns}
           data={data}
           pagination={true}
@@ -82,4 +88,4 @@ const CategoryList = ({ data, setMode, removeData, rowData, toggle }) => {
   );
 };
 
-export default CategoryList;
+export default PendingApplication;
