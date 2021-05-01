@@ -19,13 +19,12 @@ import { MdAdd } from "react-icons/md";
 import ACL from "../../Components/Account/ACL";
 import AcceptedApplications from "../../Components/Vacation/AcceptedApplications";
 import PendingApplication from "../../Components/Vacation/PendingApplication";
-import CancelledApplication from "../../Components/Vacation/CancelledApplication";
-import ModalWidget from "../../widgets/ModalWidget";
-import AccountLogin from "../../Components/Account/AccountLogin";
+import CancelledApplication from "../../Components/Vacation/CancelledApplication"; 
+import AdminStatusAction from "../../Components/Vacation/AdminStatusAction"; 
 const Vacation = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [mode, setMode] = useState(""); 
+  const [mode, setMode] = useState("");
   const [rowData, setRowData] = useState();
   const { vacationStore } = useMobxStores();
   const {
@@ -35,13 +34,14 @@ const Vacation = () => {
     message,
     removed,
     sending,
+    adminUpdate,
     delVacation,
     pendingApplications,
     approvedApplications,
     rejectedApplications,
     resetProperty,
     getApplications,
-  } = vacationStore; 
+  } = vacationStore;
 
   useEffect(() => {
     getApplications();
@@ -63,8 +63,6 @@ const Vacation = () => {
       resetProperty("message", "");
     };
   }, [removed]);
-
-   
 
   return (
     <Fragment>
@@ -89,7 +87,7 @@ const Vacation = () => {
               <TabPanel>
                 <PendingApplication
                   data={pendingApplications}
-                  // updateApp={updateApp}
+                  
                   toggle={onOpen}
                   removeData={delVacation}
                   rowData={setRowData}
@@ -108,6 +106,17 @@ const Vacation = () => {
           </Tabs>
         </Box>
       </Flex>
+      <AdminStatusAction  
+        open={isOpen}
+        action={action}
+        saved={saved}
+        error={error} 
+        message={message}
+        sending={sending} 
+        handleClose={onClose}
+        initial_data={rowData}
+        reset={resetProperty} 
+        updateApp={adminUpdate} />
     </Fragment>
   );
 };

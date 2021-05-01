@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import { IconButton, Wrap, WrapItem } from "@chakra-ui/react";
+import { MdEdit, MdDelete } from "react-icons/md";
 import Link from "next/link";
 
 const PendingApplication = ({ data, removeData, rowData, toggle }) => {
@@ -41,7 +42,7 @@ const PendingApplication = ({ data, removeData, rowData, toggle }) => {
             <IconButton
               variant="outline"
               colorScheme="teal"
-              aria-label="Edit Vacation"
+              aria-label="Edit Status"
               fontSize="20px"
               icon={<MdEdit />}
               onClick={(e) => editData(e, row)}

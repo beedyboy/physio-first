@@ -27,6 +27,7 @@ const schema = {
 };
 const AdminStatusAction = ({
   open,
+  action,
   reset,
   saved,
   error,
@@ -68,7 +69,7 @@ const AdminStatusAction = ({
         },
       }));
     };
-  }, [initial_data, mode]);
+  }, [initial_data]);
   useEffect(() => {
     const errors = dataHero.validate(schema, values);
     setFormState((formState) => ({
@@ -79,7 +80,7 @@ const AdminStatusAction = ({
   }, [values]);
 
   useEffect(() => {
-    if (saved === true) {
+    if (saved === true && action === "adminUpdate") {
       toast({
         title: "Server Response.",
         remark: message,
@@ -93,11 +94,12 @@ const AdminStatusAction = ({
     }
     return () => {
       reset("saved", false);
+      reset("action", "");
       reset("message", "");
       resetForm();
       handleClose();
     };
-  }, [saved]);
+  }, [saved, action]);
 
   useEffect(() => {
     if (error === true) {
@@ -172,7 +174,7 @@ const AdminStatusAction = ({
                   <FormControl
                     isRequired
                     my="3"
-                    isInvalid={hasError("status") || exist}
+                    isInvalid={hasError("status")}
                   >
                     <FormLabel htmlFor="status">Status</FormLabel>
                     <Select

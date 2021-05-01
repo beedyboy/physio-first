@@ -27,6 +27,7 @@ const getAllVacations = Authenticated(async (req, res) => {
 
 const updateVacation = Authenticated(async (req, res) => {
   const data = req.body;
+  console.log({data});
   try {
     await DB.Vacation.findById(data.id, (error, doc) => {
       if (!error) {

@@ -31,6 +31,7 @@ class Vacation {
       getApplications: action,
       getMyApplications: action,
       getApplicationById: action,
+      adminUpdate: action,
       delVacation: action,
       resetProperty: action,
       pendingApplications: computed,
@@ -72,7 +73,7 @@ class Vacation {
         }
       });
     } catch (err) {
-      if (err.response.status === 500) {
+      if (err.response && err.response.status === 500) {
         console.log("There was a problem with the server");
       } else {
         console.log(err.response.data.msg);
@@ -103,6 +104,30 @@ class Vacation {
     }
   };
 
+  adminUpdate = (data) => {
+    try {
+      this.sending = true;
+      this.action = "";
+      backend.put("application", data).then((res) => {
+        this.sending = false;
+        if (res.status === 200) {
+          this.getMyApplications();
+          this.message = res.data.message;
+          this.action = "adminUpdate";
+          this.saved = true;
+        } else {
+          this.message = res.data.error;
+          this.error = true;
+        }
+      });
+    } catch (err) {
+      if (err.response && err.response.status === 500) {
+        console.log("There was a problem with the server");
+      } else {
+        console.log(err.response.data.msg);
+      }
+    }
+  };
   delVacation = (id) => {
     try {
       this.removed = false;
