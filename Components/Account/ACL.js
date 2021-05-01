@@ -136,7 +136,7 @@ const AccountLogin = ({
       toast({
         title: "Server Response.",
         description: message,
-        status: "warning",
+        status: "success",
         duration: 9000,
         isClosable: true,
         position: "top-right",

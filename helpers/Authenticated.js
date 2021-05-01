@@ -4,13 +4,15 @@ import jwt from 'jsonwebtoken'
 function Authenticated(icomponent){
     return (req,res)=>{
         const {authorization} = req.headers;
-        console.log({authorization})
-        if(!authorization){
+       const bearer =  authorization.split(" ")[1];
+            
+        if(!bearer){
             return res.status(401).json({error:"you must logged in"})
         }
         try{
-              const {userId} = jwt.verify(authorization,process.env.SECRET_KEY) 
-              req.userId = userId
+              const {_id} = jwt.verify(bearer,process.env.SECRET_KEY) 
+            //   console.log({_id})
+              req.userId = _id
               return icomponent(req,res)
         }catch(err){
             console.log(err)

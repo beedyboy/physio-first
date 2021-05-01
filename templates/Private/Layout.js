@@ -70,9 +70,9 @@ if(loggedIn === false) {
       onClose();
     }
   }, [showOnBreakpoint]);
-  // if (loggedIn) {
-  //   return <Redirect to="/auth/login" />;
-  // }
+  if (loggedIn) {
+    return <Redirect to="/auth/login" />;
+  }
   return (
     <Fragment>
       {showOnBreakpoint ? (

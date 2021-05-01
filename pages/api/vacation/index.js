@@ -1,5 +1,7 @@
 import DB from "../../../models";
 import connectDB from "../../../services/database";
+import Authenticated from "../../../helpers/Authenticated";
+import Assistant from "../../../helpers/assistant";
 connectDB();
 
 export default async (req, res) => {
@@ -9,71 +11,41 @@ export default async (req, res) => {
       break;
     case "POST":
       await saveVacation(req, res);
-      break;
-    case "PUT":
-      await updateVacation(req, res);
-      break;
+      break; 
   }
 };
 
-const getAllVacations = async (req, res) => {
+const getAllVacations = Authenticated(async (req, res) => {
   try {
-    const categories = await DB.Vacation.find({});
-    res.status(200).json(categories);
+    const { userId } = req;
+    const vacations = await DB.Vacation.find({staff: userId}).populate('leave', 'leave_type');
+    // console.log({vacations})
+    res.status(200).json(vacations);
   } catch (err) {
     console.log(err);
   }
-};
+});
 
-const saveVacation = async (req, res) => {
-  const { Vacation_type, allowed_days, description } = req.body;
+const saveVacation = Authenticated(async (req, res) => {
+  const { leave, allowed_days, description, leave_start_date, leave_end_date } = req.body;
+  const { userId } = req;
   try {
-    if (!Vacation_type) {
+    if (!leave) {
       return res.status(422).json({ error: "Please add all the fields" });
     }
-    const Vacation = await DB.Vacation({
-      Vacation_type,
-      allowed_days,
+    const days = await Assistant.getDaysDiff(leave_start_date, leave_end_date);
+    await DB.Vacation({
+      days,
+      leave,
       description,
+      allowed_days,
+      staff: userId,
+      leave_end_date,
+      leave_start_date,
     }).save();
-    res.status(201).json({ message: "New Vacation type added successfully" });
+    res.status(201).json({ message: "New Vacation application sent successfully" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "internal server error" });
   }
-};
-const updateVacation = async (req, res) => {
-  const data = req.body;
-  const Vacation_typeRegex = new RegExp(data.Vacation_type, "i");
-  const check_record = await DB.Vacation.findOne({ Vacation_type: Vacation_typeRegex });
-  const exist = check_record
-    ? check_record && check_record._id.toString() === data.id
-      ? false
-      : true
-    : false;
-
-  if (exist === false) {
-    await DB.Vacation.findById(data.id, (error, doc) => {
-      if (!error) {
-        if (check_record.Vacation_type !== data.Vacation_type) {
-          doc.Vacation_type = data.Vacation_type;
-        }
-        doc.allowed_days = data.allowed_days;
-        doc.description = data.description;
-        doc.status = data.status;
-        doc.save();
-        res.status(200).json({
-          exist,
-          check_record,
-          message: "Vacation updated successfully",
-        });
-      } else {
-        return res.status(422).json({ error: "Error updating Vacation" });
-      }
-    });
-  } else {
-    return res.status(422).json({
-      error: "Duplicate Vacation Vacation_type is not allowed",
-    });
-  }
-};
+}); 

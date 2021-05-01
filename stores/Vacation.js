@@ -10,6 +10,7 @@ class Vacation {
   applications = [];
   myApplications = [];
   message = "";
+  action = "";
 
   constructor() {
     makeObservable(this, {
@@ -17,6 +18,7 @@ class Vacation {
       error: observable,
       message: observable,
       sending: observable,
+      action: observable,
       loading: observable,
       history: observable,
       application: observable,
@@ -33,6 +35,7 @@ class Vacation {
   getMyApplications = () => {
     this.loading = true;
     backend.get("vacation").then((res) => {
+      console.log(res.data)
       this.myApplications = res.data;
       this.loading = false;
     });
@@ -49,6 +52,7 @@ class Vacation {
   createVacation = (data) => {
     try {
       this.sending = true;
+      this.action = "";
       backend.post("vacation", data).then((res) => {
         this.sending = false;
         if (res.status === 201) {

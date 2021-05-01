@@ -6,6 +6,7 @@ import { useMobxStores } from "../stores/stores";
 import MyVacations from "../Components/Vacation/MyVacations";
 import MyVacationForm from "../Components/Vacation/MyVacationForm";
 import { MdAdd } from "react-icons/md"
+import { observer } from "mobx-react-lite";
 
 function Vacation(props) {
   const { leaveStore, vacationStore } = useMobxStores();
@@ -74,4 +75,4 @@ function Vacation(props) {
   );
 }
 
-export default Vacation;
+export default observer(Vacation);

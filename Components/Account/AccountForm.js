@@ -173,7 +173,7 @@ const AccountForm = ({
       resetForm();
       handleClose();
     };
-  }, [saved]);
+  }, [saved, action]);
 
   useEffect(() => {
     if (error === true && action === "newStaffError") {
