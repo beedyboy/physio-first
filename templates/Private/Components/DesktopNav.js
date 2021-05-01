@@ -7,7 +7,7 @@ const DesktopNav = (props) => {
     <Fragment>
       <Flex w="100%" h="60px" align="center" justifyContent="space-between">
         <Box>
-          <Heading ml={1} mb={4}>{pathname}</Heading>
+          <Heading color="white" ml={1} mb={4}>{pathname}</Heading>
         </Box>
         <Avatar size="md" name={user} src="https://bit.ly/kent-c-dodds" />
       </Flex>
