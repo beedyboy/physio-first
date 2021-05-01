@@ -77,14 +77,20 @@ const AccountList = ({
               >
                 Set Role
               </MenuItem>
-              {row.can_login ? null : (
+              {/* {row.can_login ? null : (
                 <MenuItem
                   onClick={(e) => setActionData(e, row, "login")}
                   icon={<CgLogIn />}
                 >
                   Set Login
                 </MenuItem>
-              )}
+              )} */}
+              <MenuItem
+                  onClick={(e) => setActionData(e, row, "login")}
+                  icon={<CgLogIn />}
+                >
+                  Set Login
+                </MenuItem>
               <MenuItem
                 onClick={(e) => setActionData(e, row, "onboard")}
                 icon={<GrIntegration />}

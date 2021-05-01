@@ -28,7 +28,16 @@ const Redirect = ({ to }) => {
 };
 const Layout = (props) => { 
   const loggedIn = Utility.get("staff_token") ? false : true;
+ const user = Utility.get("lastname") ?? "guest";
  
+let access;
+if(loggedIn === false) {
+  const obj = Utility.get("acl");
+  const acl = JSON.parse(obj);
+  access = acl.branch.view;
+  // console.log({access})
+}
+// console.log({user})
   const { pathname } = useRouter();
   const company = "Physio First"
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -64,6 +73,7 @@ const Layout = (props) => {
       {showOnBreakpoint ? (
         <MobileLayout
           pathname={pathname}
+          user={user}
           isOpen={isOpen}
           onOpen={onOpen}
           onClose={onClose}
@@ -74,6 +84,7 @@ const Layout = (props) => {
       ) : (
         <DesktopLayout
           pathname={pathname}
+          user={user}
           routes={routes}
           company={company}
           {...props}

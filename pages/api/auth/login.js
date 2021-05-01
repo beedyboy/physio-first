@@ -37,7 +37,10 @@ export default async (req, res) => {
 
         res.status(201).json({
           message: "Login successful",
-          data: { token, user },
+          firstname: user.firstname,
+          lastname: user.lastname,
+          acl: user.acl[0],
+          token
         });
       } catch (error) {
         return res.status(401).json({ error: "email or password dont match" });

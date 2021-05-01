@@ -62,18 +62,21 @@ class AuthStore {
 
   login = (data) => {
     this.sending = true;
-    this.error = null;
+    this.error = false;
+    this.isAuthenticated = false;
     backend.post("auth/login", data).then((res) => {
       this.sending = false;
       if (res.status === 201) {
-        Utility.save("name", res.data.user.lastname);
+        // console.log(res.data.acl)
+        Utility.save("name", res.data.lastname);
         Utility.save("staff_token", res.data.token);
-        Utility.save("acl", res.data.user.acl);
+        Utility.save("acl", JSON.stringify(res.data.acl));
         this.message = res.data.message;
         this.isAuthenticated = true;
       } else {
        
         this.message = res.data.error;
+        this.isAuthenticated = false;
       }
     });
   };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import dataHero from "data-hero";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { observer } from "mobx-react-lite";
 import {
   Box,
   Flex,
@@ -83,7 +84,7 @@ function Login() {
   };
  
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated === true) { 
       toast({
         title: "Server Response.",
         description: message,
@@ -95,7 +96,7 @@ function Login() {
       router.push("/");
     }
     return () => {
-      resetProperty("isAuthenticated", false);
+      // resetProperty("isAuthenticated", false);
       resetProperty("message", "");
     };
   }, [isAuthenticated]);
@@ -105,7 +106,7 @@ function Login() {
   return (
     <>
       <Head>
-        <title>Core App | Login</title>
+        <title> Login</title>
       </Head>
       <Flex h="100vh" w="100vw" justify="center" align="center">
         <Box align="center">
@@ -210,4 +211,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default observer(Login);
