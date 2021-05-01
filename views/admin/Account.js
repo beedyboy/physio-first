@@ -37,7 +37,7 @@ const Account = () => {
     resetProperty,
     getUsers,
     addStaff,
-    addStaff,
+    updateStaff,
     setRole,
      removeStaff,
   } = userStore;
