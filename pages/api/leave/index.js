@@ -18,8 +18,8 @@ export default async (req, res) => {
 
 const getAllLeaves = async (req, res) => {
   try {
-    const categories = await DB.Leave.find({});
-    res.status(200).json(categories);
+    const leaves = await DB.Leave.find({});
+    res.status(200).json(leaves);
   } catch (err) {
     console.log(err);
   }

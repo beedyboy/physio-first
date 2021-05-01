@@ -31,7 +31,7 @@ const saveDepartment = async (req, res) => {
     if (!name) {
       return res.status(422).json({ error: "Please add all the fields" });
     }
-    const department = await DB.Department({
+      await DB.Department({
       name,
       description,
     }).save();

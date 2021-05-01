@@ -1,7 +1,6 @@
 import DB from "../../../models";
 import connectDB from "../../../services/database";
-import Authenticated from "../../../helpers/Authenticated";
-import Assistant from "../../../helpers/assistant";
+import Authenticated from "../../../helpers/Authenticated"; 
 connectDB();
 
 export default async (req, res) => {

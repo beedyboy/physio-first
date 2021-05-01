@@ -2,8 +2,8 @@ import DB from "../../../models";
 import connectDB from "../../../services/database";
 import Authenticated from "../../../helpers/Authenticated";
 import Assistant from "../../../helpers/assistant";
-connectDB();
-
+import mailer from '../../../helpers/mailer';
+connectDB(); 
 export default async (req, res) => {
   switch (req.method) {
     case "GET":
@@ -43,6 +43,16 @@ const saveVacation = Authenticated(async (req, res) => {
       leave_end_date,
       leave_start_date,
     }).save();
+       await DB.User.findById(userId, (error, doc) => {
+        if (!error) {
+          const data = {email:doc.email, subject: process.env.CLIENT_EMAIL_SUBJECT, message: "We have received your application. The final decision will be sent to you soon" }
+          mailer.sendEmail(data)
+      
+        }
+      }).catch((err) => {
+        res.status(500).json({ error: "internal server error" });
+      })
+    
     res.status(201).json({ message: "New Vacation application sent successfully" });
   } catch (err) {
     console.log(err);
