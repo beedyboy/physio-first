@@ -9,6 +9,8 @@ import Department from "./Department";
 import Marketing from "./Marketing";
 import SubCategory from "./SubCategory";
 import Leave from "./Leave";
+import Auth from "./Auth";
+import Vacation from "./Vacation";
 
 const isServer = typeof window === "undefined";
 // enableStaticRendering(isServer);
@@ -24,6 +26,8 @@ export function getStores(
     marketingStore: {},
     subCategoryStore: {},
     leaveStore: {},
+    authStore: {},
+    vacationStore: {},
   }
 ) {
   if (isServer) {
@@ -35,6 +39,8 @@ export function getStores(
       marketingStore: new Marketing(initialData.marketingStore),
       subCategoryStore: new SubCategory(initialData.subCategoryStore),
       leaveStore: new Leave(initialData.leaveStore),
+      authStore: new Auth(initialData.authStore),
+      vacationStore: new Vacation(initialData.vacationStore),
     };
   }
   if (!store) {
@@ -46,6 +52,8 @@ export function getStores(
       marketingStore: new Marketing(initialData.marketingStore),
       subCategoryStore: new SubCategory(initialData.subCategoryStore),
       leaveStore: new Leave(initialData.leaveStore),
+      authStore: new Auth(initialData.authStore),
+      vacationStore: new Vacation(initialData.vacationStore),
     };
   }
   return store;

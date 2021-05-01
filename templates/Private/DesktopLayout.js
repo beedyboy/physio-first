@@ -1,13 +1,13 @@
 import React, { Fragment } from "react";
-import { Box, Flex, Center, Heading, Container } from "@chakra-ui/react";
+import { Box, Flex, Center, Heading, Container, Divider } from "@chakra-ui/react";
 import Menus from "./Components/Menus";
 import DesktopNav from "./Components/DesktopNav";
 
 const DesktopLayout = (props) => {
-  const { company, pathname, routes, children } = props;
+  const { company, pathname, user, routes, children } = props;
   return (
     <Fragment>
-      <Flex>
+      <Flex w="100%">
         {/* <Box w="250px" h="100%" top="0" bottom="0" as="aside" bg="tomato"> */}
         <Box
           as="nav"
@@ -23,20 +23,22 @@ const DesktopLayout = (props) => {
           backgroundColor="brand.white"
         >
           <Center>
-            <Heading as="h3" mb={4} color="nav.50">
+            <Heading as="h3" mb={4} color="nav.50" mt={3}>
               {company}
             </Heading>
           </Center>
-          <Box d="flex" justifyContent="space-around" mt={10}>
+
+          <Divider colorScheme="blackAlpha" />
+          <Box d="flex" justifyContent="space-around" mt={8}>
             <Menus routes={routes} company={company} />
           </Box>
         </Box>
         <Flex flex="1" direction="column" as="section">
           <Box bg="nav.50" d="flex" w="100%">
-            <DesktopNav pathname={pathname} />
+            <DesktopNav user={user} pathname={pathname} />
           </Box>
-          <Box pt="28px" pb="32px" mt="5px">
-            <Container maxW="xl">{children}</Container>
+          <Box pt="28px" pb="32px" mt="5px"  w="100%">
+            <Container  maxW="container.xl">{children}</Container>
           </Box>
         </Flex>
       </Flex>

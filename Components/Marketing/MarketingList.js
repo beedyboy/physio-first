@@ -16,13 +16,13 @@ const MarketingList = ({ data, setMode, removeData, rowData, toggle }) => {
       selector: "description",
       wrap: true,
       sortable: true,
-      hidden: "sm",
+      hidden: "md",
     },
     {
       name: "Created",
       selector: "createdAt",
       sortable: true,
-      right: true,
+      hidden: 'md',
     },
     {
       name: "Actions",

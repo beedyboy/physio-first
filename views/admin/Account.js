@@ -8,18 +8,21 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
-import AccountList from "../../Components/ Account/ AccountList";
 import { useMobxStores } from "../../stores/stores";
-import AccountForm from "../../Components/ Account/ AccountForm";
 
 import { MdAdd } from "react-icons/md";
+import ACL from "../../Components/Account/ACL";
+import AccountForm from "../../Components/Account/AccountForm";
+import AccountList from "../../Components/Account/AccountList";
+import ModalWidget from "../../widgets/ModalWidget";
+import AccountLogin from "../../Components/Account/AccountLogin";
 const Account = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
   const [modal, setModal] = useState({
-    login: false, 
-    role: false
+    login: false,
+    role: false,
   });
   const [rowData, setRowData] = useState();
   const { userStore, branchStore } = useMobxStores();
@@ -28,6 +31,7 @@ const Account = () => {
     error,
     saved,
     exist,
+    action,
     message,
     removed,
     sending,
@@ -39,9 +43,10 @@ const Account = () => {
     addStaff,
     updateStaff,
     setRole,
-     removeStaff,
+    setLogin,
+    removeStaff,
   } = userStore;
- const { role } = modal;
+  const { role, login } = modal;
 
   useEffect(() => {
     getBranches();
@@ -73,15 +78,9 @@ const Account = () => {
   const toggleModal = (id) => {
     setModal((state) => ({
       ...state,
-      [id]: !modal[id];
-    }))
-    if(acl === false) { 
-    setACL(true);  
-    } else {
-      setACL(false);
-      setId(0);  
-    }
-  }
+      [id]: !modal[id],
+    }));
+  };
 
   return (
     <Fragment>
@@ -109,14 +108,16 @@ const Account = () => {
             data={users}
             setMode={setMode}
             toggle={onOpen}
-            removeData={ removeStaff}
+            removeData={removeStaff}
             rowData={setRowData}
+            setModal={toggleModal}
           />
         </Box>
       </Flex>
       <AccountForm
         mode={mode}
         open={isOpen}
+        action={action}
         saved={saved}
         error={error}
         exist={exist}
@@ -131,17 +132,44 @@ const Account = () => {
         addStaff={addStaff}
         updateStaff={updateStaff}
       />
-      <ModalWidget id="role"  toggle={toggleModal}>
-        <ACL open={modal.role}
+      <ModalWidget
+        title="Assign Roles"
+        open={role}
+        id="role"
+        toggle={toggleModal}
+      >
+        <ACL
           saved={saved}
-        error={error}
-        exist={exist}
-        message={message}
-        sending={sending} 
-        reset={resetProperty} assignRole={setRole} toggle={toggleModal} initial_data={rowData} />
+          error={error}
+          action={action}
+          message={message}
+          sending={sending}
+          reset={resetProperty}
+          assignRole={setRole}
+          toggle={toggleModal}
+          initial_data={rowData}
+        />
+      </ModalWidget>
+      <ModalWidget
+        title="Set Login"
+        open={login}
+        id="login"
+        toggle={toggleModal}
+      >
+        <AccountLogin
+          saved={saved}
+          error={error}
+          message={message}
+          sending={sending}
+          reset={resetProperty}
+          action={action}
+          createLogin={setLogin}
+          toggle={toggleModal}
+          initial_data={rowData}
+        />
       </ModalWidget>
     </Fragment>
   );
-}
+};
 
 export default observer(Account);

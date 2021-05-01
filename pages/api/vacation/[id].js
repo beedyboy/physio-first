@@ -5,31 +5,30 @@ connectDB();
 export default async (req, res) => {
   switch (req.method) {
     case "GET":
-      await userExist(req, res);
+      await LeaveExist(req, res);
       break;
     case "DELETE":
-      await removeUser(req, res);
+      await removeLeave(req, res);
       break;
   }
 };
 
-const userExist = async (req, res) => {
+const LeaveExist = async (req, res) => {
   try {
-    const { id: email } = req.query; 
-    const regex = new RegExp(email, "i");
-    const check_record = await DB.User.findOne({email: regex
-    }); 
+    const { id } = req.query;
+    const nameRegex = new RegExp(id, "i");
+    const check_record = await DB.Leave.findOne({ leave_type: nameRegex });
     const exist = check_record ? true : false;
-    const message = check_record ? "Duplicate record not allowed" : null;
+    const message = check_record ? "Duplicate leave not allowed" : null;
     res.status(200).json({ exist, message });
   } catch (err) {
     console.log(err);
   }
 };
 
-const removeUser = async (req, res) => {
-  const { id } = req.query;
-  await DB.User.findByIdAndRemove(id, (err, doc) => {
+const removeLeave = async (req, res) => {
+  const {  id } = req.query;
+  await DB.Leave.findByIdAndRemove(id, (err, doc) => {
     if (err) {
       return res.status(400).send({
         message: "Invalid details",
@@ -37,7 +36,7 @@ const removeUser = async (req, res) => {
       });
     } else {
       return res.status(200).json({
-        message: "Record Deleted Successfully",
+        message: "Leave Record Deleted Successfully",
       });
     }
   }).catch((err) => {

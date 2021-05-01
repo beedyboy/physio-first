@@ -1,42 +1,45 @@
 import { makeObservable, observable, action } from "mobx";
-import backend from "../services/APIService"; 
-import Utility from "../services/UtilityService";
+import backend from "../services/APIService";
+// import Utility from "../services/UtilityService";
 
 class User {
   user = [];
-  error = false; 
+  error = false;
   exist = false;
   saved = false;
   loading = false;
   removed = false;
   sending = false;
-  checking = false; 
+  checking = false;
+  message = "";
   users = [];
+  action = null;
+
 
   constructor() {
     makeObservable(this, {
-      user: observable,
       message: observable,
-      sending: observable, 
-      removed: observable, 
-      checking: observable,  
+      action: observable, 
+      user: observable, 
+      sending: observable,
+      removed: observable,
+      checking: observable,
       error: observable,
       exist: observable,
-      saved: observable,  
+      saved: observable,
       users: observable,
-      login: action,
-      logout: action,
+      setLogin: action, 
       addStaff: action,
       getUsers: action,
       removeStaff: action,
-      updateStaff: action, 
+      updateStaff: action,
       resetProperty: action,
       confirmEmail: action,
-      setRole: action,
-      loginReset: action,
+      setRole: action, 
     });
   }
 
+  
   getUsers = () => {
     this.loading = true;
     try {
@@ -44,39 +47,41 @@ class User {
         .get("account")
         .then((res) => {
           this.loading = false;
-          if (res.data.status) {
+          if (res.status === 200) {
             this.error = false;
-            this.users = res.data.data;
-            console.log("store", res.data.data);
+            this.users = res.data; 
           }
         })
         .catch((err) => {
+          console.log({err})
           this.loading = false;
           this.error = true;
-          this.errMesssage = err.response
-            ? "faild to load FAQs"
+          this.message = err.response
+            ? "failed to load users"
             : "Network Connection seems slow.";
         });
     } catch (error) {
+      console.log({error})
       console.log(error.response);
     }
   };
 
-  confirmEmail = (email) => { 
+  confirmEmail = (email) => {
     try {
       this.checking = true;
       this.exist = false;
       backend.get(`account/${email}`).then((res) => {
         this.checking = false;
-        if (res.status === 200) { 
+        if (res.status === 200) {
           this.message = res.data.message;
-          this.exist = res.data.exist; 
+          this.exist = res.data.exist;
         } else {
           this.message = res.data.error;
           this.error = true;
         }
       });
     } catch (err) {
+      this.checking = false;
       if (err.response.status === 500) {
         console.log("There was a problem with the server");
       } else {
@@ -84,60 +89,7 @@ class User {
       }
     }
   };
-
-  login = (data) => {
-    this.loading = true;
-    backend
-      .post("admins/login", data)
-      .then((res) => {
-        this.loading = false;
-        if (res.data.status) { 
-          this.successMsg = "Log In Successful";
-          this.user = res.data.data.user;
-          Utility.save("token", res.data.data.token);
-          Utility.save("admin", res.data.data.user.email);
-          console.log(res.data.data);
-        }
-      })
-      .catch((err) => {
-        this.error = true;
-        this.loading = false;
-        this.errMesssage = "Invalid login details!";
-        console.log(this.errMesssage);
-      });
-  };
-
-  loginReset = (data) => {
-    this.loading = true;
-    this.saved = false;
-    backend
-      .post("admins/reset", data)
-      .then((res) => {
-        this.loading = false;
-        if (res.data.status) {
-          this.saved = true;
-          this.successMsg = res.data.message;
-        }
-      })
-      .catch((err) => {
-        this.error = true;
-        this.loading = false;
-        this.saved = false;
-        this.errMesssage = "Invalid login details!";
-        console.log(this.errMesssage);
-      });
-  };
-
-  logout = () => {
-    this.loading = true;
-    try {
-      this.loading = false;
-      this.error = false;
-      this.successMsg = "Logout successful.";
-      this.resetAction();
-      Utility.clear();
-    } catch (error) {}
-  };
+ 
  
   addStaff = (data) => {
     try {
@@ -146,73 +98,117 @@ class User {
         this.sending = false;
         if (res.status === 201) {
           this.getUsers();
-          this.message = res.data.message;
+          this.message = res.data.message; 
+          this.action = "newStaff"
           this.saved = true;
         } else {
+          this.action = "newStaffError"
           this.message = res.data.error;
           this.error = true;
         }
+      }) .catch((err) => {
+        this.sending = false;
+        console.log({ err });
+        if (err && err.response) {
+          console.log("status", err.response.status);
+        }
       });
-    } catch (err) {
-      if (err.response.status === 500) {
-        console.log("There was a problem with the server");
-      } else {
-        console.log(err.response.data.msg);
-      }
-    }
+  } catch (error) {
+    this.sending = false;
+    console.log({ error });
+  }
   };
- 
+
   updateStaff = (data) => {
     try {
       this.sending = true;
-      backend.put("account", data).then((res) => {
-        this.sending = false;
-        if (res.status === 200) {
-          this.getUsers();
-          this.message = res.data.message;
-          this.saved = true;
-        } else {
-          this.message = res.data.error;
-          this.error = true;
-        }
-      }).catch((err) => {
-        this.sending = false;
-        console.log({err});
-      if(err && err.response) {
-      console.log('status', err.response.status)
-      }
-      })
+      backend
+        .put("account", data)
+        .then((res) => {
+          this.sending = false;
+          if (res.status === 200) {
+            this.action = "newStaff"
+            this.getUsers();
+            this.message = res.data.message;
+            this.saved = true;
+          } else {
+            this.action = "newStaffError"
+            this.message = res.data.error;
+            this.error = true;
+          }
+        })
+        .catch((err) => {
+          this.sending = false;
+          console.log({ err });
+          if (err && err.response) {
+            console.log("status", err.response.status);
+          }
+        });
     } catch (error) {
-      
       this.sending = false;
-      console.log({error});
+      console.log({ error });
     }
   };
 
   setRole = (data) => {
-    try {
+    try { 
       this.sending = true;
-      backend.post("account/auth", data).then((res) => {
-        this.sending = false;
-        if (res.status === 200) {
-          this.getUsers();
-          this.message = res.data.message;
-          this.saved = true;
-        } else {
-          this.message = res.data.error;
-          this.error = true;
-        }
-      }).catch((err) => {
-        this.sending = false;
-        console.log({err});
-      if(err && err.response) {
-      console.log('status', err.response.status)
-      }
-      })
+      backend
+        .post("account/auth", data)
+        .then((res) => {
+          this.sending = false;
+          if (res.status === 200) {
+            this.getUsers();
+            this.message = res.data.message;
+            this.action = "hasRole"
+            this.saved = true;
+          } else {
+            this.action = "hasRoleError"
+            this.message = res.data.error;
+            this.error = true;
+          }
+        })
+        .catch((err) => {
+          this.sending = false;
+          console.log({ err });
+          if (err && err.response) {
+            console.log("status", err.response.status);
+          }
+        });
     } catch (error) {
-      
       this.sending = false;
-      console.log({error});
+      console.log({ error });
+    }
+  };
+
+  setLogin= (data) => {
+    try { 
+      this.sending = true;
+      backend
+        .put("account/auth", data)
+        .then((res) => {
+          this.sending = false;
+          if (res.status === 200) {
+            this.getUsers();
+            this.message = res.data.message;
+            this.action = "hasLogin"
+            this.saved = true;
+          } else {
+            this.action = "hasLoginError"
+            this.message = res.data.error;
+            this.error = true;
+          }
+        })
+        .catch((err) => {
+          this.sending = false;
+          console.log({ err });
+          if (err && err.response) {
+            console.log("status", err.response.status);
+          }
+        });
+    } catch (error) {
+      this.sending = false;
+      console.log({ error });
     }
   };
   removeStaff = (id) => {
@@ -234,10 +230,10 @@ class User {
       console.log(error);
     }
   };
- 
+   
   resetProperty = (key, value) => {
     this[key] = value;
-  }; 
+  };
 }
 
 export default User;

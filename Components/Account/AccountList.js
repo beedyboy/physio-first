@@ -1,28 +1,29 @@
 import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
-import { IconButton, Wrap, WrapItem,   Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuIcon,
-  MenuCommand,
-  MenuDivider } from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import Link from "next/link";
 import { MdEdit, MdDelete } from "react-icons/md";
+import { GrTasks, GrIntegration } from "react-icons/gr";
+import { GiKeyLock } from "react-icons/gi";
+import { CgLogIn } from "react-icons/cg";
 
-const AccountList = ({ data, setMode, removeData, rowData, toggle }) => {
+const AccountList = ({
+  data,
+  setMode,
+  setModal,
+  removeData,
+  rowData,
+  toggle,
+}) => {
   const columns = [
     {
       name: "Fullname",
       sortable: true,
       cell: (row) => (
         <Fragment>
-          <Link to={`/staff/${row.id}/view`}>
-            {row.firstname + " " + row.lastname}
+          <Link href={`/staff/${row.id}/view`}>
+            <a> {row.firstname + " " + row.lastname}</a>
           </Link>
         </Fragment>
       ),
@@ -46,64 +47,72 @@ const AccountList = ({ data, setMode, removeData, rowData, toggle }) => {
       name: "Created",
       selector: "createdAt",
       sortable: true,
-      right: true,
+      hide: "md",
     },
     {
       name: "Actions",
       sortable: true,
       cell: (row) => (
-        <Menu>
-  <MenuButton
-    as={IconButton}
-    aria-label="Options"
-    icon={<HamburgerIcon />}
-    variant="outline"
-  />
-  <MenuList>
-    <MenuItem icon={<AddIcon />} command="⌘T">
-      New Tab
-    </MenuItem>
-    <MenuItem icon={<ExternalLinkIcon />} command="⌘N">
-      New Window
-    </MenuItem>
-    <MenuItem  onClick={(e) => editData(e, row)} icon={<MdEdit />} command="⌘E">
-     Edit
-    </MenuItem>
-    <MenuItem icon={<MdDelete />} command="⌘⇧D"  onClick={(key) => {
-                if (window.confirm("Delete this Account?")) {
-                  deleteData(row._id);
-                }
-              }}>
-    Delete
-    </MenuItem>
-  </MenuList>
-</Menu>
-        // <Wrap spacing="20px">
-        //   <WrapItem>
-        //     <IconButton
-        //       variant="outline"
-        //       colorScheme="teal"
-        //       aria-label="Edit Account"
-        //       fontSize="20px"
-        //       icon={<MdEdit />}
-        //       onClick={(e) => editData(e, row)}
-        //     />
-        //   </WrapItem>
-        //   <WrapItem>
-            // <IconButton
-            //   variant="outline"
-            //   colorScheme="teal"
-            //   aria-label="Edit Account"
-            //   fontSize="20px"
-            //   icon={<MdDelete />}
-              // onClick={(key) => {
-              //   if (window.confirm("Delete this Account?")) {
-              //     deleteData(row._id);
-              //   }
-              // }}
-            // />
-        //   </WrapItem>
-        // </Wrap>
+        <Fragment>
+          <Menu h="60" placement="right">
+            <MenuButton
+              px={4}
+              py={2}
+              transition="all 0.2s"
+              borderRadius="md"
+              borderWidth="1px"
+              _hover={{ bg: "gray.400" }}
+              _expanded={{ bg: "blue.400" }}
+              _focus={{ boxShadow: "outline" }}
+              // rightIcon={<GrTasks />}
+              variant="outline"
+            >
+              Set <GrTasks />
+            </MenuButton>
+
+            <MenuList>
+              <MenuItem
+                onClick={(e) => setActionData(e, row, "role")}
+                icon={<GiKeyLock />}
+              >
+                Set Role
+              </MenuItem>
+              {/* {row.can_login ? null : (
+                <MenuItem
+                  onClick={(e) => setActionData(e, row, "login")}
+                  icon={<CgLogIn />}
+                >
+                  Set Login
+                </MenuItem>
+              )} */}
+              <MenuItem
+                  onClick={(e) => setActionData(e, row, "login")}
+                  icon={<CgLogIn />}
+                >
+                  Set Login
+                </MenuItem>
+              <MenuItem
+                onClick={(e) => setActionData(e, row, "onboard")}
+                icon={<GrIntegration />}
+              >
+                Onboard
+              </MenuItem>
+              <MenuItem onClick={(e) => editData(e, row)} icon={<MdEdit />}>
+                Edit
+              </MenuItem>
+              <MenuItem
+                icon={<MdDelete />}
+                onClick={() => {
+                  if (window.confirm("Delete this Account?")) {
+                    deleteData(row._id);
+                  }
+                }}
+              >
+                Delete
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </Fragment>
       ),
     },
   ];
@@ -112,6 +121,11 @@ const AccountList = ({ data, setMode, removeData, rowData, toggle }) => {
     setMode("Edit");
     rowData(row);
     toggle(true);
+  };
+  const setActionData = (e, row, action) => {
+    e.persist();
+    rowData(row);
+    setModal(action);
   };
   const deleteData = (id) => {
     removeData(id);

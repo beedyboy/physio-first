@@ -2,10 +2,10 @@ import React, { Fragment } from "react";
 import {
   Box,
   Flex,
-  Avatar,
+  Avatar, 
   IconButton,
+  CloseButton,
   useColorModeValue,
-  CloseButton
   
 } from "@chakra-ui/react";
 import { AiOutlineMenu } from "react-icons/ai";
