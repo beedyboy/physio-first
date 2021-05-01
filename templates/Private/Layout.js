@@ -20,13 +20,7 @@ import { MdCheckCircle, MdDashboard, MdSettings } from "react-icons/md";
 import { FaUmbrellaBeach } from "react-icons/fa";
 import Utility from "../../services/UtilityService";
 
-const Redirect = ({ to }) => {
-  const router = useRouter();
-  useEffect(() => {
-    router.push(to);
-  }, [to]);
-  return null;
-};
+ 
 const Layout = (props) => { 
   const loggedIn = Utility.get("staff_token") ? false : true;
  const user = Utility.get("lastname") ?? "guest";
@@ -65,14 +59,18 @@ if(loggedIn === false) {
       icon: <FaUmbrellaBeach />,
     },
   ];
-  React.useEffect(() => {
+ useEffect(() => {
     if (showOnBreakpoint == false) {
       onClose();
     }
   }, [showOnBreakpoint]);
+ 
+ useEffect(() => {
   if (loggedIn) {
-    return <Redirect to="/auth/login" />;
+    router.push("/auth/login");
   }
+  }, [loggedIn]);
+ 
   return (
     <Fragment>
       {showOnBreakpoint ? (
