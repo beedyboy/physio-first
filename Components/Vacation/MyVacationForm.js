@@ -54,7 +54,7 @@ const MyVacationForm = ({
   const [formState, setFormState] = useState({
     values: {
       id: "",
-      leave_type_id: "",  
+      leave: "",  
       leave_start_date: moment().format(dateFormat),
       leave_end_date: moment().format(dateFormat),
       description: "",
@@ -68,7 +68,7 @@ const MyVacationForm = ({
     const errors = dataHero.validate(schema, values);
     setFormState((formState) => ({
       ...formState,
-      isValid: errors.leave_type_id.error || errors.leave_start_date.error || errors.leave_end_date.error ? false : true,
+      isValid: errors.leave.error || errors.leave_start_date.error || errors.leave_end_date.error ? false : true,
       errors: errors || {},
     }));
   }, [values]);
@@ -140,14 +140,14 @@ const MyVacationForm = ({
       values: {
         ...formState.values,
         id: "",
-      leave_type_id: "",  
+      leave: "",  
       leave_start_date: "",
       leave_end_date: "",
       description: "",
       },
       touched: {
         ...formState.touched, 
-        leave_type_id: false,
+        leave: false,
         leave_start_date: false,
         leave_end_date: false, 
         description: false 
@@ -217,20 +217,42 @@ const MyVacationForm = ({
                       name="leave_start_date"
                       id="leave_start_date"
                       onChange={handleChange}
-                      placeholder="Sub-Category name"
+                      placeholder="Starting date"
                     />
                     <FormErrorMessage>
                       {hasError("leave_start_date")
                         ? errors.leave_start_date && errors.leave_start_date.message
                         : null}
                     </FormErrorMessage>
-                    <FormHelperText color={checking ? "blue" : "red"}>
-                      {exist
-                        ? message
-                        : checking
-                        ? "checking server for duplicate"
+                    
+                  </FormControl>
+                </Box>
+
+                <Box>
+                  <FormControl
+                    isRequired
+                    my="3"
+                    isInvalid={hasError("leave_end_date")}
+                  >
+                    <FormLabel htmlFor="leave_end_date">End Date</FormLabel>
+                    <Input
+                      type="date"
+                      defaultValue={
+                        formState.values.leave_end_date
+                          ? moment(formState.values.leave_end_date, dateFormat)
+                          : moment().format(dateFormat)
+                      }
+                      name="leave_end_date"
+                      id="leave_end_date"
+                      onChange={handleChange}
+                      placeholder="End date"
+                    />
+                    <FormErrorMessage>
+                      {hasError("leave_end_date")
+                        ? errors.leave_end_date && errors.leave_end_date.message
                         : null}
-                    </FormHelperText>
+                    </FormErrorMessage>
+                    
                   </FormControl>
                 </Box>
 

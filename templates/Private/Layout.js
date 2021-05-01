@@ -17,6 +17,7 @@ import DesktopLayout from "./DesktopLayout";
 import { useRouter } from "next/router";
 import MobileLayout from "./MobileLayout";
 import { MdCheckCircle, MdDashboard, MdSettings } from "react-icons/md";
+import { FaUmbrellaBeach } from "react-icons/fa";
 import Utility from "../../services/UtilityService";
 
 const Redirect = ({ to }) => {
@@ -36,8 +37,7 @@ if(loggedIn === false) {
   const acl = JSON.parse(obj);
   access = acl.branch.view;
   // console.log({access})
-}
-// console.log({user})
+} 
   const { pathname } = useRouter();
   const company = "Physio First"
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,6 +58,11 @@ if(loggedIn === false) {
       label: "Admin",
       href: "/admin",
       icon: <MdCheckCircle />,
+    },
+    {
+      label: "Vacation",
+      href: "/vacation",
+      icon: <FaUmbrellaBeach />,
     },
   ];
   React.useEffect(() => {

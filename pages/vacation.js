@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
-import { Flex, Button, Box, useDisclosure } from "@chakra-ui/react";
+import { Flex, Button, Box, Heading, useDisclosure } from "@chakra-ui/react";
 import Layout from "../templates/Private/Layout";
 import { useMobxStores } from "../stores/stores";
 import MyVacations from "../Components/Vacation/MyVacations";
 import MyVacationForm from "../Components/Vacation/MyVacationForm";
+import { MdAdd } from "react-icons/md"
 
 function Vacation(props) {
   const { leaveStore, vacationStore } = useMobxStores();
@@ -25,8 +26,7 @@ function Vacation(props) {
     getMyApplications();
   }, []);
 
-  const apply = () => {
-    setMode("Add");
+  const apply = () => { 
     onOpen();
   };
   return (
@@ -66,8 +66,7 @@ function Vacation(props) {
         leaves={leaves}
         message={message}
         sending={sending}
-        handleClose={onClose}
-        initial_data={rowData}
+        handleClose={onClose} 
         reset={resetProperty}
         createVacation={createVacation}
       />
