@@ -1,6 +1,7 @@
 import DB from "../../../models";
 import connectDB from "../../../services/database";
 import Authenticated from "../../../helpers/Authenticated";
+import mailer from '../../../helpers/mailer';
 connectDB();
 
 export default async (req, res) => {

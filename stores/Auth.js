@@ -37,27 +37,69 @@ class AuthStore {
     this.sending = true;
     this.error = false;
     this.requestSent = false;
-    backend.post("auth/reset-request", data).then((res) => {
+    try {
+       backend.post("auth/recovery-reset", data).then((res) => {
       this.sending = false;
-      if (res.data.status === 200) {
+      if (res.status === 201) {
         this.message = res.data.message;
         this.link = res.data.link;
         this.requestSent = true;
       }
-    });
+    }).catch((err) => {
+      if (err.response && err.response.status === 401) {
+        console.log("error in axios catch");
+        this.message = res.data.error;
+        this.error = true;
+      } else {
+        console.log({err});
+      }
+    })
+    } catch (error) {
+      this.sending = false;
+      if (error.response && error.response.status === 401) {
+        console.log("There was a problem with the server");
+        this.message = res.data.error;
+        this.error = true;
+
+      } else {
+        console.log(error);
+      }
+    }
+   
   };
 
   resetPasswordNow = (data) => {
     this.sending = true;
     this.error = false;
     this.passwordChanged = false;
-    backend.post("auth/reset-password", data).then((res) => {
+    try {
+       backend.put("auth/recovery-reset", data).then((res) => {
       this.sending = false;
-      if (res.data.status === 200) {
+      if (res.data.status === 201) {
         this.message = res.data.message;
         this.passwordChanged = true;
       }
-    });
+    }).catch((err) => {
+      if (err.response && err.response.status === 401) {
+        console.log("error in axios catch");
+        this.message = res.data.error;
+        this.error = true;
+      } else {
+        console.log({err});
+      }
+    })
+    } catch (error) {
+      this.sending = false;
+      if (error.response && error.response.status === 401) {
+        console.log("There was a problem with the server");
+        this.message = res.data.error;
+        this.error = true;
+
+      } else {
+        console.log(error);
+      }
+    }
+   
   };
 
   login = (data) => {

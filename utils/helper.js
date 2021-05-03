@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 import { sendEmail } from "../helpers/mailer";
-import mailTemplate from "./emailTemplate/contactUsTemplate";
+import mailTemplate from "./emailTemplate/auth";
 // const { cloudinary } = require('./cloudinary');
 
 const helper = {

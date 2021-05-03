@@ -1,4 +1,4 @@
-const clientEmail = subject => `
+const requestEmail = ({full_name, recoveryUrl}) => `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
     “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 
@@ -56,41 +56,17 @@ const clientEmail = subject => `
 
 <body>
     <div class="card">
-        <div style="padding: 0em 2em;">
-            <p style="font-size: 1em;">Hello there,</p>
-            <p style="font-size: 1em;">Thank you for reaching out!</p>
-            <p style="font-size: 1em;">
-                We appreciate you contacting us about <span style="color:#F70000;">${subject}</span> and we
-                will get back to you as soon as possible during
-                business hours (<span style="color: #F70000;">9am - 5pm</span>), that’s usually within a couple
-                of hours.<br>
-                Evenings and weekends may take a little longer.
-            </p>
-            <p style="font-size: 1em;">
-                In the meantime, please feel free to check some of our pages:
-            </p>
-        </div>
-        <div style="margin: 0% 5%;">
-            <a href="https://shobowaleimmigration.com/blog" target="_blank" class="link">
-                Blog Posts
-            </a>
-            <a href="https://shobowaleimmigration.com/assessment" target="_blank" class="link">
-                Take An Assessment
-            </a>
-            <a href="https://shobowaleimmigration.com/service" target="_blank" class="link">
-                Services
-            </a>
-        </div>
-        <div style="padding: 0em 2em;">
-            <p style="font-size: 1em;">Cheers,</p>
-            <p style="font-size: 1em;">${process.env.TEAM_TAG_NAME}</p>
-            <p style="font-size: 1em;">${process.env.COMPANY_ADDRESS}</p>
-        </div>
-        <div style="margin: -0.5em 0em; padding: 0em 2em;">
-            <a href=${process.env.FACEBOOK_HANDLE} target="_blank"><img
-                    src="https://ci6.googleusercontent.com/proxy/8GQiIqJLsDX0zNQ9SZ_6ZIB0iYukCOoe8v4CxZI-gfTs_xSMP41rayqJhz5oKVIkgx7OmluCEts4s7eidBdQ0vKMiFJQsOjiDlyN7oJezOQT-1Q-9CJpklEGkQWZqIYGLjyYXAvH37pCVdHq67SQYIVxkglQzRCk_u9QNRb2gw=s0-d-e1-ft#https://sites.google.com/a/concept-nova.com/team-2-site/_/rsrc/1510732424976/home/email-signature/facebk.png"
-                    class="CToWUd"></a>
-        </div>
+       
+    <p style="font-size: 1em;">
+    hi ${full_name}, 
+    <br />
+    You requested to reset your account password. 
+<br />
+Please click on the link below to reset your password.
+</p>
+<p style="font-size: 1em;">
+ ${recoveryUrl}
+</p>
 
     </div>
 
@@ -187,4 +163,4 @@ const adminEmail = ({ full_name, email, phone_number, subject, message }) => `
 
 </html>
 `
-export default { clientEmail, adminEmail };
+export default { requestEmail, adminEmail };

@@ -1,16 +1,6 @@
-import React, { Fragment, useState, useEffect } from "react";
-import {
-  Box,
-  BoxProps,
-  Center,
-  CloseButton,
-  Flex,
-  HStack,
-  IconButton,
-  IconButtonProps,
-  useBreakpointValue,
-  useColorModeValue,
-  useUpdateEffect,
+import React, { Fragment,  useEffect } from "react";
+import { 
+  useBreakpointValue, 
   useDisclosure,
 } from "@chakra-ui/react";
 import DesktopLayout from "./DesktopLayout";
@@ -32,6 +22,7 @@ if(loggedIn === false) {
   access = acl.branch.view;
   // console.log({access})
 } 
+const router  = useRouter();
   const { pathname } = useRouter();
   const company = "Physio First"
   const { isOpen, onOpen, onClose } = useDisclosure();

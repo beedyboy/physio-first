@@ -29,6 +29,7 @@ const schema = {
   },
 };
 const ResetPassword = (props) => {
+  const { query } = props;
   const toast = useToast();
   const { authStore } = useMobxStores();
   const {
@@ -41,7 +42,7 @@ const ResetPassword = (props) => {
 
   useEffect(() => {
     // let id = parseInt(props.match.params.id);
-    const { id, token } = props.match.params;
+    const { id, token } = query;
     setChange(id, token);
   }, []);
 
@@ -217,6 +218,9 @@ const ResetPassword = (props) => {
       </Flex>
     </>
   );
+};
+ResetPassword.getInitialProps = async ({ query }) => {
+  return { query };
 };
 
 export default observer(ResetPassword);
