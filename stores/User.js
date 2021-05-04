@@ -1,17 +1,18 @@
 import { makeObservable, observable, action } from "mobx";
-import backend from "../services/APIService";
-// import Utility from "../services/UtilityService";
+import backend from "../services/APIService"; 
 
 class User {
   user = [];
   error = false;
   exist = false;
   saved = false;
+  profileLoading = false;
   loading = false;
   removed = false;
   sending = false;
   checking = false;
   message = "";
+  myProfile = [];
   users = [];
   action = null;
 
@@ -21,8 +22,10 @@ class User {
       message: observable,
       action: observable, 
       user: observable, 
+      myProfile: observable, 
       sending: observable,
       removed: observable,
+      profileLoading: observable,
       checking: observable,
       error: observable,
       exist: observable,
@@ -33,6 +36,8 @@ class User {
       getUsers: action,
       removeStaff: action,
       updateStaff: action,
+      getProfile: action,
+      updateProfile: action,
       resetProperty: action,
       confirmEmail: action,
       setRole: action, 
@@ -232,7 +237,7 @@ class User {
   };
   signStory = (data) => {
     this.sending = true;
-    backend.post("user/update/signature", data).then((res) => {
+    backend.post("account/profile", data).then((res) => {
       this.sending = false;
       if (res.data.status === 200) {
         this.action = "signed"
@@ -245,11 +250,27 @@ class User {
   };
 
   getProfile = () => {
-    backend.get("user/get/profile/").then((res) => {
-      if (res.data.status === 200) {
-        this.profiles = res.data.data;
+   this.profileLoading = true;
+   try {
+    backend.get("account/profile").then((res) => {
+      if (res.status === 200) {
+        this.myProfile = res.data;
+        this.profileLoading = false;
       }
+    }) .catch((err) => { 
+      this.profileLoading = false;
+      this.error = true;
+      if(err && err.response && err.response.status === 401) { 
+        this.message = err.response.data.error;
+      this.action = "logout"
+      } else {
+        this.message = "Network Connection seems slow.";
+      }
+    
     });
+   } catch (error) {
+     
+   }
   };
 
   getProfileById = (id) => {
@@ -262,14 +283,27 @@ class User {
 
   updateProfile = (data) => {
     this.sending = true;
-    backend.post("user/update/profile", data).then((res) => {
+    backend.post("account/profile", data).then((res) => {
       this.sending = false;
       if (res.data.status === 200) {
         this.getProfile();
        this.message = res.data.message
+       this.action = "updateProfile";
       } else {
         this.message = res.data.error
+        this.action = "profileUpdateError";
+        this.error = true;
       }
+    }).catch((err) => { 
+      this.profileLoading = false;
+      this.error = true;
+      if(err && err.response && err.response.status === 422) { 
+        this.message = err.response.data.error;
+      this.action = "profileUpdateError"
+      } else {
+        this.message = "Network Connection seems slow.";
+      }
+    
     });
   };
   resetProperty = (key, value) => {
