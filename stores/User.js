@@ -230,7 +230,48 @@ class User {
       console.log(error);
     }
   };
-   
+  signStory = (data) => {
+    this.sending = true;
+    backend.post("user/update/signature", data).then((res) => {
+      this.sending = false;
+      if (res.data.status === 200) {
+        this.action = "signed"
+        this.getProfile();
+        this.message  = res.data.message
+      } else {
+        this.errMessage  = res.data.message
+      }
+    });
+  };
+
+  getProfile = () => {
+    backend.get("user/get/profile/").then((res) => {
+      if (res.data.status === 200) {
+        this.profiles = res.data.data;
+      }
+    });
+  };
+
+  getProfileById = (id) => {
+    backend.get("user/profile/" + id).then((res) => {
+      if (res.data.status === 200) {
+        this.profile = res.data.data; 
+      }
+    });
+  };
+
+  updateProfile = (data) => {
+    this.sending = true;
+    backend.post("user/update/profile", data).then((res) => {
+      this.sending = false;
+      if (res.data.status === 200) {
+        this.getProfile();
+       this.message = res.data.message
+      } else {
+        this.message = res.data.error
+      }
+    });
+  };
   resetProperty = (key, value) => {
     this[key] = value;
   };
