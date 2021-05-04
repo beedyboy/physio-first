@@ -116,7 +116,7 @@ function Login() {
                 <Heading as="h4">Welcome back</Heading>
               </Box>
               <Box mt="2">
-                <Text>Enter password</Text>
+                <Text>Enter your login details</Text>
               </Box>
               <form mt="1" onSubmit={handleSignIn}>
                 <Stack spacing={4} marginBottom="1rem">

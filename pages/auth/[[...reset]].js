@@ -207,9 +207,7 @@ const ResetPassword = (props) => {
               </form>
               <Box>
                 <Link href="/auth/login">
-                  <a>
-                  Back to login
-                  </a>
+                  <a>Back to login</a>
                 </Link>
               </Box>
             </Flex>
