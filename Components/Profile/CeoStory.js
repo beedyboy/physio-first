@@ -8,11 +8,10 @@ import {
   FormControl,
   Input,
   FormLabel,
-  FormErrorMessage,
-  Center,
+  FormErrorMessage, 
   useToast,
 } from "@chakra-ui/react";
-import { observer } from "mobx-react";
+import { observer } from "mobx-react-lite";
 import dataHero from "data-hero";
 import { useMobxStores } from "../../stores/stores";
 const schema = {
@@ -119,8 +118,8 @@ const CEOSTORY = (props) => {
       >
         <Box>
           <Document
-            file="/Ceo_story_word.pdf"
-            options={{ workerSrc: "/pdf.worker.js" }}
+            file="/docs/Ceo_story_word.pdf"
+            // options={{ workerSrc: "/pdf.worker.js" }}
             onLoadSuccess={onDocumentLoadSuccess}
           >
             <Page pageNumber={pageNumber} />

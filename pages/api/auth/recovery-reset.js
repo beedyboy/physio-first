@@ -72,13 +72,13 @@ const resetNow = async (req, res) => {
     const { staff_id, token, password } = req.body;
     const passwordResetToken = await DB.Token.findOne({ staff: staff_id});
     if (!passwordResetToken) {
-    res.status(401).json({message = "Invalid or expired password reset token"
+    res.status(401).json({message: "Invalid or expired password reset token"
   });
     } 
     const isValid = await compareSync(token, passwordResetToken.token);
 
     if (!isValid) {
-      res.status(401).json({message = "Invalid or expired password reset token"});
+      res.status(401).json({message: "Invalid or expired password reset token"});
  
     }
 
