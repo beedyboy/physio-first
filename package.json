@@ -32,12 +32,31 @@
     "react-data-table-component": "^6.11.7",
     "react-device-detect": "^1.17.0",
     "react-dom": "17.0.2",
-    "react-html-parser": "^2.0.2",
+    "react-html-parser": "2.0.2",
     "react-icons": "^4.2.0",
-    "react-pdf": "^5.2.0",
     "react-perfect-scrollbar": "^1.5.8",
     "react-spinners": "^0.10.6",
     "short-id": "^0.1.0-1",
     "styled-components": "^5.2.3"
-  }
+  },  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-decorators": "^7.12.12"
+  },
+  "presets": [
+    "next/babel"
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose": true
+      }
+    ]
+  ]
 }

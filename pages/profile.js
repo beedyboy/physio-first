@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import Head from "next/head";
 import Layout from "../templates/Private/Layout";
 import { Flex, Box, Stack, Heading, Switch } from "@chakra-ui/react";

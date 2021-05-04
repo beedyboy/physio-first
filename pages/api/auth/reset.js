@@ -1,5 +1,5 @@
-import connectDB from "../../../utils/database";
-import DB from "../models";
+import DB from "../../../models";
+import connectDB from "../../../services/database";
 import { compare, hash } from "bcryptjs";
 export default connectDB(async (req, res) => {
   const { method } = req;

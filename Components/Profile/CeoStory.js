@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Document, Page } from "react-pdf";
+import React, { useState, useEffect } from "react"; 
 import {
   Box,
   Flex,
@@ -25,9 +24,7 @@ const schema = {
 const CEOSTORY = (props) => {
   const toast = useToast();
   const { userStore } = useMobxStores();
-  const { signStory, sending, action, resetProperty, message } = userStore;
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1); //setting 1 to show fisrt page
+  const { signStory, sending, action, resetProperty, message } = userStore; 
 
   const { id, signed } = props;
   const [formState, setFormState] = useState({
@@ -68,22 +65,8 @@ const CEOSTORY = (props) => {
       resetProperty("action", "");  
     };
   }, [action]);
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-    setPageNumber(1);
-  }
-
-  function changePage(offset) {
-    setPageNumber((prevPageNumber) => prevPageNumber + offset);
-  }
-
-  function previousPage() {
-    changePage(-1);
-  }
-
-  function nextPage() {
-    changePage(1);
-  }
+  
+ 
   const handleChange = (event) => {
     event.persist();
     setFormState((formState) => ({
@@ -103,9 +86,8 @@ const CEOSTORY = (props) => {
     e.preventDefault();
     signStory(formState.values);
   };
-  const hasError = (field) =>
-    formState.touched[field] && formState.errors[field].error;
-
+  const hasError = (field) => formState.touched[field] && formState.errors[field].error;
+ 
   return (
     <>
       <Stack
@@ -117,37 +99,10 @@ const CEOSTORY = (props) => {
         overflow="hidden"
       >
         <Box>
-          <Document
-            file="/docs/Ceo_story_word.pdf"
-            // options={{ workerSrc: "/pdf.worker.js" }}
-            onLoadSuccess={onDocumentLoadSuccess}
-          >
-            <Page pageNumber={pageNumber} />
-          </Document>
+         
+          <iframe  src="/docs/Ceo_story_word.pdf"></iframe>
         </Box>
-        <Flex>
-          <Box>
-            Page {pageNumber || (numPages ? 1 : "--")} of {numPages || "--"}
-          </Box>
-          <Flex justify="space-between">
-            <Button
-              type="button"
-              colorScheme="core.main"
-              disabled={pageNumber <= 1}
-              onClick={previousPage}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              colorScheme="teal"
-              disabled={pageNumber >= numPages}
-              onClick={nextPage}
-            >
-              Next
-            </Button>
-          </Flex>
-        </Flex>
+        
 
         <Box>
           {signed && signed === "Yes" ? null : (
