@@ -1,5 +1,5 @@
 import { makeObservable, observable, action } from "mobx";
-import backend from "../services/APIService"; 
+import backend from "../services/APIService";
 
 class User {
   user = [];
@@ -12,17 +12,18 @@ class User {
   sending = false;
   checking = false;
   message = "";
+  errMessage = "";
   myProfile = [];
   users = [];
   action = null;
 
-
   constructor() {
     makeObservable(this, {
       message: observable,
-      action: observable, 
-      user: observable, 
-      myProfile: observable, 
+      errMessage: observable,
+      action: observable,
+      user: observable,
+      myProfile: observable,
       sending: observable,
       removed: observable,
       profileLoading: observable,
@@ -31,20 +32,20 @@ class User {
       exist: observable,
       saved: observable,
       users: observable,
-      setLogin: action, 
+      setLogin: action,
       addStaff: action,
       getUsers: action,
       removeStaff: action,
       updateStaff: action,
       getProfile: action,
+      signStory: action,
       updateProfile: action,
       resetProperty: action,
       confirmEmail: action,
-      setRole: action, 
+      setRole: action,
     });
   }
 
-  
   getUsers = () => {
     this.loading = true;
     try {
@@ -54,11 +55,11 @@ class User {
           this.loading = false;
           if (res.status === 200) {
             this.error = false;
-            this.users = res.data; 
+            this.users = res.data;
           }
         })
         .catch((err) => {
-          console.log({err})
+          console.log({ err });
           this.loading = false;
           this.error = true;
           this.message = err.response
@@ -66,7 +67,7 @@ class User {
             : "Network Connection seems slow.";
         });
     } catch (error) {
-      console.log({error})
+      console.log({ error });
       console.log(error.response);
     }
   };
@@ -94,34 +95,36 @@ class User {
       }
     }
   };
- 
- 
+
   addStaff = (data) => {
     try {
       this.sending = true;
-      backend.post("account", data).then((res) => {
-        this.sending = false;
-        if (res.status === 201) {
-          this.getUsers();
-          this.message = res.data.message; 
-          this.action = "newStaff"
-          this.saved = true;
-        } else {
-          this.action = "newStaffError"
-          this.message = res.data.error;
-          this.error = true;
-        }
-      }) .catch((err) => {
-        this.sending = false;
-        console.log({ err });
-        if (err && err.response) {
-          console.log("status", err.response.status);
-        }
-      });
-  } catch (error) {
-    this.sending = false;
-    console.log({ error });
-  }
+      backend
+        .post("account", data)
+        .then((res) => {
+          this.sending = false;
+          if (res.status === 201) {
+            this.getUsers();
+            this.message = res.data.message;
+            this.action = "newStaff";
+            this.saved = true;
+          } else {
+            this.action = "newStaffError";
+            this.message = res.data.error;
+            this.error = true;
+          }
+        })
+        .catch((err) => {
+          this.sending = false;
+          console.log({ err });
+          if (err && err.response) {
+            console.log("status", err.response.status);
+          }
+        });
+    } catch (error) {
+      this.sending = false;
+      console.log({ error });
+    }
   };
 
   updateStaff = (data) => {
@@ -132,12 +135,12 @@ class User {
         .then((res) => {
           this.sending = false;
           if (res.status === 200) {
-            this.action = "newStaff"
+            this.action = "newStaff";
             this.getUsers();
             this.message = res.data.message;
             this.saved = true;
           } else {
-            this.action = "newStaffError"
+            this.action = "newStaffError";
             this.message = res.data.error;
             this.error = true;
           }
@@ -156,7 +159,7 @@ class User {
   };
 
   setRole = (data) => {
-    try { 
+    try {
       this.sending = true;
       backend
         .post("account/auth", data)
@@ -165,10 +168,10 @@ class User {
           if (res.status === 200) {
             this.getUsers();
             this.message = res.data.message;
-            this.action = "hasRole"
+            this.action = "hasRole";
             this.saved = true;
           } else {
-            this.action = "hasRoleError"
+            this.action = "hasRoleError";
             this.message = res.data.error;
             this.error = true;
           }
@@ -186,8 +189,8 @@ class User {
     }
   };
 
-  setLogin= (data) => {
-    try { 
+  setLogin = (data) => {
+    try {
       this.sending = true;
       backend
         .put("account/auth", data)
@@ -196,10 +199,10 @@ class User {
           if (res.status === 200) {
             this.getUsers();
             this.message = res.data.message;
-            this.action = "hasLogin"
+            this.action = "hasLogin";
             this.saved = true;
           } else {
-            this.action = "hasLoginError"
+            this.action = "hasLoginError";
             this.message = res.data.error;
             this.error = true;
           }
@@ -237,74 +240,88 @@ class User {
   };
   signStory = (data) => {
     this.sending = true;
-    backend.post("account/profile", data).then((res) => {
-      this.sending = false;
-      if (res.data.status === 200) {
-        this.action = "signed"
-        this.getProfile();
-        this.message  = res.data.message
-      } else {
-        this.errMessage  = res.data.message
-      }
-    });
+    backend
+      .post("account/profile", data)
+      .then((res) => {
+        this.sending = false;
+        if (res.status === 200) {
+          this.getProfile();
+          this.message = res.data.message;
+          this.action = "signed";
+        } else {
+          this.errMessage = res.data.message;
+        }
+      })
+      .catch((err) => {
+        this.profileLoading = false;
+        this.error = true;
+        if (err && err.response && err.response.status === 401) {
+          this.message = err.response.data.error;
+          this.action = "logout";
+        } else {
+          this.message = "Network Connection seems slow.";
+        }
+      });
   };
 
   getProfile = () => {
-   this.profileLoading = true;
-   try {
-    backend.get("account/profile").then((res) => {
-      if (res.status === 200) {
-        this.myProfile = res.data;
-        this.profileLoading = false;
-      }
-    }) .catch((err) => { 
-      this.profileLoading = false;
-      this.error = true;
-      if(err && err.response && err.response.status === 401) { 
-        this.message = err.response.data.error;
-      this.action = "logout"
-      } else {
-        this.message = "Network Connection seems slow.";
-      }
-    
-    });
-   } catch (error) {
-     
-   }
+    this.profileLoading = true;
+    try {
+      backend
+        .get("account/profile")
+        .then((res) => {
+          if (res.status === 200) {
+            this.myProfile = res.data;
+            this.profileLoading = false;
+          }
+        })
+        .catch((err) => {
+          this.profileLoading = false;
+          this.error = true;
+          if (err && err.response && err.response.status === 401) {
+            this.errMessage = err.response.data.error;
+            this.action = "logout";
+          } else {
+            this.message = "Network Connection seems slow.";
+          }
+        });
+    } catch (error) {}
   };
 
   getProfileById = (id) => {
     backend.get("user/profile/" + id).then((res) => {
       if (res.data.status === 200) {
-        this.profile = res.data.data; 
+        this.profile = res.data.data;
       }
     });
   };
 
   updateProfile = (data) => {
     this.sending = true;
-    backend.post("account/profile", data).then((res) => {
-      this.sending = false;
-      if (res.data.status === 200) {
-        this.getProfile();
-       this.message = res.data.message
-       this.action = "updateProfile";
-      } else {
-        this.message = res.data.error
-        this.action = "profileUpdateError";
+    backend
+      .post("account/profile", data)
+      .then((res) => {
+        this.sending = false;
+        if (res.data.status === 200) {
+          this.getProfile();
+          this.message = res.data.message;
+          this.action = "updateProfile";
+        } else {
+          this.message = res.data.error;
+          this.action = "profileUpdateError";
+          this.error = true;
+        }
+      })
+      .catch((err) => {
+        this.profileLoading = false;
         this.error = true;
-      }
-    }).catch((err) => { 
-      this.profileLoading = false;
-      this.error = true;
-      if(err && err.response && err.response.status === 422) { 
-        this.message = err.response.data.error;
-      this.action = "profileUpdateError"
-      } else {
-        this.message = "Network Connection seems slow.";
-      }
-    
-    });
+        if (err && err.response && err.response.status === 422) {
+          this.message = err.response.data.error;
+          this.action = "profileUpdateError";
+        } else {
+          this.message = "Network Connection seems slow.";
+        }
+      });
   };
   resetProperty = (key, value) => {
     this[key] = value;

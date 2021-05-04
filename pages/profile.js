@@ -14,6 +14,7 @@ function profile(props) {
     message, 
     sending,
     profileLoading,
+    errMessage,
     getProfile,
     myProfile,
     updateProfile,
@@ -26,6 +27,25 @@ function profile(props) {
   const handlePage = (e) => {
     setPage(!page);
   };
+  useEffect(() => {
+    if (error && action === "logout") {
+        toast({
+          title: "Server Response.",
+          description: errMessage,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+          position: "top-right",
+        });
+      } 
+      return () => {
+        resetProperty("profileLoading", false);
+        resetProperty("error", false);
+        resetProperty("errMessage", "");
+        resetProperty("message", "");
+        resetProperty("action", "");  
+      };
+  }, [action, error])
   return (
     <>
       <Head>

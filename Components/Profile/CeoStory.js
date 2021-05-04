@@ -26,7 +26,7 @@ const schema = {
 const CEOSTORY = (props) => {
   const toast = useToast();
   const { userStore } = useMobxStores();
-  const { signStory, sending, action, errMessage, message, error } = userStore;
+  const { signStory, sending, action, resetProperty, message } = userStore;
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1); //setting 1 to show fisrt page
 
@@ -61,17 +61,13 @@ const CEOSTORY = (props) => {
           position: "top-right",
         });
       }
-    }
-    if (error) {
-      toast({
-        title: "Server Response.",
-        description: errMessage,
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-        position: "top-right",
-      });
-    }
+    } 
+    return () => {
+      resetProperty("error", false);
+      resetProperty("errMessage", "");
+      resetProperty("message", "");
+      resetProperty("action", "");  
+    };
   }, [action]);
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
