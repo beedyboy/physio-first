@@ -1,4 +1,4 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, computed } from "mobx";
 import backend from "../services/APIService";
 
 class User {
@@ -43,6 +43,7 @@ class User {
       resetProperty: action,
       confirmEmail: action,
       setRole: action,
+      stats: computed
     });
   }
 
@@ -323,6 +324,9 @@ class User {
         }
       });
   };
+  get stats() {
+    return this.users.length;
+  }
   resetProperty = (key, value) => {
     this[key] = value;
   };

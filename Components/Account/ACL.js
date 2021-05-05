@@ -132,7 +132,7 @@ const AccountLogin = ({
   };
 
   useEffect(() => {
-    if (saved === true && action === "hasRole") {
+    if (action === "hasRole") {
       toast({
         title: "Server Response.",
         description: message,
@@ -150,7 +150,7 @@ const AccountLogin = ({
       resetForm();
       toggle('role');
     };
-  }, [saved]);
+  }, [action]);
 
   useEffect(() => {
     if (error === true && action === "hasRoleError") {

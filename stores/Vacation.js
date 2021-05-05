@@ -37,6 +37,7 @@ class Vacation {
       pendingApplications: computed,
       approvedApplications: computed,
       rejectedApplications: computed,
+      stats: computed,
     });
   }
 
@@ -172,7 +173,7 @@ class Vacation {
     return this.applications.filter((d) => d.status === "Rejected");
   }
   get stats() {
-    return this.vacation.length;
+    return this.applications.filter((d) => d.status === "Pending").length;
   }
 }
 

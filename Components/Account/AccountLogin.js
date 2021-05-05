@@ -54,8 +54,7 @@ const AccountLogin = ({
         values: {
           ...state.values,
           id: data && data._id,
-          email: data && data.email,
-          password: data && data.password,
+          email: data && data.email, 
         },
       }));
     }
@@ -97,8 +96,8 @@ const AccountLogin = ({
     }));
   };
 
-  useEffect(() => {
-    if (saved === true && action === "hasLogin") {
+  useEffect(() => { 
+    if (action === "hasLogin") {
       toast({
         title: "Server Response.",
         description: message,
@@ -117,10 +116,10 @@ const AccountLogin = ({
       resetForm();
       toggle("login");
     };
-  }, [saved]);
+  }, [ action]);
 
   useEffect(() => {
-    if (error === true && action === "hasLoginError") {
+    if (action === "hasLoginError") {
       toast({
         title: "Server Response.",
         description: message,
@@ -136,7 +135,7 @@ const AccountLogin = ({
       resetForm();
       toggle("login");
     };
-  }, [error]);
+  }, [action]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

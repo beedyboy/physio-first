@@ -15,11 +15,13 @@ const Layout = (props) => {
   const loggedIn = Utility.get("staff_token") ? false : true;
  const user = Utility.get("lastname") ?? "guest";
  
-let access;
+let access, acl;
 if(loggedIn === false) {
   const obj = Utility.get("acl");
-  const acl = JSON.parse(obj);
-  access = acl.branch.view;
+  if(obj &&  obj !== 'undefined') {
+    acl = JSON.parse(obj);
+    access = acl.branch.view;
+  }
   // console.log({access})
 } 
 const router  = useRouter();
@@ -73,6 +75,7 @@ const router  = useRouter();
           onClose={onClose}
           routes={routes}
           company={company}
+          acl={acl}
           {...props}
         />
       ) : (
@@ -81,6 +84,7 @@ const router  = useRouter();
           user={user}
           routes={routes}
           company={company}
+          acl={acl}
           {...props}
         />
       )}

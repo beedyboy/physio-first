@@ -21,7 +21,7 @@ const Utility = {
     // window.location.hash ? window.location.hash : window.location.pathname
     // window.location.href = "/login";
     // window.location.hash  = 'login';
-    window.location.replace("/");
+    window.location.replace("/auth/login");
   },
   canAccess: (key, priviledge) => {
     let access = Utility.get("acl");

@@ -28,7 +28,7 @@ const myProfile = Authenticated(async (req, res) => {
       } else {
         res.status(200).json(doc);
       }
-    });
+    }).populate('branch', 'name');
   } catch (err) {
     console.log(err);
     return res

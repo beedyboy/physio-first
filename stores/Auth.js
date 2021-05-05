@@ -110,7 +110,7 @@ class AuthStore {
       this.sending = false;
       if (res.status === 201) {
         // console.log(res.data.acl)
-        Utility.save("name", res.data.lastname);
+        Utility.save("name", res.data.lastname + " "+ res.data.firstname);
         Utility.save("staff_token", res.data.token);
         Utility.save("acl", JSON.stringify(res.data.acl));
         this.message = res.data.message;
