@@ -7,9 +7,11 @@ import {
   Link,
   Menu,
   MenuButton,
+  MenuItem,
   MenuList,
 } from "@chakra-ui/react";
 import Utility from "../../../services/UtilityService";
+import { BiDownArrow } from "react-icons/bi";
 
 const DesktopNav = (props) => {
   const { pathname, user } = props; 
@@ -27,7 +29,7 @@ const DesktopNav = (props) => {
             size="md"
             name={user}
             src="https://bit.ly/dan-abramov"
-            rightIcon={<ChevronDownIcon />}
+            rightIcon={<BiDownArrow />}
           ></MenuButton>
           <MenuList>
             <MenuItem as={Link} href="/profile">

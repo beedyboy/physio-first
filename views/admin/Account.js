@@ -78,7 +78,7 @@ const Account = () => {
   const toggleModal = (id) => {
     setModal((state) => ({
       ...state,
-      [id]: !modal[id],
+      [id]: !modal[id], 
     }));
   };
 

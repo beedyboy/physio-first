@@ -108,14 +108,14 @@ const AccountLogin = ({
         position: "top-right",
       });
       resetForm();
-      toggle("role");
+      toggle("login");
     }
     return () => {
       reset("saved", false);
       reset("message", "");
       reset("action", "");
       resetForm();
-      toggle("role");
+      toggle("login");
     };
   }, [saved]);
 
@@ -134,57 +134,14 @@ const AccountLogin = ({
       reset("error", false);
       reset("message", "");
       resetForm();
-      toggle("role");
+      toggle("login");
     };
   }, [error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     createLogin(values);
-  };
-  useEffect(() => {
-    if (saved === true && action === "hasLogin") {
-      toast({
-        title: "Server Response.",
-        description: message,
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-        position: "top-right",
-      });
-      resetForm();
-      reset("action", "");
-      toggle('login');
-    }
-    return () => {
-      reset("saved", false);
-      reset("action", "");
-      reset("message", "");
-      resetForm();
-       toggle('login'); 
-    };
-  }, [saved, action]);
-
-  useEffect(() => {
-    if (error === true && action === "hasLoginError") {
-      toast({
-        title: "Server Response.",
-        description: message,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-        position: "top-right",
-      });
-    }
-    return () => {
-      reset("error", false);
-      reset("message", "");
-      reset("action", "");
-      resetForm();
-       toggle('login'); 
-    };
-  }, [error]);
-
+  }; 
   const resetForm = () => {
     setFormState((prev) => ({
       ...prev,

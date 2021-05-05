@@ -7,7 +7,7 @@ function connectDB() {
     console.log("already connected");
     return;
   }
-  mongoose.connect(process.env.DEV_DATABASE_URL, {
+  mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true,
     useFindAndModify: false,
     useCreateIndex: true,
