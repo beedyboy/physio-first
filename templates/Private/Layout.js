@@ -33,7 +33,7 @@ const router  = useRouter();
   const routes = [
     {
       label: "Dashboard",
-      href: "/dashboard",
+      href: "/",
       icon: <MdDashboard />,
     },
     {

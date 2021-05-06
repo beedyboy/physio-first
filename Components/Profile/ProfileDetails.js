@@ -10,6 +10,7 @@ import {
 import React, { useState, Fragment } from "react";
 import DrawalWidget from "../../widgets/DrawalWidget"; 
 import ProfileForm from "./ProfileForm";
+import { MdEdit } from "react-icons/md";
 
 function ProfileDetails(props) {
   const { data } = props;
@@ -127,6 +128,9 @@ function ProfileDetails(props) {
             
          
           </Stack>
+          <Button leftIcon={<MdEdit />} onClick={editProfile} colorScheme="teal" variant="solid">
+    Edit
+  </Button>
         </Flex>
 
         <Flex direction="column" justifyContent="space-between" w="100%">
