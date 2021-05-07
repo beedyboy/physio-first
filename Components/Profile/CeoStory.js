@@ -100,12 +100,12 @@ const CEOSTORY = (props) => {
       >
         <Box>
          
-          <iframe  src="/docs/Ceo_story_word.pdf"></iframe>
+          <iframe width="100%" src="/assets/docs/Ceo_story_word.pdf"></iframe>
         </Box>
         
 
         <Box>
-          {signed && signed === "Yes" ? null : (
+          {signed && signed ? null : (
             <>
               <FormControl isRequired isInvalid={hasError("newpassword")}>
                 <FormLabel htmlFor="newpassword">Sign Here</FormLabel>

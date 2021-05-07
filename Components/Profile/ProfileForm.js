@@ -45,19 +45,21 @@ const schema = {
     message: "User must belong to a branch",
   },
 };
-const ProfileForm = ({
-  mode,
-  open,
-  reset,
-  saved,
-  error,
-  action,
-  sending,
-  message,
-  updateProfile,
-  toggle,
-  initial_data,
-}) => {
+const ProfileForm = (props) => {
+  const {
+    mode,
+    open,
+    reset,
+    saved,
+    error,
+    action,
+    sending,
+    message,
+    updateProfile,
+    toggle,
+    initial_data,
+  } = props;
+  // console.log({props})
   const toast = useToast();
   const [formState, setFormState] = useState({
     values: {
@@ -88,7 +90,7 @@ const ProfileForm = ({
           firstname: data && data.firstname,
           lastname: data && data.lastname,
           staffId: data && data.staffId,
-          branch: data && data.branch.name,
+          branch: data && data.branch && data.branch.name,
           email: data && data.email,
           phone: data && data.phone_number,
           address: data && data.address,
@@ -225,18 +227,7 @@ const ProfileForm = ({
 
   return (
     <Fragment>
-      <Drawer
-        isOpen={open}
-        placement="right"
-        // initialFocusRef={firstField}
-        onClose={toggle}
-      >
-        <DrawerOverlay>
-          <DrawerContent>
-            <DrawerCloseButton />
-            <DrawerHeader borderBottomWidth="1px">Edit Profile</DrawerHeader>
-
-            <DrawerBody>
+    
               <Stack spacing="24px">
                 <Box>
                   <FormControl
@@ -384,9 +375,6 @@ const ProfileForm = ({
                   </FormControl>
                 </Box>
               </Stack>
-            </DrawerBody>
-
-            <DrawerFooter borderTopWidth="1px">
               <Button
                 variant="outline"
                 disabled={sending}
@@ -413,10 +401,7 @@ const ProfileForm = ({
               >
                 Save Changes
               </Button>
-            </DrawerFooter>
-          </DrawerContent>
-        </DrawerOverlay>
-      </Drawer>
+           
     </Fragment>
   );
 };

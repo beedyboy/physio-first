@@ -1,21 +1,20 @@
 import {
-  Flex,
-  Box,
+  Flex, 
   Stack,
   Text,
   Badge, 
   Divider,
+  Button,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import DrawalWidget from "../../widgets/DrawalWidget"; 
 import ProfileForm from "./ProfileForm";
 import { MdEdit } from "react-icons/md";
 
 function ProfileDetails(props) {
   const { data } = props;
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [rowData, setRowData] = useState();
+  const { isOpen, onOpen, onClose } = useDisclosure(); 
   let access = data && data.acl;
   let acl;
 
@@ -55,8 +54,7 @@ function ProfileDetails(props) {
     );
   };
  
-  const editProfile = () => {
-    setRowData(data);
+  const editProfile = () => { 
     onOpen();
   };
   return (
@@ -128,7 +126,7 @@ function ProfileDetails(props) {
             
          
           </Stack>
-          <Button leftIcon={<MdEdit />} onClick={editProfile} colorScheme="teal" variant="solid">
+          <Button leftIcon={<MdEdit />}  size="sm" onClick={editProfile} colorScheme="teal" mt={5} variant="solid">
     Edit
   </Button>
         </Flex>
@@ -142,19 +140,11 @@ function ProfileDetails(props) {
         </Flex>
       </Stack>
 
-      <DrawalWidget title="Edit Profile" open={isOpen} toggle={onClose}>
-        <ProfileForm
-          //   reset={reset}
-          //   saved={saved}
-          //   error={error}
-          //   message={message}
-          //   sending={sending}
-          //   reset={resetProperty}
-          //   action={action}
-          //   updateProfile={updateProfile}
-          {...props}
+      <DrawalWidget title="Edit Profile" open={isOpen} handleClose={onClose}>
+        <ProfileForm 
+           {...props}
           toggle={onClose}
-          initial_data={rowData}
+          initial_data={data}
         />
       </DrawalWidget>
     </Fragment>

@@ -55,6 +55,9 @@ const userSchema = new mongoose.Schema(
     pre_contract: {
       type: Array,
     },
+    post_contract: {
+      type: Array,
+    },
     general: {
       type: Array,
     },

@@ -42,6 +42,7 @@ class User {
       updateProfile: action,
       resetProperty: action,
       confirmEmail: action,
+      onBoardStaff: action,
       setRole: action,
       stats: computed
     });
@@ -190,6 +191,37 @@ class User {
     }
   };
 
+  onBoardStaff = (data) => {
+    try {
+      this.sending = true;
+      backend
+        .put("account/onboard", data)
+        .then((res) => {
+          this.sending = false;
+          if (res.status === 200) {
+            this.getUsers();
+            this.message = res.data.message;
+            this.action = "onBoard";
+            this.saved = true;
+          } else {
+            this.action = "onBoardError";
+            this.message = res.data.error;
+            this.error = true;
+          }
+        })
+        .catch((err) => {
+          this.sending = false;
+          console.log({ err });
+          if (err && err.response) {
+            console.log("status", err.response.status);
+          }
+        });
+    } catch (error) {
+      this.sending = false;
+      console.log({ error });
+    }
+  };
+
   setLogin = (data) => {
     try {
       this.sending = true;
@@ -300,10 +332,10 @@ class User {
   updateProfile = (data) => {
     this.sending = true;
     backend
-      .post("account/profile", data)
+      .put("account/profile", data)
       .then((res) => {
         this.sending = false;
-        if (res.data.status === 200) {
+        if (res.status === 200) {
           this.getProfile();
           this.message = res.data.message;
           this.action = "updateProfile";

@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Head from "next/head";
 import Layout from "../templates/Private/Layout";
-import { Flex, Box, Stack, Heading, Switch } from "@chakra-ui/react";
+import { Flex, Box, FormControl, FormLabel, Heading, Switch } from "@chakra-ui/react";
 import { useMobxStores } from "../stores/stores";
 import { observer } from "mobx-react-lite";
 import ProfileDetails from "../Components/Profile/ProfileDetails";
@@ -53,12 +53,21 @@ function profile(props) {
       </Head>
       <Layout>
         <Flex direction="column" w="100%" justifyContent="space-between">
-          <Stack direction="row">
+          <Flex direction="row">
             <Box mb={3}>
-              <Heading>Profile Information</Heading>
+              <Heading>{page ? 'Profile Information': 'CEO Story' }</Heading>
             </Box>
-            <Switch id="page" isChecked={page} onChange={handlePage} />
-          </Stack>
+            <Box mt={3} mx="auto" mr={3} align="right" mb={3}>
+            <FormControl display="flex" alignItems="center">
+  <FormLabel htmlFor="email-alerts" mb="0">
+    Toggle
+  </FormLabel>
+  <Switch id="page" isChecked={page} onChange={handlePage} />
+</FormControl>
+  
+            </Box>
+            
+          </Flex>
           <Box w="100%">
             {page ? (
               <Fragment>

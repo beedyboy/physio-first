@@ -3,7 +3,7 @@ import dataHero from "data-hero";
 import {
   Box,
   Stack,
-  Button, 
+  Button,
   useToast,
   Wrap,
   WrapItem,
@@ -11,7 +11,7 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-  Text, 
+  Text,
   AccordionIcon,
   Checkbox,
 } from "@chakra-ui/react";
@@ -19,17 +19,16 @@ import { toJS } from "mobx";
 
 const Onboard = ({
   reset,
-  saved,
   action,
   error,
   sending,
   message,
-  assignRole,
+  onBoardStaff,
   toggle,
   initial_data,
 }) => {
   const toast = useToast();
-  const [uid, setId] = useState(); 
+  const [uid, setId] = useState();
 
   const [onBoarding, setOnBoarding] = useState({
     pre_contract: {
@@ -157,258 +156,122 @@ const Onboard = ({
       let mk;
       let me;
       let posc;
-      pc = JSON.parse(pre_contract);
-      gn = JSON.parse(general);
-      st = JSON.parse(student);
-      pp = JSON.parse(para_professional);
-      pf = JSON.parse(professional);
-      mk = JSON.parse(marketing);
-      me = JSON.parse(management_executive);
-      posc = JSON.parse(post_contract);
+
+      pc = toJS(pre_contract);
+      gn = toJS(general);
+      st = toJS(student);
+      pp = toJS(para_professional);
+      pf = toJS(professional);
+      mk = toJS(marketing);
+      me = toJS(management_executive);
+      posc = toJS(post_contract);
       setOnBoarding((state) => ({
         ...state,
         pre_contract: {
-          rc: (pc && pc.pre_contract && pc.pre_contract.rc) || false,
-          schedule:
-            (pc && pc.pre_contract && pc.pre_contract.schedule) || false,
-          feel: (pc && pc.pre_contract && pc.pre_contract.feel) || false,
-          birdtest:
-            (pc && pc.pre_contract && pc.pre_contract.birdtest) || false,
-          send_contract:
-            (pc && pc.pre_contract && pc.pre_contract.send_contract) || false,
-          signed_contract:
-            (pc && pc.pre_contract && pc.pre_contract.signed_contract) || false,
-          emp_sheet:
-            (pc && pc.pre_contract && pc.pre_contract.emp_sheet) || false,
-          license_number:
-            (pc && pc.pre_contract && pc.pre_contract.license_number) || false,
+          rc: (pc && pc[0].rc) || false,
+          schedule: (pc && pc[0].schedule) || false,
+          feel: (pc && pc[0].feel) || false,
+          birdtest: (pc && pc[0].birdtest) || false,
+          send_contract: (pc && pc[0].send_contract) || false,
+          signed_contract: (pc && pc[0].signed_contract) || false,
+          emp_sheet: (pc && pc[0].emp_sheet) || false,
+          license_number: (pc && pc[0].license_number) || false,
         },
         general: {
-          breakfast: (gn && gn.general && gn.general.breakfast) || false,
-          tour: (gn && gn.general && gn.general.tour) || false,
-          introduce: (gn && gn.general && gn.general.introduce) || false,
-          launch: (gn && gn.general && gn.general.launch) || false,
-          coffee: (gn && gn.general && gn.general.coffee) || false,
+          breakfast: (gn && gn[0].breakfast) || false,
+          tour: (gn && gn[0].tour) || false,
+          introduce: (gn && gn[0].introduce) || false,
+          launch: (gn && gn[0].launch) || false,
+          coffee: (gn && gn[0].coffee) || false,
         },
         student: {
-          icecream: (st && st.student && st.student.icecream) || false,
-          tour: (st && st.student && st.student.tour) || false,
-          pair: (st && st.student && st.student.pair) || false,
-          cleaning: (st && st.student && st.student.cleaning) || false,
+          icecream: (st && st[0].icecream) || false,
+          tour: (st && st[0].tour) || false,
+          pair: (st && st[0].pair) || false,
+          cleaning: (st && st[0].cleaning) || false,
         },
         para_professional: {
-          pair:
-            (pp && pp.para_professional && pp.para_professional.pair) || false,
-          shedule:
-            (pp && pp.para_professional && pp.para_professional.shedule) ||
-            false,
-          laundry:
-            (pp && pp.para_professional && pp.para_professional.laundry) ||
-            false,
-          clean:
-            (pp && pp.para_professional && pp.para_professional.clean) || false,
-          inventory:
-            (pp && pp.para_professional && pp.para_professional.inventory) ||
-            false,
-          modalities:
-            (pp && pp.para_professional && pp.para_professional.modalities) ||
-            false,
-          capture_way:
-            (pp && pp.para_professional && pp.para_professional.capture_way) ||
-            false,
-          mingle:
-            (pp && pp.para_professional && pp.para_professional.mingle) ||
-            false,
+          pair: (pp && pp[0].pair) || false,
+          shedule: (pp && pp[0].shedule) || false,
+          laundry: (pp && pp[0].laundry) || false,
+          clean: (pp && pp[0].clean) || false,
+          inventory: (pp && pp[0].inventory) || false,
+          modalities: (pp && pp[0].modalities) || false,
+          capture_way: (pp && pp[0].capture_way) || false,
+          mingle: (pp && pp[0].mingle) || false,
         },
         professional: {
-          breakfast:
-            (pf && pf.professional && pf.professional.breakfast) || false,
-          tour: (pf && pf.professional && pf.professional.tour) || false,
-          introduce:
-            (pf && pf.professional && pf.professional.introduce) || false,
-          launch: (pf && pf.professional && pf.professional.launch) || false,
-          coffee: (pf && pf.professional && pf.professional.coffee) || false,
+          breakfast: (pf && pf[0].breakfast) || false,
+          tour: (pf && pf[0].tour) || false,
+          introduce: (pf && pf[0].introduce) || false,
+          launch: (pf && pf[0].launch) || false,
+          coffee: (pf && pf[0].coffee) || false,
 
-          team_introduction:
-            (pf && pf.professional && pf.professional.team_introduction) ||
-            false,
-          payroll: (pf && pf.professional && pf.post_contract.payroll) || false,
-          allergies:
-            (pf && pf.professional && pf.professional.allergies) || false,
-          basic: (pf && pf.professional && pf.professional.basic) || false,
-          lic_info:
-            (pf && pf.professional && pf.professional.lic_info) || false,
-          ins_app: (pf && pf.professional && pf.professional.ins_app) || false,
-          grp_ins: (pf && pf.professional && pf.professional.grp_ins) || false,
-          location:
-            (pf && pf.professional && pf.professional.location) || false,
-          parking: (pf && pf.professional && pf.professional.parking) || false,
-          schedule_dis:
-            (pf && pf.professional && pf.professional.schedule_dis) || false,
-          headshot_jamie:
-            (pf && pf.professional && pf.professional.headshot_jamie) || false,
-          slack: (pf && pf.professional && pf.professional.slack) || false,
-          snapchat:
-            (pf && pf.professional && pf.professional.snapchat) || false,
-          secret_buddy:
-            (pf && pf.professional && pf.professional.secret_buddy) || false,
-          lululemon:
-            (pf && pf.professional && pf.professional.lululemon) || false,
-          bird: (pf && pf.professional && pf.professional.bird) || false,
+          team_introduction: (pf && pf[0].team_introduction) || false,
+          payroll: (pf && pf[0].payroll) || false,
+          allergies: (pf && pf[0].allergies) || false,
+          basic: (pf && pf[0].basic) || false,
+          lic_info: (pf && pf[0].lic_info) || false,
+          ins_app: (pf && pf[0].ins_app) || false,
+          grp_ins: (pf && pf[0].grp_ins) || false,
+          location: (pf && pf[0].location) || false,
+          parking: (pf && pf[0].parking) || false,
+          schedule_dis: (pf && pf[0].schedule_dis) || false,
+          headshot_jamie: (pf && pf[0].headshot_jamie) || false,
+          slack: (pf && pf[0].slack) || false,
+          snapchat: (pf && pf[0].snapchat) || false,
+          secret_buddy: (pf && pf[0].secret_buddy) || false,
+          lululemon: (pf && pf[0].lululemon) || false,
+          bird: (pf && pf[0].bird) || false,
         },
         marketing: {
-          headshot: (mk && mk.marketing && mk.marketing.headshot) || false,
-          make_posts: (mk && mk.marketing && mk.marketing.make_posts) || false,
-          bios: (mk && mk.marketing && mk.marketing.bios) || false,
-          business: (mk && mk.marketing && mk.marketing.business) || false,
+          headshot: (mk && mk[0].headshot) || false,
+          make_posts: (mk && mk[0].make_posts) || false,
+          bios: (mk && mk[0].bios) || false,
+          business: (mk && mk[0].business) || false,
         },
         management_executive: {
-          breakfast:
-            (me &&
-              me.management_executive &&
-              me.management_executive.breakfast) ||
-            false,
-          tour:
-            (me && me.management_executive && me.management_executive.tour) ||
-            false,
-          introduce:
-            (me &&
-              me.management_executive &&
-              me.management_executive.introduce) ||
-            false,
-          launch:
-            (me && me.management_executive && me.management_executive.launch) ||
-            false,
-          coffee:
-            (me && me.management_executive && me.management_executive.coffee) ||
-            false,
-          team_introduction:
-            (me &&
-              me.management_executive &&
-              me.management_executive.team_introduction) ||
-            false,
-          payroll:
-            (me &&
-              me.management_executive &&
-              me.management_executive.payroll) ||
-            false,
-          allergies:
-            (me &&
-              me.management_executive &&
-              me.management_executive.allergies) ||
-            false,
-          basic:
-            (me && me.management_executive && me.management_executive.basic) ||
-            false,
-          lic_info:
-            (me &&
-              me.management_executive &&
-              me.management_executive.lic_info) ||
-            false,
-          ins_app:
-            (me &&
-              me.management_executive &&
-              me.management_executive.ins_app) ||
-            false,
-          grp_ins:
-            (me &&
-              me.management_executive &&
-              me.management_executive.grp_ins) ||
-            false,
-          location:
-            (posc && posc.post_contract && me.management_executive.location) ||
-            false,
-          parking:
-            (me &&
-              me.management_executive &&
-              me.management_executive.parking) ||
-            false,
-          schedule_dis:
-            (me &&
-              me.management_executive &&
-              me.management_executive.schedule_dis) ||
-            false,
-          headshot_jamie:
-            (me &&
-              me.management_executive &&
-              me.management_executive.headshot_jamie) ||
-            false,
-          slack:
-            (me && me.management_executive && me.management_executive.slack) ||
-            false,
-          snapchat:
-            (me &&
-              me.management_executive &&
-              me.management_executive.snapchat) ||
-            false,
-          secret_buddy:
-            (me &&
-              me.management_executive &&
-              me.management_executive.secret_buddy) ||
-            false,
-          lululemon:
-            (me &&
-              me.management_executive &&
-              me.management_executive.lululemon) ||
-            false,
-          bird:
-            (me && me.management_executive && me.management_executive.bird) ||
-            false,
-          shadowing:
-            (me &&
-              me.management_executive &&
-              me.management_executive.shadowing) ||
-            false,
-          whole_team:
-            (me &&
-              me.management_executive &&
-              me.management_executive.whole_team) ||
-            false,
+          breakfast: (me && me[0].breakfast) || false,
+          tour: (me && me[0].tour) || false,
+          introduce: (me && me[0].introduce) || false,
+          launch: (me && me[0].launch) || false,
+          coffee: (me && me[0].coffee) || false,
+          team_introduction: (me && me[0].team_introduction) || false,
+          payroll: (me && me[0].payroll) || false,
+          allergies: (me && me[0].allergies) || false,
+          basic: (me && me[0].basic) || false,
+          lic_info: (me && me[0].lic_info) || false,
+          ins_app: (me && me[0].ins_app) || false,
+          grp_ins: (me && me[0].grp_ins) || false,
+          location: (posc && posc[0].location) || false,
+          parking: (me && me[0].parking) || false,
+          schedule_dis: (me && me[0].schedule_dis) || false,
+          headshot_jamie: (me && me[0].headshot_jamie) || false,
+          slack: (me && me[0].slack) || false,
+          snapchat: (me && me[0].snapchat) || false,
+          secret_buddy: (me && me[0].secret_buddy) || false,
+          lululemon: (me && me[0].lululemon) || false,
+          bird: (me && me[0].bird) || false,
+          shadowing: (me && me[0].shadowing) || false,
+          whole_team: (me && me[0].whole_team) || false,
         },
         post_contract: {
-          team_introduction:
-            (posc &&
-              posc.post_contract &&
-              posc.post_contract.team_introduction) ||
-            false,
-          payroll:
-            (posc && posc.post_contract && posc.post_contract.payroll) || false,
-          allergies:
-            (posc && posc.post_contract && posc.post_contract.allergies) ||
-            false,
-          basic:
-            (posc && posc.post_contract && posc.post_contract.basic) || false,
-          lic_info:
-            (posc && posc.post_contract && posc.post_contract.lic_info) ||
-            false,
-          ins_app:
-            (posc && posc.post_contract && posc.post_contract.ins_app) || false,
-          grp_ins:
-            (posc && posc.post_contract && posc.post_contract.grp_ins) || false,
-          location:
-            (posc && posc.post_contract && posc.post_contract.location) ||
-            false,
-          parking:
-            (posc && posc.post_contract && posc.post_contract.parking) || false,
-          schedule_dis:
-            (posc && posc.post_contract && posc.post_contract.schedule_dis) ||
-            false,
-          headshot_jamie:
-            (posc && posc.post_contract && posc.post_contract.headshot_jamie) ||
-            false,
-          slack:
-            (posc && posc.post_contract && posc.post_contract.slack) || false,
-          snapchat:
-            (posc && posc.post_contract && posc.post_contract.snapchat) ||
-            false,
-          secret_buddy:
-            (posc && posc.post_contract && posc.post_contract.secret_buddy) ||
-            false,
-          lululemon:
-            (posc && posc.post_contract && posc.post_contract.lululemon) ||
-            false,
-          bird:
-            (posc && posc.post_contract && posc.post_contract.bird) || false,
+          team_introduction: (posc && posc[0].team_introduction) || false,
+          payroll: (posc && posc[0].payroll) || false,
+          allergies: (posc && posc[0].allergies) || false,
+          basic: (posc && posc[0].basic) || false,
+          lic_info: (posc && posc[0].lic_info) || false,
+          ins_app: (posc && posc[0].ins_app) || false,
+          grp_ins: (posc && posc[0].grp_ins) || false,
+          location: (posc && posc[0].location) || false,
+          parking: (posc && posc[0].parking) || false,
+          schedule_dis: (posc && posc[0].schedule_dis) || false,
+          headshot_jamie: (posc && posc[0].headshot_jamie) || false,
+          slack: (posc && posc[0].slack) || false,
+          snapchat: (posc && posc[0].snapchat) || false,
+          secret_buddy: (posc && posc[0].secret_buddy) || false,
+          lululemon: (posc && posc[0].lululemon) || false,
+          bird: (posc && posc[0].bird) || false,
         },
       }));
     }
@@ -416,11 +279,11 @@ const Onboard = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const roleData = {
-      priviledges,
+    const data = {
+      onBoarding,
       id: uid,
     };
-    assignRole(roleData);
+    onBoardStaff(data);
   };
   const handleChange = (event, field) => {
     event.persist();
@@ -434,7 +297,7 @@ const Onboard = ({
   };
 
   useEffect(() => {
-    if (action === "hasRole") {
+    if (action === "onBoard") {
       toast({
         title: "Server Response.",
         description: message,
@@ -444,18 +307,18 @@ const Onboard = ({
         position: "top-right",
       });
       resetForm();
-      toggle("role");
+      toggle("onboard");
     }
     return () => {
       reset("saved", false);
       reset("message", "");
       resetForm();
-      toggle("role");
+      toggle("onboard");
     };
   }, [action]);
 
   useEffect(() => {
-    if (error === true && action === "hasRoleError") {
+    if (error === true && action === "onBoardError") {
       toast({
         title: "Server Response.",
         description: message,
@@ -469,7 +332,7 @@ const Onboard = ({
       reset("error", false);
       reset("message", "");
       resetForm();
-      toggle("role");
+      toggle("onboard");
     };
   }, [error]);
 
@@ -580,7 +443,6 @@ const Onboard = ({
   };
   return (
     <Fragment>
-      {/* <Flex direction="column" align="space-between" justifyContent="space-between"> */}
       <Stack spacing="24px">
         <Stack spacing="24px">
           <Accordion>
@@ -670,38 +532,38 @@ const Onboard = ({
                   name="breakfast"
                   onChange={(event) => handleChange(event, "general")}
                 >
-                A breakfast Date with the CEO or meet the CEO
+                  A breakfast Date with the CEO or meet the CEO
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.general.tour || false}
                   name="tour"
                   onChange={(event) => handleChange(event, "general")}
                 >
-                A tour of both buildings by a current employee
+                  A tour of both buildings by a current employee
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.general.introduce || false}
                   name="introduce"
                   onChange={(event) => handleChange(event, "general")}
                 >
-                Introduce new team member to the rest of the crew in person (for
-                those that are there)
+                  Introduce new team member to the rest of the crew in person
+                  (for those that are there)
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.general.launch || false}
                   name="launch"
                   onChange={(event) => handleChange(event, "general")}
                 >
-                Lunch with a group of people- we can select a few and send them
-                for lunch
+                  Lunch with a group of people- we can select a few and send
+                  them for lunch
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.general.coffee || false}
                   name="coffee"
                   onChange={(event) => handleChange(event, "general")}
                 >
-                Coffee Cup prior to arrival and desk set up for them (if
-                applicable)
+                  Coffee Cup prior to arrival and desk set up for them (if
+                  applicable)
                 </Checkbox>
               </AccordionPanel>
             </AccordionItem>
@@ -721,30 +583,30 @@ const Onboard = ({
                   name="icecream"
                   onChange={(event) => handleChange(event, "student")}
                 >
-                An ice cream/ tims date with one of the staff members
-                 </Checkbox>
+                  An ice cream/ tims date with one of the staff members
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.student.tour || false}
                   name="tour"
                   onChange={(event) => handleChange(event, "student")}
                 >
-                Tour of the clinic that they are working at
-                 </Checkbox>
+                  Tour of the clinic that they are working at
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.student.pair || false}
                   name="pair"
                   onChange={(event) => handleChange(event, "student")}
                 >
-                Pair with a Para- Professional to train in the back
-                 </Checkbox>
+                  Pair with a Para- Professional to train in the back
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.student.cleaning || false}
                   name="cleaning"
                   onChange={(event) => handleChange(event, "student")}
                 >
-                Depending on Saturdays, the student will need to spend a day of
-                cleaning with another student
-                 </Checkbox>
+                  Depending on Saturdays, the student will need to spend a day
+                  of cleaning with another student
+                </Checkbox>
               </AccordionPanel>
             </AccordionItem>
 
@@ -763,8 +625,9 @@ const Onboard = ({
                   name="pair"
                   onChange={(event) => handleChange(event, "para_professional")}
                 >
-                Pair with another team member to give them an additional tour,
-                as well as,shadowing them for a couple days to learn how we work
+                  Pair with another team member to give them an additional tour,
+                  as well as,shadowing them for a couple days to learn how we
+                  work
                 </Checkbox>
                 <Text>Show them how;</Text>
                 <Checkbox
@@ -772,43 +635,43 @@ const Onboard = ({
                   name="shedule"
                   onChange={(event) => handleChange(event, "para_professional")}
                 >
-                Scheduling system works (with Ipad)
-                 </Checkbox>
+                  Scheduling system works (with Ipad)
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.para_professional.laundry || false}
                   name="laundry"
                   onChange={(event) => handleChange(event, "para_professional")}
                 >
-                Laundry System
-                 </Checkbox>
+                  Laundry System
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.para_professional.clean || false}
                   name="clean"
                   onChange={(event) => handleChange(event, "para_professional")}
                 >
-                How to clean/prepare rooms
-                 </Checkbox>
+                  How to clean/prepare rooms
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.para_professional.inventory || false}
                   name="inventory"
                   onChange={(event) => handleChange(event, "para_professional")}
                 >
-                Inventory storage
-                 </Checkbox>
+                  Inventory storage
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.para_professional.modalities || false}
                   name="modalities"
                   onChange={(event) => handleChange(event, "para_professional")}
                 >
-                How to use modalities
-                 </Checkbox>
+                  How to use modalities
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.para_professional.capture_way || false}
                   name="capture_way"
                   onChange={(event) => handleChange(event, "para_professional")}
                 >
-                The capture way of doing things
-                 </Checkbox>
+                  The capture way of doing things
+                </Checkbox>
               </AccordionPanel>
             </AccordionItem>
 
@@ -827,45 +690,45 @@ const Onboard = ({
                   name="breakfast"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                A breakfast Date with the CEO or meet the CEO
+                  A breakfast Date with the CEO or meet the CEO
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.tour || false}
                   name="tour"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                A tour of both buildings by a current employee
+                  A tour of both buildings by a current employee
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.introduce || false}
                   name="introduce"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Introduce new team member to the rest of the crew in person (for
-                those that are there)
+                  Introduce new team member to the rest of the crew in person
+                  (for those that are there)
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.launch || false}
                   name="launch"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Lunch with a group of people- we can select a few and send them
-                for lunch
+                  Lunch with a group of people- we can select a few and send
+                  them for lunch
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.coffee || false}
                   name="coffee"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Coffee Cup prior to arrival and desk set up for them (if
-                applicable)
+                  Coffee Cup prior to arrival and desk set up for them (if
+                  applicable)
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.team_introduction || false}
                   name="team_introduction"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Introduction to the Team
+                  Introduction to the Team
                 </Checkbox>
                 <Text mb={2}>Employee Sheet sent out by Julie</Text>
                 <Checkbox
@@ -873,111 +736,111 @@ const Onboard = ({
                   name="payroll"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Payroll information
+                  Payroll information
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.allergies || false}
                   name="allergies"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Allergies
+                  Allergies
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.basic || false}
                   name="basic"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                All basic information
-                 </Checkbox>
+                  All basic information
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.lic_info || false}
                   name="lic_info"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                License information if applicable (Professional certificates or
-                insurance etc.)
-                 </Checkbox>
+                  License information if applicable (Professional certificates
+                  or insurance etc.)
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.ins_app || false}
                   name="ins_app"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Insurance application for direct deposit have it
-                signed(Professional)
-               </Checkbox>
-                 <Checkbox
+                  Insurance application for direct deposit have it
+                  signed(Professional)
+                </Checkbox>
+                <Checkbox
                   isChecked={onBoarding.professional.grp_ins || false}
                   name="grp_ins"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Add to Group insurance after 3 months (Full time)
+                  Add to Group insurance after 3 months (Full time)
                 </Checkbox>
-                 <Checkbox
+                <Checkbox
                   isChecked={onBoarding.professional.location || false}
                   name="location"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Key for location (s), Code etc and which door to enter etc.
-                 </Checkbox>
-                 <Checkbox
+                  Key for location (s), Code etc and which door to enter etc.
+                </Checkbox>
+                <Checkbox
                   isChecked={onBoarding.professional.parking || false}
                   name="parking"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Parking (depending on the location)
-                 </Checkbox>
-                 <Checkbox
+                  Parking (depending on the location)
+                </Checkbox>
+                <Checkbox
                   isChecked={onBoarding.professional.schedule_dis || false}
                   name="schedule_dis"
                   onChange={(event) => handleChange(event, "professional")}
-              >
-                Schedule Discussion
+                >
+                  Schedule Discussion
                 </Checkbox>
-                 <Checkbox
+                <Checkbox
                   isChecked={onBoarding.professional.headshot_jamie || false}
                   name="headshot_jamie"
                   onChange={(event) => handleChange(event, "professional")}
-              >
-                Headshot with Jamie Bard (or the closest location)- Marketing
+                >
+                  Headshot with Jamie Bard (or the closest location)- Marketing
                 </Checkbox>
-                 <Checkbox
+                <Checkbox
                   isChecked={onBoarding.professional.slack || false}
                   name="slack"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Slack Welcome
-                 </Checkbox>
+                  Slack Welcome
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.snapchat || false}
                   name="snapchat"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Snapchat Welcome
-                 </Checkbox>
+                  Snapchat Welcome
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.secret_buddy || false}
                   name="secret_buddy"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Secret Buddy & Added to a team for Dashboards (depending on how
-                far the next team meeting is)
-                 </Checkbox>
+                  Secret Buddy & Added to a team for Dashboards (depending on
+                  how far the next team meeting is)
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.lululemon || false}
                   name="lululemon"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Lululemon Sizing and ordering (Students- 1 shirt, Para and
-                Professionals 2 shirts and a sweater)
-                 </Checkbox>
+                  Lululemon Sizing and ordering (Students- 1 shirt, Para and
+                  Professionals 2 shirts and a sweater)
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.professional.bird || false}
                   name="bird"
                   onChange={(event) => handleChange(event, "professional")}
                 >
-                Bird Testing should of been done, if preliminary in person
-                meeting- if not it needs to be done and added to the frames
-                 </Checkbox>
+                  Bird Testing should of been done, if preliminary in person
+                  meeting- if not it needs to be done and added to the frames
+                </Checkbox>
               </AccordionPanel>
             </AccordionItem>
 
@@ -997,34 +860,30 @@ const Onboard = ({
                   name="headshot"
                   onChange={(event) => handleChange(event, "marketing")}
                 >
-                Headshot for professionals or students (arrange with Jamie)
-               
+                  Headshot for professionals or students (arrange with Jamie)
                 </Checkbox>
-                 <Checkbox
+                <Checkbox
                   isChecked={onBoarding.marketing.make_posts || false}
                   name="make_posts"
                   onChange={(event) => handleChange(event, "marketing")}
                 >
-                Make posts- if applicable to professionals
-              
-               </Checkbox>
-                 <Checkbox
+                  Make posts- if applicable to professionals
+                </Checkbox>
+                <Checkbox
                   isChecked={onBoarding.marketing.bios || false}
                   name="bios"
                   onChange={(event) => handleChange(event, "marketing")}
                 >
-                Get Bios of professionals
-             
-              </Checkbox>
-                 <Checkbox
+                  Get Bios of professionals
+                </Checkbox>
+                <Checkbox
                   isChecked={onBoarding.marketing.business || false}
                   name="business"
                   onChange={(event) => handleChange(event, "marketing")}
                 >
-                Business Cards? If applicable
-             
-              </Checkbox>
-               </AccordionPanel>
+                  Business Cards? If applicable
+                </Checkbox>
+              </AccordionPanel>
             </AccordionItem>
 
             <AccordionItem>
@@ -1044,17 +903,17 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                A breakfast Date with the CEO or meet the CEO
+                  A breakfast Date with the CEO or meet the CEO
                 </Checkbox>
-                 <Checkbox
+                <Checkbox
                   isChecked={onBoarding.management_executive.tour || false}
                   name="tour"
                   onChange={(event) =>
                     handleChange(event, "management_executive")
                   }
                 >
-                A tour of both buildings by a current employee
-               </Checkbox> 
+                  A tour of both buildings by a current employee
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.management_executive.introduce || false}
                   name="introduce"
@@ -1062,9 +921,9 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Introduce new team member to the rest of the crew in person (for
-                those that are there)
-                </Checkbox> 
+                  Introduce new team member to the rest of the crew in person
+                  (for those that are there)
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.management_executive.launch || false}
                   name="launch"
@@ -1072,20 +931,20 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Lunch with a group of people- we can select a few and send them
-                for lunch
+                  Lunch with a group of people- we can select a few and send
+                  them for lunch
                 </Checkbox>
-                 <Checkbox
+                <Checkbox
                   isChecked={onBoarding.management_executive.coffee || false}
                   name="coffee"
                   onChange={(event) =>
                     handleChange(event, "management_executive")
                   }
                 >
-                Coffee Cup prior to arrival and desk set up for them (if
-                applicable)
-               </Checkbox>
-                 <Checkbox
+                  Coffee Cup prior to arrival and desk set up for them (if
+                  applicable)
+                </Checkbox>
+                <Checkbox
                   isChecked={
                     onBoarding.management_executive.team_introduction || false
                   }
@@ -1094,7 +953,7 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Introduction to the Team
+                  Introduction to the Team
                 </Checkbox>
                 <Text mb={2}>Employee Sheet sent out by Julie</Text>
                 <Checkbox
@@ -1104,7 +963,7 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Payroll information
+                  Payroll information
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.management_executive.allergies || false}
@@ -1113,7 +972,7 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Allergies
+                  Allergies
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.management_executive.basic || false}
@@ -1122,7 +981,7 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                All basic information
+                  All basic information
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.management_executive.lic_info || false}
@@ -1131,8 +990,8 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                License information if applicable (Professional certificates or
-                insurance etc.)
+                  License information if applicable (Professional certificates
+                  or insurance etc.)
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.management_executive.ins_app || false}
@@ -1141,8 +1000,8 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Insurance application for direct deposit have it
-                signed(Professional)
+                  Insurance application for direct deposit have it
+                  signed(Professional)
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.management_executive.grp_ins || false}
@@ -1151,7 +1010,7 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Add to Group insurance after 3 months (Full time)
+                  Add to Group insurance after 3 months (Full time)
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.management_executive.location || false}
@@ -1160,7 +1019,7 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Key for location (s), Code etc and which door to enter etc.
+                  Key for location (s), Code etc and which door to enter etc.
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.management_executive.parking || false}
@@ -1169,7 +1028,7 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Parking (depending on the location)
+                  Parking (depending on the location)
                 </Checkbox>
                 <Checkbox
                   isChecked={
@@ -1180,7 +1039,7 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Schedule Discussion
+                  Schedule Discussion
                 </Checkbox>
                 <Checkbox
                   isChecked={
@@ -1191,58 +1050,58 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Headshot with Jamie Bard (or the closest location)- Marketing
+                  Headshot with Jamie Bard (or the closest location)- Marketing
                 </Checkbox>
-                 <Checkbox
+                <Checkbox
                   isChecked={onBoarding.management_executive.slack || false}
                   name="slack"
                   onChange={(event) =>
                     handleChange(event, "management_executive")
                   }
                 >
-                Slack Welcome
+                  Slack Welcome
                 </Checkbox>
-                 <Checkbox
+                <Checkbox
                   isChecked={onBoarding.post_contract.snapchat || false}
                   name="snapchat"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Snapchat Welcome
+                  Snapchat Welcome
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.post_contract.secret_buddy || false}
                   name="secret_buddy"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Secret Buddy & Added to a team for Dashboards (depending on how
-                far the next team meeting is)
+                  Secret Buddy & Added to a team for Dashboards (depending on
+                  how far the next team meeting is)
                 </Checkbox>
-                  <Checkbox
+                <Checkbox
                   isChecked={onBoarding.post_contract.lululemon || false}
                   name="lululemon"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Lululemon Sizing and ordering (Students- 1 shirt, Para and
-                Professionals 2 shirts and a sweater)
+                  Lululemon Sizing and ordering (Students- 1 shirt, Para and
+                  Professionals 2 shirts and a sweater)
                 </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.post_contract.bird || false}
                   name="bird"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Bird Testing should of been done, if preliminary in person
-                meeting- if not it needs to be done and added to the frames
+                  Bird Testing should of been done, if preliminary in person
+                  meeting- if not it needs to be done and added to the frames
                 </Checkbox>
-                 <Checkbox
+                <Checkbox
                   isChecked={onBoarding.management_executive.shadowing || false}
                   name="shadowing"
                   onChange={(event) =>
                     handleChange(event, "management_executive")
                   }
                 >
-                Shadowing Julie or Alannah
+                  Shadowing Julie or Alannah
                 </Checkbox>
-                 <Checkbox
+                <Checkbox
                   isChecked={
                     onBoarding.management_executive.whole_team || false
                   }
@@ -1251,7 +1110,7 @@ const Onboard = ({
                     handleChange(event, "management_executive")
                   }
                 >
-                Meet the whole team
+                  Meet the whole team
                 </Checkbox>
               </AccordionPanel>
             </AccordionItem>
@@ -1273,8 +1132,8 @@ const Onboard = ({
                   name="team_introduction"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Introduction to the Team
-            </Checkbox>
+                  Introduction to the Team
+                </Checkbox>
 
                 <Text mb={2}>Employee Sheet sent out by Julie</Text>
                 <Checkbox
@@ -1282,117 +1141,117 @@ const Onboard = ({
                   name="payroll"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Payroll information
-            </Checkbox>
+                  Payroll information
+                </Checkbox>
 
                 <Checkbox
                   isChecked={onBoarding.post_contract.allergies || false}
                   name="allergies"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Allergies
-            </Checkbox>
+                  Allergies
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.post_contract.basic || false}
                   name="basic"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                All basic information
-            </Checkbox>
+                  All basic information
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.post_contract.lic_info || false}
                   name="lic_info"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                License information if applicable (Professional certificates or
-                insurance etc.)
-            </Checkbox>
-             
+                  License information if applicable (Professional certificates
+                  or insurance etc.)
+                </Checkbox>
+
                 <Checkbox
                   isChecked={onBoarding.post_contract.ins_app || false}
                   name="ins_app"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Insurance application for direct deposit have it
-                signed(Professional)
-            </Checkbox>
+                  Insurance application for direct deposit have it
+                  signed(Professional)
+                </Checkbox>
 
                 <Checkbox
                   isChecked={onBoarding.post_contract.grp_ins || false}
                   name="grp_ins"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Add to Group insurance after 3 months (Full time)
-            </Checkbox>
+                  Add to Group insurance after 3 months (Full time)
+                </Checkbox>
 
                 <Checkbox
                   isChecked={onBoarding.post_contract.location || false}
                   name="location"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Key for location (s), Code etc and which door to enter etc.
-            </Checkbox>
+                  Key for location (s), Code etc and which door to enter etc.
+                </Checkbox>
 
                 <Checkbox
                   isChecked={onBoarding.post_contract.parking || false}
                   name="parking"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Parking (depending on the location)
-            </Checkbox>
-                
+                  Parking (depending on the location)
+                </Checkbox>
+
                 <Checkbox
                   isChecked={onBoarding.post_contract.schedule_dis || false}
                   name="schedule_dis"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Schedule Discussion
-            </Checkbox>
+                  Schedule Discussion
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.post_contract.headshot_jamie || false}
                   name="headshot_jamie"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Headshot with Jamie Bard (or the closest location)- Marketing
-            </Checkbox>
-               
+                  Headshot with Jamie Bard (or the closest location)- Marketing
+                </Checkbox>
+
                 <Checkbox
                   isChecked={onBoarding.post_contract.slack || false}
                   name="slack"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Slack Welcome
-            </Checkbox>
+                  Slack Welcome
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.post_contract.snapchat || false}
                   name="snapchat"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Snapchat Welcome
-            </Checkbox>
+                  Snapchat Welcome
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.post_contract.secret_buddy || false}
                   name="secret_buddy"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Secret Buddy & Added to a team for Dashboards (depending on how
-                far the next team meeting is)
-            </Checkbox>
+                  Secret Buddy & Added to a team for Dashboards (depending on
+                  how far the next team meeting is)
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.post_contract.lululemon || false}
                   name="lululemon"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Lululemon Sizing and ordering (Students- 1 shirt, Para and
-                Professionals 2 shirts and a sweater)
-            </Checkbox>
+                  Lululemon Sizing and ordering (Students- 1 shirt, Para and
+                  Professionals 2 shirts and a sweater)
+                </Checkbox>
                 <Checkbox
                   isChecked={onBoarding.post_contract.bird || false}
                   name="bird"
                   onChange={(event) => handleChange(event, "post_contract")}
                 >
-                Bird Testing should of been done, if preliminary in person
-                meeting- if not it needs to be done and added to the frames
+                  Bird Testing should of been done, if preliminary in person
+                  meeting- if not it needs to be done and added to the frames
                 </Checkbox>
               </AccordionPanel>
             </AccordionItem>

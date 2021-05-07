@@ -16,6 +16,7 @@ import AccountForm from "../../Components/Account/AccountForm";
 import AccountList from "../../Components/Account/AccountList";
 import ModalWidget from "../../widgets/ModalWidget";
 import AccountLogin from "../../Components/Account/AccountLogin";
+import Onboard from "../../Components/Account/Onboard";
 const Account = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -23,6 +24,7 @@ const Account = () => {
   const [modal, setModal] = useState({
     login: false,
     role: false,
+    onboard: false,
   });
   const [rowData, setRowData] = useState();
   const { userStore, branchStore } = useMobxStores();
@@ -42,11 +44,12 @@ const Account = () => {
     getUsers,
     addStaff,
     updateStaff,
+    onBoardStaff,
     setRole,
     setLogin,
     removeStaff,
   } = userStore;
-  const { role, login } = modal;
+  const { role, onboard, login } = modal;
 
   useEffect(() => {
     getBranches();
@@ -78,7 +81,7 @@ const Account = () => {
   const toggleModal = (id) => {
     setModal((state) => ({
       ...state,
-      [id]: !modal[id], 
+      [id]: !modal[id],
     }));
   };
 
@@ -164,6 +167,24 @@ const Account = () => {
           reset={resetProperty}
           action={action}
           createLogin={setLogin}
+          toggle={toggleModal}
+          initial_data={rowData}
+        />
+      </ModalWidget>
+      <ModalWidget
+        title="Onboard"
+        open={onboard}
+        id="onboard"
+        toggle={toggleModal}
+      >
+        <Onboard
+          saved={saved}
+          error={error}
+          message={message}
+          sending={sending}
+          reset={resetProperty}
+          action={action}
+          onBoardStaff={onBoardStaff}
           toggle={toggleModal}
           initial_data={rowData}
         />
