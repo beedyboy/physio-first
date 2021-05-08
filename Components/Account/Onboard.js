@@ -457,7 +457,7 @@ const Onboard = ({
               </h2>
               <AccordionPanel pb={4}>
                <Stack>
-              <Box>
+             
               <Checkbox
                   isChecked={onBoarding.pre_contract.rc || false}
                   name="rc"
@@ -466,18 +466,17 @@ const Onboard = ({
                   {" "}
                   Resume and cover letter received
                 </Checkbox>
-                </Box> 
-                 <Box>
+              
+               
                    <Checkbox
                   isChecked={onBoarding.pre_contract.schedule || false}
                   name="schedule"
                   onChange={(event) => handleChange(event, "pre_contract")}
-                />
+                >
                 Find a date that works to either works in person, on the phone,
                 or virtually to meet them
-                 </Box>
-                   <Box>
-                   <Checkbox
+                </Checkbox>
+                  <Checkbox
                   isChecked={onBoarding.pre_contract.feel || false}
                   name="feel"
                   onChange={(event) => handleChange(event, "pre_contract")}
@@ -485,35 +484,28 @@ const Onboard = ({
                   Get a feel for them, and let them know you will get back to
                   them
                 </Checkbox>
-                </Box>
-                  <Box>
-                   <Checkbox
+                    <Checkbox
                   isChecked={onBoarding.pre_contract.birdtest || false}
                   name="birdtest"
                   onChange={(event) => handleChange(event, "pre_contract")}
                 >
                   Bird Test to be completed first time we meet them
                 </Checkbox>
-              </Box>
-              <Box>
-                  <Checkbox
+                 <Checkbox
                   isChecked={onBoarding.pre_contract.send_contract || false}
                   name="send_contract"
                   onChange={(event) => handleChange(event, "pre_contract")}
                 >
                   Send out contract
                 </Checkbox>
-             </Box>
-             <Box>
-                  <Checkbox
+                   <Checkbox
                   isChecked={onBoarding.pre_contract.signed_contract || false}
                   name="signed_contract"
                   onChange={(event) => handleChange(event, "pre_contract")}
                 >
                   Get signed contract
                 </Checkbox>
-                </Box>
-                    <Checkbox
+                     <Checkbox
                   isChecked={onBoarding.pre_contract.emp_sheet || false}
                   name="emp_sheet"
                   onChange={(event) => handleChange(event, "pre_contract")}
@@ -644,7 +636,7 @@ const Onboard = ({
                   as well as,shadowing them for a couple days to learn how we
                   work
                 </Checkbox>
-                <Text>Show them how;</Text>
+                <Text mb={2} textAlign="left" fontWeight="bolder">Show them how;</Text>
                 <Checkbox
                   isChecked={onBoarding.para_professional.shedule || false}
                   name="shedule"
@@ -747,7 +739,7 @@ const Onboard = ({
                 >
                   Introduction to the Team
                 </Checkbox>
-                <Text mb={2}>Employee Sheet sent out by Julie</Text>
+                <Text  textAlign="left" fontWeight="bolder"mb={2}>Employee Sheet sent out by Julie</Text>
                 <Checkbox
                   isChecked={onBoarding.professional.payroll || false}
                   name="payroll"
@@ -975,7 +967,7 @@ const Onboard = ({
                 >
                   Introduction to the Team
                 </Checkbox>
-                <Text mb={2}>Employee Sheet sent out by Julie</Text>
+                <Text  textAlign="left" fontWeight="bolder"mb={2}>Employee Sheet sent out by Julie</Text>
                 <Checkbox
                   isChecked={onBoarding.management_executive.payroll || false}
                   name="payroll"
@@ -1157,7 +1149,7 @@ const Onboard = ({
                   Introduction to the Team
                 </Checkbox>
 
-                <Text mb={2}>Employee Sheet sent out by Julie</Text>
+                <Text  textAlign="left" fontWeight="bolder"mb={2}>Employee Sheet sent out by Julie</Text>
                 <Checkbox
                   isChecked={onBoarding.post_contract.payroll || false}
                   name="payroll"
@@ -1287,7 +1279,7 @@ const Onboard = ({
                 variant="outline"
                 disabled={sending}
                 mr={3}
-                onClick={() => toggle("role")}
+                onClick={() => toggle("onboard")}
               >
                 Cancel
               </Button>
