@@ -2,8 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import dataHero from "data-hero";
 import {
   Box,
-  Stack,
-  HStack,
+  Stack, 
   Button,
   useToast,
   Wrap,
@@ -226,53 +225,53 @@ const Onboard = ({
           bird: (pf && pf[0] && pf[0].bird) || false,
         },
         marketing: {
-          headshot: (mk && mk[0].headshot) || false,
-          make_posts: (mk && mk[0].make_posts) || false,
-          bios: (mk && mk[0].bios) || false,
-          business: (mk && mk[0].business) || false,
+          headshot: (mk && mk[0] && mk[0].headshot) || false,
+          make_posts: (mk && mk[0] && mk[0].make_posts) || false,
+          bios: (mk && mk[0] && mk[0].bios) || false,
+          business: (mk && mk[0] && mk[0].business) || false,
         },
         management_executive: {
-          breakfast: (me && me[0].breakfast) || false,
-          tour: (me && me[0].tour) || false,
-          introduce: (me && me[0].introduce) || false,
-          launch: (me && me[0].launch) || false,
-          coffee: (me && me[0].coffee) || false,
-          team_introduction: (me && me[0].team_introduction) || false,
-          payroll: (me && me[0].payroll) || false,
-          allergies: (me && me[0].allergies) || false,
-          basic: (me && me[0].basic) || false,
-          lic_info: (me && me[0].lic_info) || false,
-          ins_app: (me && me[0].ins_app) || false,
-          grp_ins: (me && me[0].grp_ins) || false,
-          location: (posc && posc[0].location) || false,
-          parking: (me && me[0].parking) || false,
-          schedule_dis: (me && me[0].schedule_dis) || false,
-          headshot_jamie: (me && me[0].headshot_jamie) || false,
-          slack: (me && me[0].slack) || false,
-          snapchat: (me && me[0].snapchat) || false,
-          secret_buddy: (me && me[0].secret_buddy) || false,
-          lululemon: (me && me[0].lululemon) || false,
-          bird: (me && me[0].bird) || false,
-          shadowing: (me && me[0].shadowing) || false,
-          whole_team: (me && me[0].whole_team) || false,
+          breakfast: (me && me[0] && me[0].breakfast) || false,
+          tour: (me && me[0] && me[0].tour) || false,
+          introduce: (me && me[0] && me[0].introduce) || false,
+          launch: (me && me[0] && me[0].launch) || false,
+          coffee: (me && me[0] && me[0].coffee) || false,
+          team_introduction: (me && me[0] && me[0].team_introduction) || false,
+          payroll: (me && me[0] && me[0].payroll) || false,
+          allergies: (me && me[0] && me[0].allergies) || false,
+          basic: (me && me[0] && me[0].basic) || false,
+          lic_info: (me && me[0] && me[0].lic_info) || false,
+          ins_app: (me && me[0] && me[0].ins_app) || false,
+          grp_ins: (me && me[0] && me[0].grp_ins) || false,
+          location: (posc && posc[0] && posc[0].location) || false,
+          parking: (me && me[0] && me[0].parking) || false,
+          schedule_dis: (me && me[0] && me[0].schedule_dis) || false,
+          headshot_jamie: (me && me[0] && me[0].headshot_jamie) || false,
+          slack: (me && me[0] && me[0].slack) || false,
+          snapchat: (me && me[0] && me[0].snapchat) || false,
+          secret_buddy: (me && me[0] && me[0].secret_buddy) || false,
+          lululemon: (me && me[0] && me[0].lululemon) || false,
+          bird: (me && me[0] && me[0].bird) || false,
+          shadowing: (me && me[0] && me[0].shadowing) || false,
+          whole_team: (me && me[0] && me[0].whole_team) || false,
         },
         post_contract: {
-          team_introduction: (posc && posc[0].team_introduction) || false,
-          payroll: (posc && posc[0].payroll) || false,
-          allergies: (posc && posc[0].allergies) || false,
-          basic: (posc && posc[0].basic) || false,
-          lic_info: (posc && posc[0].lic_info) || false,
-          ins_app: (posc && posc[0].ins_app) || false,
-          grp_ins: (posc && posc[0].grp_ins) || false,
-          location: (posc && posc[0].location) || false,
-          parking: (posc && posc[0].parking) || false,
-          schedule_dis: (posc && posc[0].schedule_dis) || false,
-          headshot_jamie: (posc && posc[0].headshot_jamie) || false,
-          slack: (posc && posc[0].slack) || false,
-          snapchat: (posc && posc[0].snapchat) || false,
-          secret_buddy: (posc && posc[0].secret_buddy) || false,
-          lululemon: (posc && posc[0].lululemon) || false,
-          bird: (posc && posc[0].bird) || false,
+          team_introduction: (posc && posc[0] && posc[0].team_introduction) || false,
+          payroll: (posc && posc[0] && posc[0].payroll) || false,
+          allergies: (posc && posc[0] && posc[0].allergies) || false,
+          basic: (posc && posc[0] && posc[0].basic) || false,
+          lic_info: (posc && posc[0] && posc[0].lic_info) || false,
+          ins_app: (posc && posc[0] && posc[0].ins_app) || false,
+          grp_ins: (posc && posc[0] && posc[0].grp_ins) || false,
+          location: (posc && posc[0] && posc[0].location) || false,
+          parking: (posc && posc[0] && posc[0].parking) || false,
+          schedule_dis: (posc && posc[0] && posc[0].schedule_dis) || false,
+          headshot_jamie: (posc && posc[0] && posc[0].headshot_jamie) || false,
+          slack: (posc && posc[0] && posc[0].slack) || false,
+          snapchat: (posc && posc[0] && posc[0].snapchat) || false,
+          secret_buddy: (posc && posc[0] && posc[0].secret_buddy) || false,
+          lululemon: (posc && posc[0] && posc[0].lululemon) || false,
+          bird: (posc && posc[0] && posc[0].bird) || false,
         },
       }));
     }
@@ -457,8 +456,9 @@ const Onboard = ({
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-               <HStack>
-               <Checkbox
+               <Stack>
+              <Box>
+              <Checkbox
                   isChecked={onBoarding.pre_contract.rc || false}
                   name="rc"
                   onChange={(event) => handleChange(event, "pre_contract")}
@@ -466,14 +466,18 @@ const Onboard = ({
                   {" "}
                   Resume and cover letter received
                 </Checkbox>
-                <Checkbox
+                </Box> 
+                 <Box>
+                   <Checkbox
                   isChecked={onBoarding.pre_contract.schedule || false}
                   name="schedule"
                   onChange={(event) => handleChange(event, "pre_contract")}
                 />
                 Find a date that works to either works in person, on the phone,
                 or virtually to meet them
-                <Checkbox
+                 </Box>
+                   <Box>
+                   <Checkbox
                   isChecked={onBoarding.pre_contract.feel || false}
                   name="feel"
                   onChange={(event) => handleChange(event, "pre_contract")}
@@ -481,28 +485,35 @@ const Onboard = ({
                   Get a feel for them, and let them know you will get back to
                   them
                 </Checkbox>
-                <Checkbox
+                </Box>
+                  <Box>
+                   <Checkbox
                   isChecked={onBoarding.pre_contract.birdtest || false}
                   name="birdtest"
                   onChange={(event) => handleChange(event, "pre_contract")}
                 >
                   Bird Test to be completed first time we meet them
                 </Checkbox>
-                <Checkbox
+              </Box>
+              <Box>
+                  <Checkbox
                   isChecked={onBoarding.pre_contract.send_contract || false}
                   name="send_contract"
                   onChange={(event) => handleChange(event, "pre_contract")}
                 >
                   Send out contract
                 </Checkbox>
-                <Checkbox
+             </Box>
+             <Box>
+                  <Checkbox
                   isChecked={onBoarding.pre_contract.signed_contract || false}
                   name="signed_contract"
                   onChange={(event) => handleChange(event, "pre_contract")}
                 >
                   Get signed contract
                 </Checkbox>
-                <Checkbox
+                </Box>
+                    <Checkbox
                   isChecked={onBoarding.pre_contract.emp_sheet || false}
                   name="emp_sheet"
                   onChange={(event) => handleChange(event, "pre_contract")}
@@ -516,7 +527,7 @@ const Onboard = ({
                 >
                   Get license numbers if applicable
                 </Checkbox>
-               </HStack>
+               </Stack>
               </AccordionPanel>
             </AccordionItem>
 
@@ -623,7 +634,8 @@ const Onboard = ({
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <Checkbox
+              <Stack>
+                 <Checkbox
                   isChecked={onBoarding.para_professional.pair || false}
                   name="pair"
                   onChange={(event) => handleChange(event, "para_professional")}
@@ -675,6 +687,7 @@ const Onboard = ({
                 >
                   The capture way of doing things
                 </Checkbox>
+                </Stack>
               </AccordionPanel>
             </AccordionItem>
 
@@ -688,6 +701,7 @@ const Onboard = ({
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
+              <Stack>
                 <Checkbox
                   isChecked={onBoarding.professional.breakfast || false}
                   name="breakfast"
@@ -844,6 +858,7 @@ const Onboard = ({
                   Bird Testing should of been done, if preliminary in person
                   meeting- if not it needs to be done and added to the frames
                 </Checkbox>
+                </Stack>
               </AccordionPanel>
             </AccordionItem>
 
@@ -857,7 +872,7 @@ const Onboard = ({
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <br />
+              <Stack>
                 <Checkbox
                   isChecked={onBoarding.marketing.headshot || false}
                   name="headshot"
@@ -886,6 +901,7 @@ const Onboard = ({
                 >
                   Business Cards? If applicable
                 </Checkbox>
+                </Stack>
               </AccordionPanel>
             </AccordionItem>
 
@@ -899,7 +915,8 @@ const Onboard = ({
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <Checkbox
+              <Stack>
+                   <Checkbox
                   isChecked={onBoarding.management_executive.breakfast || false}
                   name="breakfast"
                   onChange={(event) =>
@@ -1115,6 +1132,7 @@ const Onboard = ({
                 >
                   Meet the whole team
                 </Checkbox>
+                </Stack>
               </AccordionPanel>
             </AccordionItem>
 
@@ -1128,7 +1146,8 @@ const Onboard = ({
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <Checkbox
+              <Stack>
+                 <Checkbox
                   isChecked={
                     onBoarding.post_contract.team_introduction || false
                   }
@@ -1256,7 +1275,8 @@ const Onboard = ({
                   Bird Testing should of been done, if preliminary in person
                   meeting- if not it needs to be done and added to the frames
                 </Checkbox>
-              </AccordionPanel>
+                </Stack>
+                    </AccordionPanel>
             </AccordionItem>
           </Accordion>
         </Stack>
