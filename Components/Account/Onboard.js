@@ -3,6 +3,7 @@ import dataHero from "data-hero";
 import {
   Box,
   Stack,
+  HStack,
   Button,
   useToast,
   Wrap,
@@ -168,61 +169,61 @@ const Onboard = ({
       setOnBoarding((state) => ({
         ...state,
         pre_contract: {
-          rc: (pc && pc[0].rc) || false,
-          schedule: (pc && pc[0].schedule) || false,
-          feel: (pc && pc[0].feel) || false,
-          birdtest: (pc && pc[0].birdtest) || false,
-          send_contract: (pc && pc[0].send_contract) || false,
-          signed_contract: (pc && pc[0].signed_contract) || false,
-          emp_sheet: (pc && pc[0].emp_sheet) || false,
-          license_number: (pc && pc[0].license_number) || false,
+          rc: (pc && pc[0]  && pc[0].rc) || false,
+          schedule: (pc && pc[0]  && pc[0].schedule) || false,
+          feel: (pc && pc[0]  && pc[0].feel) || false,
+          birdtest: (pc && pc[0]  && pc[0].birdtest) || false,
+          send_contract: (pc && pc[0]  && pc[0].send_contract) || false,
+          signed_contract: (pc && pc[0]  && pc[0].signed_contract) || false,
+          emp_sheet: (pc && pc[0]  && pc[0].emp_sheet) || false,
+          license_number: (pc && pc[0]  && pc[0].license_number) || false,
         },
         general: {
-          breakfast: (gn && gn[0].breakfast) || false,
-          tour: (gn && gn[0].tour) || false,
-          introduce: (gn && gn[0].introduce) || false,
-          launch: (gn && gn[0].launch) || false,
-          coffee: (gn && gn[0].coffee) || false,
+          breakfast: (gn && gn[0] && gn[0].breakfast) || false,
+          tour: (gn && gn[0] && gn[0].tour) || false,
+          introduce: (gn && gn[0] && gn[0].introduce) || false,
+          launch: (gn && gn[0] && gn[0].launch) || false,
+          coffee: (gn && gn[0] && gn[0].coffee) || false,
         },
         student: {
-          icecream: (st && st[0].icecream) || false,
-          tour: (st && st[0].tour) || false,
-          pair: (st && st[0].pair) || false,
-          cleaning: (st && st[0].cleaning) || false,
+          icecream: (st && st[0] && st[0].icecream) || false,
+          tour: (st && st[0] && st[0].tour) || false,
+          pair: (st && st[0] && st[0].pair) || false,
+          cleaning: (st && st[0] && st[0].cleaning) || false,
         },
         para_professional: {
-          pair: (pp && pp[0].pair) || false,
-          shedule: (pp && pp[0].shedule) || false,
-          laundry: (pp && pp[0].laundry) || false,
-          clean: (pp && pp[0].clean) || false,
-          inventory: (pp && pp[0].inventory) || false,
-          modalities: (pp && pp[0].modalities) || false,
-          capture_way: (pp && pp[0].capture_way) || false,
-          mingle: (pp && pp[0].mingle) || false,
+          pair: (pp && pp[0] && pp[0].pair) || false,
+          shedule: (pp && pp[0] && pp[0].shedule) || false,
+          laundry: (pp && pp[0] && pp[0].laundry) || false,
+          clean: (pp && pp[0] && pp[0].clean) || false,
+          inventory: (pp && pp[0] && pp[0].inventory) || false,
+          modalities: (pp && pp[0] && pp[0].modalities) || false,
+          capture_way: (pp && pp[0] && pp[0].capture_way) || false,
+          mingle: (pp && pp[0] && pp[0].mingle) || false,
         },
         professional: {
-          breakfast: (pf && pf[0].breakfast) || false,
-          tour: (pf && pf[0].tour) || false,
-          introduce: (pf && pf[0].introduce) || false,
-          launch: (pf && pf[0].launch) || false,
-          coffee: (pf && pf[0].coffee) || false,
+          breakfast: (pf && pf[0] && pf[0].breakfast) || false,
+          tour: (pf && pf[0] && pf[0].tour) || false,
+          introduce: (pf && pf[0] && pf[0].introduce) || false,
+          launch: (pf && pf[0] && pf[0].launch) || false,
+          coffee: (pf && pf[0] && pf[0].coffee) || false,
 
-          team_introduction: (pf && pf[0].team_introduction) || false,
-          payroll: (pf && pf[0].payroll) || false,
-          allergies: (pf && pf[0].allergies) || false,
-          basic: (pf && pf[0].basic) || false,
-          lic_info: (pf && pf[0].lic_info) || false,
-          ins_app: (pf && pf[0].ins_app) || false,
-          grp_ins: (pf && pf[0].grp_ins) || false,
-          location: (pf && pf[0].location) || false,
-          parking: (pf && pf[0].parking) || false,
-          schedule_dis: (pf && pf[0].schedule_dis) || false,
-          headshot_jamie: (pf && pf[0].headshot_jamie) || false,
-          slack: (pf && pf[0].slack) || false,
-          snapchat: (pf && pf[0].snapchat) || false,
-          secret_buddy: (pf && pf[0].secret_buddy) || false,
-          lululemon: (pf && pf[0].lululemon) || false,
-          bird: (pf && pf[0].bird) || false,
+          team_introduction: (pf && pf[0] && pf[0].team_introduction) || false,
+          payroll: (pf && pf[0] && pf[0].payroll) || false,
+          allergies: (pf && pf[0] && pf[0].allergies) || false,
+          basic: (pf && pf[0] && pf[0].basic) || false,
+          lic_info: (pf && pf[0] && pf[0].lic_info) || false,
+          ins_app: (pf && pf[0] && pf[0].ins_app) || false,
+          grp_ins: (pf && pf[0] && pf[0].grp_ins) || false,
+          location: (pf && pf[0] && pf[0].location) || false,
+          parking: (pf && pf[0] && pf[0].parking) || false,
+          schedule_dis: (pf && pf[0] && pf[0].schedule_dis) || false,
+          headshot_jamie: (pf && pf[0] && pf[0].headshot_jamie) || false,
+          slack: (pf && pf[0] && pf[0].slack) || false,
+          snapchat: (pf && pf[0] && pf[0].snapchat) || false,
+          secret_buddy: (pf && pf[0] && pf[0].secret_buddy) || false,
+          lululemon: (pf && pf[0] && pf[0].lululemon) || false,
+          bird: (pf && pf[0] && pf[0].bird) || false,
         },
         marketing: {
           headshot: (mk && mk[0].headshot) || false,
@@ -456,7 +457,8 @@ const Onboard = ({
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <Checkbox
+               <HStack>
+               <Checkbox
                   isChecked={onBoarding.pre_contract.rc || false}
                   name="rc"
                   onChange={(event) => handleChange(event, "pre_contract")}
@@ -514,6 +516,7 @@ const Onboard = ({
                 >
                   Get license numbers if applicable
                 </Checkbox>
+               </HStack>
               </AccordionPanel>
             </AccordionItem>
 

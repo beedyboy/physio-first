@@ -4,7 +4,7 @@ function Authenticated(icomponent) {
   return (req, res) => {
     const { authorization } = req.headers;
     const bearer = authorization.split(" ")[1];
-console.log({bearer})
+// console.log({bearer})
     if (!bearer || bearer === 'null' || bearer === null) {
       return res.status(401).json({ error: "you must logged in" });
     }

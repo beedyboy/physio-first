@@ -106,21 +106,33 @@ class AuthStore {
     this.sending = true;
     this.error = false;
     this.isAuthenticated = false;
-    backend.post("auth/login", data).then((res) => {
-      this.sending = false;
-      if (res.status === 201) {
-        // console.log(res.data.acl)
-        Utility.save("name", res.data.lastname + " "+ res.data.firstname);
-        Utility.save("staff_token", res.data.token);
-        Utility.save("acl", JSON.stringify(res.data.acl));
-        this.message = res.data.message;
-        this.isAuthenticated = true;
-      } else {
-       
-        this.message = res.data.error;
-        this.isAuthenticated = false;
-      }
-    });
+try {
+  backend.post("auth/login", data).then((res) => {
+    this.sending = false;
+    if (res.status === 201) {
+      // console.log(res.data.acl)
+      Utility.save("name", res.data.lastname + " "+ res.data.firstname);
+      Utility.save("staff_token", res.data.token);
+      Utility.save("acl", JSON.stringify(res.data.acl));
+      this.message = res.data.message;
+      this.isAuthenticated = true;
+    } else {
+     
+      this.message = res.data.error;
+      this.isAuthenticated = false;
+    }
+  })
+  .catch((err) => {
+    this.sending = false;
+    console.log({ err });
+    if (err && err.response) {
+      console.log("status", err.response.status);
+    }
+  });
+} catch (error) {
+this.sending = false;
+console.log({ error });
+}
   };
   resetProperty = (key, value) => {
     this[key] = value;
