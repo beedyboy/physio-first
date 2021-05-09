@@ -8,7 +8,8 @@ class Asset {
   removed = false;
   sending = false;
   checking = false; 
-  Asset = [];
+  asset = [];
+  assets = [];
   message = "";
  
   constructor() {
@@ -19,34 +20,34 @@ class Asset {
       checking: observable,  
       error: observable,
       exist: observable, 
-      stats: computed,
-      AssetSelect: computed,
+      stats: computed, 
       loading: observable,
-      Asset: observable,
+      asset: observable,
+      assets: observable,
       confirmRow: action,
-      addSubCat: action,
-      updateSubCat: action,
-      deleteSubCat: action,
+      createAsset: action,
+      updateAsset: action,
+      removeAsset: action,
       resetProperty: action,
     });
   }
 
-  getSubCategories = () => {
+  fetchAsset = () => {
     this.loading = true;
-    backend.get("Asset").then((res) => {
-      this.Asset = res.data;
+    backend.get("asset").then((res) => {
+      this.assets = res.data;
       this.loading = false;
     });
   };
-  confirmRow = (cat_id, sub_name) => { 
+  confirmRow = (sub, title) => { 
     try {
       this.checking = true;
       this.exist = false;
       const data = {
-        cat_id,
-        sub_name
+        sub,
+        title
       }
-      backend.post(`Asset/${sub_name}`, data).then((res) => {
+      backend.post(`asset/${title}`, data).then((res) => {
         this.checking = false;
         if (res.status === 200) { 
           this.message = res.data.message;
@@ -64,13 +65,13 @@ class Asset {
       }
     }
   };
-  addSubCat = (data) => {
+  createAsset = (data) => {
     try {
       this.sending = true;
-      backend.post("Asset", data).then((res) => {
+      backend.post("asset", data).then((res) => {
         this.sending = false;
         if (res.status === 201) {
-          this.getSubCategories();
+          this.fetchAsset();
           this.message = res.data.message;
           this.saved = true;
         } else {
@@ -87,13 +88,13 @@ class Asset {
     }
   };
 
-  updateSubCat = (data) => {
+  updateAsset = (data) => {
     try {
       this.sending = true;
-      backend.put("Asset", data).then((res) => {
+      backend.put("asset", data).then((res) => {
         this.sending = false;
         if (res.status === 200) {
-          this.getSubCategories();
+          this.fetchAsset();
           this.message = res.data.message;
           this.saved = true;
         } else {
@@ -113,12 +114,12 @@ class Asset {
       console.log({error});
     }
   };
-  deleteSubCat = (id) => {
+  removeAsset = (id) => {
     try {
       this.removed = false;
-      backend.delete(`Asset/${id}`).then((res) => {
+      backend.delete(`asset/${id}`).then((res) => {
         if (res.status === 200) {
-          this.getSubCategories();
+          this.fetchAsset();
           this.message = res.data.message;
           this.removed = true;
         } else {
@@ -140,12 +141,12 @@ class Asset {
   get stats() {
     return this.Asset.length;
   }
-  get AssetSelect() {
-    return Object.keys(this.Asset || {}).map((key) => ({
-      value: this.Asset[key]._id,
-      label: this.Asset[key].name,
-    }));
-  }
+  // get AssetSelect() {
+  //   return Object.keys(this.Asset || {}).map((key) => ({
+  //     value: this.Asset[key]._id,
+  //     label: this.Asset[key].name,
+  //   }));
+  // }
 }
 
 export default Asset;

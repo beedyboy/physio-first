@@ -4,6 +4,9 @@ connectDB();
 
 export default async (req, res) => {
   switch (req.method) {
+    case "GET":
+      await getCategories(req, res);
+      break;
     case "POST":
       await subExist(req, res);
       break;
@@ -48,4 +51,21 @@ const removeSubCategory = async (req, res) => {
     console.log({ err });
     res.status(400).json({ message: "Invalid details", err });
   });
+};
+
+const getCategories = async (req, res) => {
+  try {
+    const { id } = req.query; 
+    try {
+      const categories = await DB.SubCategory.find({cat_id: id}).populate(
+        "cat_id",
+        "name -_id"
+      );
+      res.status(200).json(categories);
+    } catch (err) {
+      console.log(err);
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };

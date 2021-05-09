@@ -9,6 +9,7 @@ class SubCategory {
   sending = false;
   checking = false; 
   subcategory = [];
+  categorysubs = [];
   message = "";
  
   constructor() {
@@ -17,6 +18,7 @@ class SubCategory {
       sending: observable, 
       removed: observable, 
       checking: observable,  
+      categorysubs: observable,  
       error: observable,
       exist: observable, 
       stats: computed,
@@ -130,6 +132,25 @@ class SubCategory {
     } catch (error) {
       this.removed = false;
       console.log(error);
+    }
+  };
+
+  getCategoryBySub = (id) => {
+    try {
+      this.loading = true;
+      backend
+        .get("subcategory/" + id)
+        .then((res) => {
+          this.loading = false;
+          this.categorysubs = res.data;
+        })
+        .catch((err) => {
+          console.log("my_subcategory", err.code);
+          console.log("my_subcategory", err.message);
+          console.log("my_subcategory", err.stack);
+        });
+    } catch (e) {
+      console.error(e);
     }
   };
 
