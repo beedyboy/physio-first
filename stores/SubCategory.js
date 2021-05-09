@@ -27,6 +27,7 @@ class SubCategory {
       subcategory: observable,
       confirmRow: action,
       addSubCat: action,
+      getCategoryBySub: action,
       updateSubCat: action,
       deleteSubCat: action,
       resetProperty: action,

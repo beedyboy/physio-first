@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { Flex, Button, Box, Heading, useDisclosure } from "@chakra-ui/react";
 import Layout from "../../templates/Private/Layout";
@@ -6,16 +6,12 @@ import { useMobxStores } from "../../stores/stores";
 import { MdAdd } from "react-icons/md";
 import { observer } from "mobx-react-lite";
 import AssetForm from "../../Components/Asset/AssetForm";
-import AssetList from "../../Components/Asset/AssetList";
+import AssetList from "../../Components/Asset/AssetList"; 
 
 function Asset(props) {
   const [mode, setMode] = useState("");
-  const {
-    assetStore,
-    departmentStores,
-    categoryStore,
-    subCategoryStore,
-  } = useMobxStores();
+  const [rowData, setRowData] = useState();
+  const { assetStore, categoryStore, subCategoryStore } = useMobxStores();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     createAsset,
@@ -23,24 +19,23 @@ function Asset(props) {
     sending,
     message,
     error,
-    action,
+    saved,
     assets,
     fetchAsset,
     removeAsset,
     resetProperty,
     confirmRow,
   } = assetStore;
-  const { getDepartments, department } = departmentStores;
   const { getCategories, category } = categoryStore;
   const { getCategoryBySub, categorysubs } = subCategoryStore;
 
   useEffect(() => {
     fetchAsset();
     getCategories();
-    getDepartments();
   }, []);
 
   const newAsset = () => {
+    setMode("Add");
     onOpen();
   };
   return (
@@ -69,7 +64,9 @@ function Asset(props) {
             </Button>
           </Box>
           <Box>
-            <AssetList data={assets} />
+            <AssetList data={assets}  setMode={setMode}
+            toggle={onOpen} 
+            rowData={setRowData} removeData={removeAsset} />
           </Box>
         </Flex>
       </Layout>
@@ -80,14 +77,14 @@ function Asset(props) {
         error={error}
         categories={category}
         message={message}
-        sending={sending}
+        sending={sending} 
+        initial_data={rowData}
         handleClose={onClose}
         reset={resetProperty}
         createAsset={createAsset}
         updateAsset={updateAsset}
         getCategoryBySub={getCategoryBySub}
-        categorysubs={categorysubs}
-        createVacation={createVacation}
+        categorysubs={categorysubs} 
       />
     </>
   );

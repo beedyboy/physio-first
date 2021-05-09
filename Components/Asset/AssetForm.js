@@ -48,12 +48,9 @@ const AssetForm = ({
   reset,
   saved,
   error,
-  exist,
-  action,
-  confirm,
+  exist, 
   sending,
-  message,
-  checking,
+  message, 
   getCategoryBySub,
   categorysubs,
   createAsset,
@@ -164,8 +161,7 @@ const AssetForm = ({
     //   confirm(event.target.value);
     // }
   };
-  const getSubCategory = (cat_id) => {
-    setSubCategories([]);
+  const getSubCategory = (cat_id) => { 
     setFormState((prev) => ({
       ...prev,
       values: {
@@ -178,7 +174,7 @@ const AssetForm = ({
     }
   };
   useEffect(() => {
-    if (saved === true && action === "newStaff") {
+    if (saved === true) {
       toast({
         title: "Server Response.",
         description: message,
@@ -192,15 +188,14 @@ const AssetForm = ({
     }
     return () => {
       reset("saved", false);
-      reset("message", "");
-      reset("action", "");
+      reset("message", ""); 
       resetForm();
       handleClose();
     };
-  }, [saved, action]);
+  }, [saved]);
 
   useEffect(() => {
-    if (error === true && action === "newStaffError") {
+    if (error === true) {
       toast({
         title: "Server Response.",
         description: message,
