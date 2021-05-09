@@ -6,7 +6,7 @@ import { useMobxStores } from "../../stores/stores";
 import { MdAdd } from "react-icons/md";
 import { observer } from "mobx-react-lite";
 import AssetForm from "../../Components/Asset/AssetForm";
-import AssetList from "../../Components/Asset/AssetList"; 
+import AssetList from "../../Components/Asset/AssetList";
 
 function Asset(props) {
   const [mode, setMode] = useState("");
@@ -64,9 +64,13 @@ function Asset(props) {
             </Button>
           </Box>
           <Box>
-            <AssetList data={assets}  setMode={setMode}
-            toggle={onOpen} 
-            rowData={setRowData} removeData={removeAsset} />
+            <AssetList
+              data={assets}
+              setMode={setMode}
+              toggle={onOpen}
+              rowData={setRowData}
+              removeData={removeAsset}
+            />
           </Box>
         </Flex>
       </Layout>
@@ -77,14 +81,14 @@ function Asset(props) {
         error={error}
         categories={category}
         message={message}
-        sending={sending} 
+        sending={sending}
         initial_data={rowData}
         handleClose={onClose}
         reset={resetProperty}
         createAsset={createAsset}
         updateAsset={updateAsset}
         getCategoryBySub={getCategoryBySub}
-        categorysubs={categorysubs} 
+        categorysubs={categorysubs}
       />
     </>
   );

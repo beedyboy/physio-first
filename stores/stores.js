@@ -11,6 +11,7 @@ import SubCategory from "./SubCategory";
 import Leave from "./Leave";
 import Auth from "./Auth";
 import Asset from "./Asset";
+import Ticket from "./Ticket";
 import Vacation from "./Vacation";
 
 const isServer = typeof window === "undefined";
@@ -29,6 +30,7 @@ export function getStores(
     leaveStore: {},
     authStore: {},
     assetStore: {},
+    ticketStore: {},
     vacationStore: {},
   }
 ) {
@@ -43,6 +45,7 @@ export function getStores(
       leaveStore: new Leave(initialData.leaveStore),
       assetStore: new Asset(initialData.assetStore),
       authStore: new Auth(initialData.authStore),
+      ticketStore: new Ticket(initialData.ticketStore),
       vacationStore: new Vacation(initialData.vacationStore),
     };
   }
@@ -56,6 +59,7 @@ export function getStores(
       subCategoryStore: new SubCategory(initialData.subCategoryStore),
       leaveStore: new Leave(initialData.leaveStore),
       assetStore: new Asset(initialData.assetStore),
+      ticketStore: new Ticket(initialData.ticketStore),
       authStore: new Auth(initialData.authStore),
       vacationStore: new Vacation(initialData.vacationStore),
     };
