@@ -13,6 +13,7 @@ import Auth from "./Auth";
 import Asset from "./Asset";
 import Ticket from "./Ticket";
 import Vacation from "./Vacation";
+import Conversation from "./Conversation";
 
 const isServer = typeof window === "undefined";
 // enableStaticRendering(isServer);
@@ -32,6 +33,7 @@ export function getStores(
     assetStore: {},
     ticketStore: {},
     vacationStore: {},
+    conversationStore: {},
   }
 ) {
   if (isServer) {
@@ -47,6 +49,7 @@ export function getStores(
       authStore: new Auth(initialData.authStore),
       ticketStore: new Ticket(initialData.ticketStore),
       vacationStore: new Vacation(initialData.vacationStore),
+      conversationStore: new Conversation(initialData.conversationStore),
     };
   }
   if (!store) {
@@ -62,6 +65,7 @@ export function getStores(
       ticketStore: new Ticket(initialData.ticketStore),
       authStore: new Auth(initialData.authStore),
       vacationStore: new Vacation(initialData.vacationStore),
+      conversationStore: new Conversation(initialData.conversationStore),
     };
   }
   return store;

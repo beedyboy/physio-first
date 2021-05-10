@@ -1,18 +1,18 @@
-import React, { useEffect, useState,  Fragment } from "react";
-import dataHero from "data-hero"; 
+import React, { useEffect, useState, Fragment } from "react";
+import dataHero from "data-hero";
 import {
   Box,
   Input,
   Stack,
   Button,
   Select,
-  useToast, 
+  useToast,
   FormLabel,
   FormControl,
   FormErrorMessage,
-} from "@chakra-ui/react";  
+} from "@chakra-ui/react";
 import SunEditor from "suneditor-react";
-import "suneditor/dist/css/suneditor.min.css";  
+import "suneditor/dist/css/suneditor.min.css";
 const schema = {
   name: {
     isEmpty: false,
@@ -30,8 +30,8 @@ const schema = {
   },
 };
 
-const CreateTicket = ({saved, message, error, addTicket, sending}) => { 
-const toast = useToast();
+const CreateTicket = ({ saved, message, error, addTicket, sending }) => {
+  const toast = useToast();
   const [formState, setFormState] = useState({
     values: {
       id: "",
@@ -47,7 +47,6 @@ const toast = useToast();
     touched: {},
     errors: {},
   });
-
 
   const { touched, errors, values, isValid } = formState;
   useEffect(() => {
@@ -76,8 +75,8 @@ const toast = useToast();
     }
     return () => {
       reset("saved", false);
-      reset("message", ""); 
-      resetForm(); 
+      reset("message", "");
+      resetForm();
     };
   }, [saved]);
 
@@ -96,7 +95,7 @@ const toast = useToast();
       reset("error", false);
       reset("message", "");
       reset("action", "");
-      resetForm(); 
+      resetForm();
     };
   }, [error]);
 
@@ -157,7 +156,7 @@ const toast = useToast();
   return (
     <Fragment>
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-        <Stack spacing="24px"  boxShadow="base" p="6" rounded="md" bg="white">
+        <Stack spacing="24px" boxShadow="base" p="6" rounded="md" bg="white">
           <Box>
             <FormControl isRequired my="3" isInvalid={hasError("name")}>
               <FormLabel htmlFor="name">Subject</FormLabel>
@@ -232,32 +231,27 @@ const toast = useToast();
             </FormControl>
           </Box>
         </Stack>
+        <Button variant="outline" disabled={sending} mr={3} onClick={resetForm}>
+          Reset
+        </Button>
         <Button
-                variant="outline"
-                disabled={sending}
-                mr={3}
-                onClick={resetForm}
-              >
-                Reset
-              </Button>
-              <Button
-                disabled={!isValid || sending}
-                colorScheme="blue"
-                onClick={handleSubmit}
-                isLoading={sending}
-                bg="brand.mainAccent"
-                color="brand.white"
-                variant="ghost"
-                _hover={{
-                  borderColor: "brand.mainAccent",
-                  bg: "brand.white",
-                  color: "brand.mainAccent",
-                  boxShadow: "md",
-                }}
-                _focus={{}}
-              >
-                Submit Ticket
-              </Button>
+          disabled={!isValid || sending}
+          colorScheme="blue"
+          onClick={handleSubmit}
+          isLoading={sending}
+          bg="brand.mainAccent"
+          color="brand.white"
+          variant="ghost"
+          _hover={{
+            borderColor: "brand.mainAccent",
+            bg: "brand.white",
+            color: "brand.mainAccent",
+            boxShadow: "md",
+          }}
+          _focus={{}}
+        >
+          Submit Ticket
+        </Button>
       </form>
     </Fragment>
   );

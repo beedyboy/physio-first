@@ -5,7 +5,7 @@ import Layout from "../templates/Private/Layout";
 import { useMobxStores } from "../stores/stores";
 import MyVacations from "../Components/Vacation/MyVacations";
 import MyVacationForm from "../Components/Vacation/MyVacationForm";
-import { MdAdd } from "react-icons/md"
+import { MdAdd } from "react-icons/md";
 import { observer } from "mobx-react-lite";
 
 function Vacation(props) {
@@ -27,7 +27,7 @@ function Vacation(props) {
     getMyApplications();
   }, []);
 
-  const apply = () => { 
+  const apply = () => {
     onOpen();
   };
   return (
@@ -67,7 +67,7 @@ function Vacation(props) {
         leaves={leaves}
         message={message}
         sending={sending}
-        handleClose={onClose} 
+        handleClose={onClose}
         reset={resetProperty}
         createVacation={createVacation}
       />

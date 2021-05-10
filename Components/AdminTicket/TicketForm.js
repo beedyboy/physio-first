@@ -1,27 +1,18 @@
-import React, { useEffect, useState, useContext, Fragment } from "react";
-import Select from "react-select";
+import React, { useEffect, useState, Fragment } from "react";
 import dataHero from "data-hero";
 import {
-  Button,
-  Card,
-  CardBody,
-  FormGroup,
-  FormFeedback,
+  Box,
   Input,
-  Label,
-  CardFooter,
-  Row,
-  Col,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalFooter,
-} from "reactstrap";
-import CKEditor from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { observer } from "mobx-react";
-import TicketStore from "../../../stores/TicketStore";
-import UserStore from "../../../stores/UserStore";
+  Stack,
+  Button,
+  Select,
+  useToast,
+  FormLabel,
+  FormControl,
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import SunEditor from "suneditor-react";
+import "suneditor/dist/css/suneditor.min.css";
 const schema = {
   name: {
     isEmpty: false,
@@ -33,7 +24,7 @@ const schema = {
     min: 1,
     message: "Category is required",
   },
-  staff_id: {
+  staff: {
     isEmpty: false,
     min: 1,
     message: "Staff is required",
@@ -44,12 +35,17 @@ const schema = {
   },
 };
 
-const TicketForm = ({ mode, open, handleClose, initial_data }) => {
-  const tickStore = useContext(TicketStore);
-  const userStore = useContext(UserStore);
-  const { createTicket, updateTicket, sending, saved, toggleClose } = tickStore;
-  const { fetchUsers, userSelect: users } = userStore;
-  const [title, setTitle] = useState("Create Ticket");
+const TicketForm = ({
+  mode,
+  saved,
+  message,
+  error,
+  addTicket,
+  sending,
+  users,
+  initial_data,
+}) => {
+  const toast = useToast();
 
   const [formState, setFormState] = useState({
     values: {
@@ -57,7 +53,7 @@ const TicketForm = ({ mode, open, handleClose, initial_data }) => {
       name: "",
       category: "",
       user: "Admin",
-      staff_id: "",
+      staff: "",
       requester: "Staff",
       priority: "Low",
       description: "",
@@ -66,12 +62,9 @@ const TicketForm = ({ mode, open, handleClose, initial_data }) => {
     errors: {},
   });
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const { touched, errors, values, isValid } = formState;
   useEffect(() => {
     if (mode === "Edit") {
-      setTitle("Edit Ticket");
       let shouldSetData = typeof initial_data !== "undefined" ? true : false;
       if (shouldSetData) {
         const data = initial_data;
@@ -79,10 +72,10 @@ const TicketForm = ({ mode, open, handleClose, initial_data }) => {
           ...state,
           values: {
             ...state.values,
-            id: data && data.id,
+            id: data && data._id,
             name: data && data.name,
             category: data && data.category,
-            staff_id: data && data.staff_id,
+            staff: data && data.staff,
             description: data && data.description,
           },
         }));
@@ -97,7 +90,7 @@ const TicketForm = ({ mode, open, handleClose, initial_data }) => {
           name: "",
           category: "",
           user: "Admin",
-          staff_id: "",
+          staff: "",
           requester: "Staff",
           priority: "Low",
           description: "",
@@ -112,19 +105,14 @@ const TicketForm = ({ mode, open, handleClose, initial_data }) => {
       isValid:
         errors.name.error ||
         errors.category.error ||
-        errors.staff_id.error ||
+        errors.staff.error ||
         errors.description.error
           ? false
           : true,
       errors: errors || {},
     }));
-  }, [formState.values]);
-  useEffect(() => {
-    if (saved === true) {
-      resetForm();
-      toggleClose();
-    }
-  }, [saved]);
+  }, [values]);
+
   const handleChange = (event) => {
     event.persist();
     setFormState((formState) => ({
@@ -140,51 +128,63 @@ const TicketForm = ({ mode, open, handleClose, initial_data }) => {
     }));
   };
 
-  const handleStaff = (e) => {
-    if (e !== null) {
-      setFormState((state) => ({
-        ...state,
-        values: {
-          ...state.values,
-          staff_id: e.value,
-        },
-        touched: {
-          ...state.touched,
-          staff_id: true,
-        },
-      }));
-    } else {
-      setFormState((prev) => ({
-        ...prev,
-        values: {
-          ...prev.values,
-          staff_id: "",
-        },
-      }));
-    }
-  };
-  const onEditorStateChange = (e, editor) => {
-    const data = editor.getData();
-    setFormState((state) => ({
-      ...formState,
-      values: {
-        ...formState.values,
-        description: data,
-      },
-      touched: {
-        ...formState.touched,
-        description: true,
-      },
-    }));
-  };
-  const hasError = (field) =>
-    formState.touched[field] && formState.errors[field].error;
+  const hasError = (field) => touched[field] && errors[field].error;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mode === "Add"
-      ? createTicket(formState.values)
-      : updateTicket(formState.values);
+    mode === "Add" ? addTicket(values) : updateTicket(values);
+  };
+
+  useEffect(() => {
+    if (saved === true) {
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+      resetForm();
+      handleClose();
+    }
+    return () => {
+      reset("saved", false);
+      reset("message", "");
+      resetForm();
+    };
+  }, [saved]);
+
+  useEffect(() => {
+    if (error === true) {
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+    return () => {
+      reset("error", false);
+      reset("message", "");
+      reset("action", "");
+      resetForm();
+    };
+  }, [error]);
+  const handleContentChange = (e) => {
+    setFormState((state) => ({
+      ...state,
+      values: {
+        ...state.values,
+        description: e,
+      },
+      touched: {
+        ...state.touched,
+        description: true,
+      },
+    }));
   };
   const resetForm = () => {
     setFormState((prev) => ({
@@ -195,7 +195,7 @@ const TicketForm = ({ mode, open, handleClose, initial_data }) => {
         name: "",
         category: "",
         user: "Admin",
-        staff_id: "",
+        staff: "",
         requester: "Staff",
         priority: "Low",
         description: "",
@@ -204,158 +204,118 @@ const TicketForm = ({ mode, open, handleClose, initial_data }) => {
       errors: {},
     }));
   };
-  const closeBtn = (
-    <Button className="close" onClick={handleClose}>
-      &times;
-    </Button>
-  );
   return (
     <Fragment>
-      <Modal isOpen={open} toggle={handleClose}>
-        <ModalHeader toggle={handleClose} close={closeBtn}>
-          {title}
-        </ModalHeader>
-        <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-          <ModalBody>
-            <Card>
-              <CardBody>
-                <Row>
-                  <Col md="12">
-                    <FormGroup>
-                      <Label for="name">Subject</Label>
-                      <Input
-                        type="text"
-                        value={formState.values.name || ""}
-                        name="name"
-                        onChange={handleChange}
-                        placeholder="Ticket Subject"
-                        invalid={hasError("name")}
-                      />
-                      <FormFeedback>
-                        {hasError("name")
-                          ? formState.errors.name.message
-                          : null}
-                      </FormFeedback>
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md="4">
-                    <FormGroup>
-                      <Label for="category">Related Services</Label>
-                      <Input
-                        type="select"
-                        value={formState.values.category || ""}
-                        name="category"
-                        onChange={handleChange}
-                        placeholder="Related Services"
-                      >
-                        <option value="">Select One</option>
-                        <option value="Asset">Asset</option>
-                        <option value="Order">Order</option>
-                      </Input>
-                    </FormGroup>
-                  </Col>
-                  <Col md="4">
-                    <FormGroup>
-                      <Label for="priority">Priority</Label>
-                      <Input
-                        type="select"
-                        value={formState.values.priority || ""}
-                        name="priority"
-                        onChange={handleChange}
-                      >
-                        <option value="High">High</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Low">Low</option>
-                      </Input>
-                    </FormGroup>
-                  </Col>
-
-                  <Col md="12">
-                    <FormGroup>
-                      <Label for="staff_id">Staff</Label>
-                      <Select
-                        placeholder="Select Option"
-                        name="staff_id"
-                        value={
-                          users.filter(
-                            (obj) => obj.value === formState.values.staff_id
-                          ) || ""
-                        }
-                        onChange={handleStaff}
-                        isLoading={users && users.length > 0 ? false : true}
-                        isClearable={true}
-                        options={users}
-                      />
-                      <span
-                        className={hasError("staff_id") ? "text-danger" : null}
-                      >
-                        {hasError("staff_id")
-                          ? formState.errors.staff_id &&
-                            formState.errors.staff_id.message
-                          : null}
-                      </span>
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md="12">
-                    <FormGroup
-                      className={hasError("description") ? "has-danger" : null}
-                    >
-                      <Label for="description">Description</Label>
-                      <CKEditor
-                        editor={ClassicEditor}
-                        data={formState.values.description}
-                        // config={configuration}
-                        onChange={onEditorStateChange}
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-              </CardBody>
-              <CardFooter>
-                <Button
-                  color="primary"
-                  disabled={!formState.isValid || sending}
-                  type="submit"
+      <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+        <Stack spacing="24px" boxShadow="base" p="6" rounded="md" bg="white">
+          <Box>
+            <FormControl isRequired my="3" isInvalid={hasError("name")}>
+              <FormLabel htmlFor="name">Subject</FormLabel>
+              <Input
+                type="text"
+                value={values.name || ""}
+                name="name"
+                id="name"
+                onChange={handleChange}
+                placeholder="Ticket Subject"
+              />
+              <FormErrorMessage>
+                {hasError("name") ? errors.name && errors.name.message : null}
+              </FormErrorMessage>
+            </FormControl>
+          </Box>
+          <Stack spacing="24px" direction={["column", "row"]}>
+            <Box>
+              <FormControl my="3">
+                <FormLabel htmlFor="category">Related Services</FormLabel>
+                <Select
+                  value={formState.values.category || ""}
+                  placeholder="Related Services"
+                  name="category"
+                  id="category"
+                  onChange={handleChange}
                 >
-                  {sending ? (
-                    <span>
-                      {" "}
-                      Saving data <i className="fa fa-spinner"></i>
-                    </span>
-                  ) : (
-                    "Submit Ticket"
-                  )}
-                </Button>
-              </CardFooter>
-            </Card>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={handleClose}>
-              Close
-            </Button>{" "}
-            <Button
-              color="primary"
-              disabled={!formState.isValid || sending }
-              type="submit"
-            >
-              {sending ? (
-                <span>
-                  {" "}
-                  Saving data <i className="fa fa-spinner"></i>
-                </span>
-              ) : (
-                "Save changes"
-              )}
-            </Button>
-          </ModalFooter>
-        </form>
-      </Modal>
+                  <option value="Asset">Asset</option>
+                  <option value="Order">Order</option>
+                </Select>
+              </FormControl>
+            </Box>
+
+            <Box>
+              <FormControl my="3">
+                <FormLabel htmlFor="priority">Priority</FormLabel>
+                <Select
+                  value={formState.values.priority || ""}
+                  placeholder="Priority"
+                  name="priority"
+                  id="priority"
+                  onChange={handleChange}
+                >
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </Select>
+              </FormControl>
+            </Box>
+            <Box>
+              <FormControl isRequired my="3">
+                <FormLabel htmlFor="staff">Staff</FormLabel>
+                <Select
+                  placeholder="Select Option"
+                  name="staff"
+                  value={formState.values.staff || ""}
+                  onChange={handleStaff}
+                >
+                  {users &&
+                    users.map((user) => {
+                      <option key={user._id} value={user._id}>
+                        {user.firstname + " " + user.lastname}
+                      </option>;
+                    })}
+                </Select>
+              </FormControl>
+            </Box>
+          </Stack>
+          <Box>
+            <FormControl isRequired my="3" isInvalid={hasError("description")}>
+              <FormLabel htmlFor="description">Description</FormLabel>
+              <SunEditor
+                onChange={handleContentChange}
+                name="description"
+                setContents={formState.values.description}
+              />
+              <FormErrorMessage>
+                {hasError("description")
+                  ? errors.description && errors.description.message
+                  : null}
+              </FormErrorMessage>
+            </FormControl>
+          </Box>
+        </Stack>
+        <Button variant="outline" disabled={sending} mr={3} onClick={resetForm}>
+          Reset
+        </Button>
+        <Button
+          disabled={!isValid || sending}
+          colorScheme="blue"
+          onClick={handleSubmit}
+          isLoading={sending}
+          bg="brand.mainAccent"
+          color="brand.white"
+          variant="ghost"
+          _hover={{
+            borderColor: "brand.mainAccent",
+            bg: "brand.white",
+            color: "brand.mainAccent",
+            boxShadow: "md",
+          }}
+          _focus={{}}
+        >
+          Submit Ticket
+        </Button>
+      </form>
     </Fragment>
   );
 };
 
-export default observer(TicketForm);
+export default TicketForm;

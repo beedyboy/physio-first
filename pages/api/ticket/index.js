@@ -38,6 +38,7 @@ const addTicket = Authenticated(async (req, res) => {
     start_date,
     end_date,
     description,
+    user,
     purchased_date,
   } = req.body;
   try {

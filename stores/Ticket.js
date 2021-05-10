@@ -35,6 +35,7 @@ class Ticket {
       addTicket: action,
       updateTicket: action,
       getTicketById: action,
+      toggleStatus: action,
       removeTicket: action,
       resetProperty: action,
     });
@@ -49,7 +50,7 @@ class Ticket {
   };
   fetchMyTicket = () => {
     this.loading = true;
-    backend.get("ticket/myticket").then((res) => {
+    backend.get("ticket").then((res) => {
       this.staffTickets = res.data;
       this.loading = false;
     });
@@ -57,7 +58,7 @@ class Ticket {
   addTicket = (data) => {
     try {
       this.sending = true;
-      backend.post("ticket/myticket", data).then((res) => {
+      backend.post("ticket", data).then((res) => {
         this.sending = false;
         if (res.status === 201) {
           this.fetchMyTicket();
@@ -138,11 +139,13 @@ class Ticket {
   toggleStatus = (data) => {
     try {
       this.sending = true;
+      this.action = "";
       backend.put("ticket/admin", data).then((res) => {
         this.sending = false;
         if (res.status === 200) {
           this.fetchTicket();
           this.message = res.data.message;
+          this.action = "statusChanged"
         } else {
           this.message = res.data.error;
         }

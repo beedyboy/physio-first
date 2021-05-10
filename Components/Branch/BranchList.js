@@ -32,39 +32,37 @@ const BranchList = ({ data, setMode, removeData, rowData, toggle }) => {
       name: "Created",
       selector: "createdAt",
       sortable: true,
-      hidden: 'md',
+      hidden: "md",
     },
     {
       name: "Actions",
       sortable: true,
       cell: (row) => (
         <Wrap spacing="20px">
-         <WrapItem>
-         <IconButton
-            variant="outline"
-            colorScheme="teal"
-            aria-label="Edit Branch"
-            fontSize="20px"
-            icon={<MdEdit />}
-            onClick={(e) => editData(e, row)}
-          />
-           </WrapItem> 
-         <WrapItem>
-             <IconButton
-            variant="outline"
-            colorScheme="teal"
-            aria-label="Edit Branch"
-            fontSize="20px"
-            icon={<MdDelete />}
-            onClick={(key) => {
-              if (window.confirm("Delete this branch?")) {
-                deleteData(row._id);
-              }
-            }}
-          />
-           </WrapItem> 
-
-        
+          <WrapItem>
+            <IconButton
+              variant="outline"
+              colorScheme="teal"
+              aria-label="Edit Branch"
+              fontSize="20px"
+              icon={<MdEdit />}
+              onClick={(e) => editData(e, row)}
+            />
+          </WrapItem>
+          <WrapItem>
+            <IconButton
+              variant="outline"
+              colorScheme="teal"
+              aria-label="Edit Branch"
+              fontSize="20px"
+              icon={<MdDelete />}
+              onClick={(key) => {
+                if (window.confirm("Delete this branch?")) {
+                  deleteData(row._id);
+                }
+              }}
+            />
+          </WrapItem>
         </Wrap>
       ),
     },

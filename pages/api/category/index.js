@@ -31,7 +31,7 @@ const saveCategory = async (req, res) => {
     if (!name) {
       return res.status(422).json({ error: "Please add all the fields" });
     }
-    const category = await DB.Category({
+      await DB.Category({
       name,
       description,
     }).save();
@@ -42,11 +42,9 @@ const saveCategory = async (req, res) => {
   }
 };
 const updateCategory = async (req, res) => {
-  const data = req.body;
-  console.log(data.name)
+  const data = req.body; 
   const nameRegex = new RegExp(data.name, "i");
-  const check_record = await DB.Category.findOne({ name: nameRegex });
-  console.log({ check_record });
+  const check_record = await DB.Category.findOne({ name: nameRegex }); 
   const exist = check_record
     ? check_record && check_record._id.toString() === data.id
       ? false
@@ -56,11 +54,7 @@ const updateCategory = async (req, res) => {
   if (exist === false) {
     await DB.Category.findById(data.id, (error, doc) => {
       if (!error) {
-        // if (check_record && check_record.name !== data.name) {
-        //   doc.name = data.name;
-        // } 
-         doc.name = data.name;
-       
+        doc.name = data.name;
         doc.description = data.description;
         doc.status = data.status;
         doc.save();

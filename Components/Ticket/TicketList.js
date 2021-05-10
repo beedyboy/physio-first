@@ -1,14 +1,20 @@
 import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
+import { Badge, IconButton, Wrap, WrapItem  } from "@chakra-ui/react";
 import Link from "next/link"; 
+import { MdDelete } from "react-icons/md";
 
-const TicketList = ({data}) => { 
+const TicketList = ({data, removeData}) => { 
  
   const columns = [
     {
-      name: "Subject",
-      selector: "title",
+      name: "Subject", 
       sortable: true,
+      cell: (row) => {
+        <Link href={`/ticket/${row.id}`}>
+           <a> {row.title}</a>
+          </Link>
+      }
     },
     {
       name: "Ticket date",
@@ -25,14 +31,33 @@ const TicketList = ({data}) => {
       sortable: true,
       cell: (row) => (
         <Fragment>
-          <Link href={`/ticket/${row.id}/view`}>
-           <a> View</a>
-          </Link>
+          
+          <Wrap spacing="20px">
+        
+         <WrapItem>
+             <IconButton
+            variant="outline"
+            colorScheme="teal"
+            aria-label="Delete ticket"
+            fontSize="20px"
+            icon={<MdDelete />}
+            onClick={(key) => {
+              if (window.confirm("Delete this ticket?")) {
+                deleteData(row._id);
+              }
+            }}
+          />
+           </WrapItem> 
+
+        
+        </Wrap>
         </Fragment>
       ),
     },
   ];
-
+  const deleteData = (id) => {
+    removeData(id);
+  };
   return (
     <Fragment>
       <DataTable

@@ -8,9 +8,9 @@ const TicketSummary = memo(({ row }) => {
       <Box my={1}>
         <Text as="span" className="text-muted">
           {" "}
-          #{row.id}
+          #{row._id}
         </Text>
-        <Link href={`/ticket/${row.id}`}>
+        <Link href={`/ticket/${row._id}`}>
           <a> {row.title}</a>
         </Link>
         <Divider />
