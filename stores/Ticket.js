@@ -78,7 +78,7 @@ class Ticket {
   updateTicket = (data) => {
     try {
       this.sending = true;
-      backend.post("ticket/update", data).then((res) => {
+      backend.post("ticket", data).then((res) => {
         this.sending = false;
         if (res.status === 200) {
           this.fetchTicket();
