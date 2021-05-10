@@ -63,10 +63,12 @@ class Ticket {
          this.message = res.data.message; 
           this.saved = true;
         } else {
+          this.message = res.data.error; 
           this.error = true;
         }
       });
     } catch (err) {
+      this.sending = false;
       if (err.response.status === 500) {
         console.log("There was a problem with the server");
       } else {

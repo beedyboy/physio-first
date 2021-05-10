@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import MobileLayout from "./MobileLayout";
 import { MdCheckCircle, MdDashboard, MdSettings } from "react-icons/md";
 import { FaUmbrellaBeach } from "react-icons/fa";
+import { GrTicket, GrResources } from "react-icons/gr";
 import Utility from "../../services/UtilityService";
 
  
@@ -35,6 +36,16 @@ const router  = useRouter();
       label: "Dashboard",
       href: "/",
       icon: <MdDashboard />,
+    },
+    {
+      label: "Asset",
+      href: "/asset",
+      icon: <GrResources />,
+    },
+    {
+      label: "Ticket",
+      href: "/ticket",
+      icon: <GrTicket />,
     },
     {
       label: "System",
