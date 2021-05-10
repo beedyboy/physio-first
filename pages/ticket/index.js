@@ -31,4 +31,4 @@ function index(props) {
   );
 }
 
-export default index;
+export default observer(index);

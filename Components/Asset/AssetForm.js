@@ -47,8 +47,7 @@ const AssetForm = ({
   open,
   reset,
   saved,
-  error,
-  exist, 
+  error, 
   sending,
   message, 
   getCategoryBySub,
@@ -472,7 +471,7 @@ const AssetForm = ({
                 Cancel
               </Button>
               <Button
-                disabled={!isValid || sending || exist}
+                disabled={!isValid || sending}
                 colorScheme="blue"
                 onClick={handleSubmit}
                 isLoading={sending}

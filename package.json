@@ -37,8 +37,10 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-spinners": "^0.10.6",
     "short-id": "^0.1.0-1",
-    "styled-components": "^5.2.3"
-  },  "devDependencies": {
+    "styled-components": "^5.2.3",
+    "suneditor-react": "^2.16.5"
+  },
+  "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-decorators": "^7.12.12"
   },

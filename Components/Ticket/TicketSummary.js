@@ -10,7 +10,7 @@ const TicketSummary = memo(({ row }) => {
           {" "}
           #{row.id}
         </Text>
-        <Link href={`/ticket/${row.id}`} className="text-info">
+        <Link href={`/ticket/${row.id}`}>
           <a> {row.title}</a>
         </Link>
         <Divider />
