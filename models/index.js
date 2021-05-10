@@ -11,7 +11,7 @@ import Allocation from './Allocation';
 import Ticket from './Ticket';
 import Leave from './Leave';
 import Vacation from './Vacation';
-import Converstaion from './Converstaion';
+import Conversation from './Conversation';
 
 export default {
     User,
@@ -25,6 +25,6 @@ export default {
     Vacation,
     Ticket,
     Allocation,
-    Converstaion,
+    Conversation,
     SubCategory
 };

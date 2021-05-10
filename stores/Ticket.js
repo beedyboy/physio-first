@@ -8,9 +8,11 @@ class Ticket {
   deleting = false;
   sending = false;
   saved = false;
+  removed = false;
   ticket = [];
   tickets = [];
   staffTickets = [];
+  message = "";
 
   constructor() {
     makeObservable(this, {
@@ -20,8 +22,7 @@ class Ticket {
       deleting: observable,
       saved: observable, 
       error: observable, 
-      info: computed,
-      stats: computed, 
+      info: computed,  
       saved: observable,
       ticket: observable,
       staffTickets: observable,
@@ -187,4 +188,4 @@ class Ticket {
   }
 }
 
-export default createContext(new Ticket());
+export default Ticket;

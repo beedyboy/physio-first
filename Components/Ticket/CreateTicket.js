@@ -47,6 +47,9 @@ const toast = useToast();
     touched: {},
     errors: {},
   });
+
+
+  const { touched, errors, values, isValid } = formState;
   useEffect(() => {
     const errors = dataHero.validate(schema, formState.values);
     setFormState((formState) => ({
@@ -57,7 +60,7 @@ const toast = useToast();
           : true,
       errors: errors || {},
     }));
-  }, [formState.values]);
+  }, [values]);
   useEffect(() => {
     if (saved === true) {
       toast({
@@ -74,8 +77,7 @@ const toast = useToast();
     return () => {
       reset("saved", false);
       reset("message", ""); 
-      resetForm();
-      handleClose();
+      resetForm(); 
     };
   }, [saved]);
 
@@ -94,8 +96,7 @@ const toast = useToast();
       reset("error", false);
       reset("message", "");
       reset("action", "");
-      resetForm();
-      handleClose();
+      resetForm(); 
     };
   }, [error]);
 
@@ -235,9 +236,9 @@ const toast = useToast();
                 variant="outline"
                 disabled={sending}
                 mr={3}
-                onClick={handleClose}
+                onClick={resetForm}
               >
-                Cancel
+                Reset
               </Button>
               <Button
                 disabled={!isValid || sending}

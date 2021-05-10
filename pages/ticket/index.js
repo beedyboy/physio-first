@@ -15,6 +15,7 @@ function index(props) {
     addTicket,
     sending,
     saved,
+    message,
     fetchMyTicket,
     myTickets,
     error,
@@ -49,7 +50,7 @@ function index(props) {
               </ButtonGroup>
               <Box w="100%">
                 {/* pages shows here */}
-                <Box d={page === "Home" ? "flex" : "none"}>
+                <Box d={page === "home" ? "flex" : "none"}>
                   <TicketHome />
                 </Box>
                 <Box d={page === "view" ? "flex" : "none"}>
