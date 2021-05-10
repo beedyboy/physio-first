@@ -30,6 +30,7 @@ const AssetList = ({
       name: "Date",
       selector: "purchased_date",
       sortable: true,
+      hidden: "sm",
     },
     {
       name: "Price",
@@ -45,7 +46,7 @@ const AssetList = ({
       name: "Created",
       selector: "createdAt",
       sortable: true,
-      hide: "md",
+      hidden: "sm",
     },
     {
       name: "Actions",

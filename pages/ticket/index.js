@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import Head from "next/head";
-import { Flex, Button, Box, ButtonGroup, Heading } from "@chakra-ui/react";
+import { Flex, Button, Box, ButtonGroup, Heading, Text } from "@chakra-ui/react";
 import Layout from "../../templates/Private/Layout";
 import { useMobxStores } from "../../stores/stores";
 import { CgViewList, CgPlayListAdd } from "react-icons/cg";
@@ -21,6 +21,7 @@ function index(props) {
     myTickets: tickets,
     removeTicket,
     error,
+    resetProperty
   } = ticketStore;
   useEffect(() => {
     fetchMyTicket();
@@ -35,18 +36,24 @@ function index(props) {
         <title>Physio First | Ticket</title>
       </Head>
       <Layout>
-        <Flex direction={["column", "row"]} justifyContent="space-between">
-          <Box width="30%">
-            {tickets &&
+        <Flex direction={["column", "row"]} align="space-between" justifyContent="space-between">
+          <Box width="30%" mr={1} boxShadow="base" p="6" rounded="md" bg="white">
+          <Text fontWeight="bolder" fontSize="sm">Recent Ticket(s)</Text>
+            {tickets && tickets.length === 0 ? (
+              <Text mt={2} fontWeight="normal">No available ticket </Text>
+            ) : (
+              tickets &&
               tickets
                 .slice(0, 5)
                 .map((ticket) => (
                   <TicketSummary key={ticket._id} row={ticket} />
-                ))}
+                ))
+            )}
           </Box>
-          <Box flex="1">
+          <Box flex="1" ml={2}>
             <Heading as="h1">Ticket Management</Heading>
             <Flex
+            mt={2}
               direction="column"
               align="space-between"
               justifyContent="space-between"
@@ -81,6 +88,7 @@ function index(props) {
                     sending={sending}
                     message={message}
                     error={error}
+                    reset={resetProperty}
                   />
                 </Box>
               </Box>

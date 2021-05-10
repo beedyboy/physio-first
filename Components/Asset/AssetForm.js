@@ -47,9 +47,9 @@ const AssetForm = ({
   open,
   reset,
   saved,
-  error, 
+  error,
   sending,
-  message, 
+  message,
   getCategoryBySub,
   categorysubs,
   createAsset,
@@ -60,7 +60,7 @@ const AssetForm = ({
 }) => {
   const toast = useToast();
   const [title, setTitle] = useState("Add Asset");
-  
+
   const [formState, setFormState] = useState({
     values: {
       id: "",
@@ -88,15 +88,15 @@ const AssetForm = ({
       let shouldSetData = typeof initial_data !== "undefined" ? true : false;
       if (shouldSetData) {
         const data = initial_data;
-        getSubCategory(data.cat_id);
+        getSubCategory(data && data.sub_id && data.sub_id.cat_id);
         setFormState((state) => ({
           ...state,
           values: {
             ...state.values,
-            id: data && data.id,
+            id: data && data._id,
             name: data && data.title,
             condition: data && data.condition,
-            cat_id: data && data.cat_id,
+            cat_id: data && data.sub_id && data.sub_id.cat_id,
             sub_id: data && data.sub_id,
             purchased_price: data && data.purchased_price,
             purchased_date: data && data.purchased_date,
@@ -107,7 +107,7 @@ const AssetForm = ({
             description: data && data.description,
           },
         }));
-        handleButtonTab(data.condition);
+        handleRadioChange(data.condition);
       }
     }
     return () => {
@@ -137,8 +137,6 @@ const AssetForm = ({
     }));
   }, [values]);
 
- 
-
   const handleChange = (event) => {
     event.persist();
     setFormState((formState) => ({
@@ -156,11 +154,21 @@ const AssetForm = ({
     if (event.target.name === "cat_id") {
       getSubCategory(event.target.value);
     }
-    // if (event.target.name === "email") {
-    //   confirm(event.target.value);
-    // }
+  }; 
+   const handleRadioChange = (e) => {
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        condition: e,
+      },
+      touched: {
+        ...formState.touched,
+        condition: true,
+      },
+    }));
   };
-  const getSubCategory = (cat_id) => { 
+  const getSubCategory = (cat_id) => {
     setFormState((prev) => ({
       ...prev,
       values: {
@@ -168,7 +176,7 @@ const AssetForm = ({
         sub_id: "",
       },
     }));
-    if (cat_id.length !== "") {
+    if (cat_id !== "") {
       getCategoryBySub(cat_id);
     }
   };
@@ -187,7 +195,7 @@ const AssetForm = ({
     }
     return () => {
       reset("saved", false);
-      reset("message", ""); 
+      reset("message", "");
       resetForm();
       handleClose();
     };
@@ -251,14 +259,10 @@ const AssetForm = ({
     mode === "Add"
       ? createAsset(formState.values)
       : updateAsset(formState.values);
-  }; 
+  };
   return (
     <Fragment>
-      <Drawer
-        isOpen={open}
-        placement="right" 
-        onClose={handleClose}
-      >
+      <Drawer isOpen={open} placement="right" onClose={handleClose}>
         <DrawerOverlay>
           <DrawerContent>
             <DrawerCloseButton />
@@ -294,9 +298,9 @@ const AssetForm = ({
                       name="cat_id"
                       id="cat_id"
                       onChange={handleChange}
-                    > 
+                    >
                       {categories &&
-                        bracategoriesnches.map((val, index) => (
+                        categories.map((val, index) => (
                           <option value={val._id} key={index}>
                             {val.name}
                           </option>
@@ -371,7 +375,7 @@ const AssetForm = ({
                   <FormControl my="3">
                     <FormLabel htmlFor="condition">Condition</FormLabel>
                     <RadioGroup
-                      onChange={handleChange}
+                      onChange={handleRadioChange}
                       value={values.condition}
                     >
                       <Stack spacing={4} direction="row">
@@ -387,7 +391,7 @@ const AssetForm = ({
                       <FormControl my="3">
                         <FormLabel htmlFor="start_date">Start Date</FormLabel>
                         <Input
-                          type="text"
+                          type="date"
                           value={values.start_date || ""}
                           name="start_date"
                           id="start_date"
@@ -401,7 +405,7 @@ const AssetForm = ({
                       <FormControl my="3">
                         <FormLabel htmlFor="end_date">End Date</FormLabel>
                         <Input
-                          type="text"
+                          type="date"
                           value={values.end_date || ""}
                           name="end_date"
                           id="end_date"
@@ -435,7 +439,7 @@ const AssetForm = ({
                         Purchased date
                       </FormLabel>
                       <Input
-                        type="text"
+                        type="date"
                         value={values.purchased_date || ""}
                         name="purchased_date"
                         id="purchased_date"

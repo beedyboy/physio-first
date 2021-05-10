@@ -15,8 +15,7 @@ export default async (req, res) => {
 
 const getTickets = async (req, res) => {
   try {
-    const assets = await DB.Ticket.find({})
-      .populate("sub_id", "sub_name -_id cat_id")
+    const assets = await DB.Ticket.find({}) 
       .populate("assigned_to", "firstname lastname")
       .populate("staff", "firstname lastname");
     return res.status(200).json(assets);

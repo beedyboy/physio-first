@@ -1,6 +1,7 @@
 import DB from "../../../models";
 import connectDB from "../../../services/database";
 import Authenticated from "../../../helpers/Authenticated";
+import Assistant from "../../../helpers/Assistant";
 connectDB();
 
 export default async (req, res) => {
@@ -17,11 +18,10 @@ export default async (req, res) => {
 const getTickets = Authenticated(async (req, res) => {
   try {
     const { userId } = req;
-    const assets = await DB.Ticket.find({ staff: userId })
-      .populate("sub_id", "sub_name -_id cat_id")
+    const tickets = await DB.Ticket.find({ staff: userId }) 
       .populate("assigned_to", "firstname lastname")
       .populate("staff", "firstname lastname");
-    return res.status(200).json(assets);
+    return res.status(200).json(tickets);
   } catch (err) {
     console.log(err);
   }
@@ -29,39 +29,44 @@ const getTickets = Authenticated(async (req, res) => {
 
 const addTicket = Authenticated(async (req, res) => {
   const {
-    sub_id,
     name: title,
-    purchased_price,
-    serial,
-    company_name,
-    condition,
-    start_date,
-    end_date,
-    description,
-    user,
-    purchased_date,
+      description,
+      email,
+      requester,
+      category,
+      priority,
+      user,
   } = req.body;
   try {
-    if (!sub_id || !title) {
+    if (!description || !title) {
       return res.status(422).json({ error: "Please add all the fields" });
     }
-
+    const ticket_date = Assistant.useDate();
     const { userId: staff } = req;
-
-    await DB.Ticket({
-      sub_id,
-      title,
-      purchased_price,
-      serial,
-      company_name,
-      condition,
-      start_date,
-      end_date,
-      staff,
-      description,
-      purchased_date,
-    }).save();
-    res.status(201).json({ message: "New asset added successfully" });
+if(user === "Admin") {
+  await DB.Ticket({
+    title,
+    description, 
+    staff,
+    ticket_date,
+    requester,
+    category,
+    priority,
+  }).save();
+} else {
+  await DB.Ticket({
+    title,
+    description, 
+    email,
+    staff,
+    ticket_date,
+    requester,
+    category,
+    priority,
+  }).save();
+}
+   
+    res.status(201).json({ message: "New ticket added successfully" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "internal server error" });

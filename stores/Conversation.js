@@ -8,14 +8,14 @@ class Conversation {
   deleting = false;
   sending = false;
   loading = false;
+  message = "";
   conversations = [];
 
   constructor() {
     makeObservable(this, {
       message: observable,
       sending: observable,
-      removed: observable,
-      checking: observable,
+      removed: observable, 
       deleting: observable,
       sending: observable,
       error: observable,

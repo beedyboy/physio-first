@@ -68,7 +68,9 @@ class Ticket {
           this.message = res.data.error;
           this.error = true;
         }
-      });
+      }).catch((error) => {
+        this.sending = false;
+      })
     } catch (err) {
       this.sending = false;
       if (err.response.status === 500) {

@@ -30,7 +30,7 @@ const schema = {
   },
 };
 
-const CreateTicket = ({ saved, message, error, addTicket, sending }) => {
+const CreateTicket = ({ saved, message, error, reset, addTicket, sending }) => {
   const toast = useToast();
   const [formState, setFormState] = useState({
     values: {
@@ -70,8 +70,7 @@ const CreateTicket = ({ saved, message, error, addTicket, sending }) => {
         isClosable: true,
         position: "top-right",
       });
-      resetForm();
-      handleClose();
+      resetForm(); 
     }
     return () => {
       reset("saved", false);
@@ -208,12 +207,12 @@ const CreateTicket = ({ saved, message, error, addTicket, sending }) => {
             </Box>
             <Box>
               <FormControl isRequired my="3">
-                <FormLabel htmlFor="name">Email Address</FormLabel>
+                <FormLabel htmlFor="email">Email Address</FormLabel>
                 <Input
                   type="email"
                   value={formState.values.email || ""}
-                  name="name"
-                  id="name"
+                  name="email"
+                  id="email"
                   onChange={handleChange}
                   placeholder="Email Address"
                 />
@@ -222,7 +221,7 @@ const CreateTicket = ({ saved, message, error, addTicket, sending }) => {
           </Stack>
           <Box>
             <FormControl my="3">
-              <FormLabel htmlFor="name">Description</FormLabel>
+              <FormLabel htmlFor="description">Description</FormLabel>
               <SunEditor
                 onChange={handleContentChange}
                 name="description"

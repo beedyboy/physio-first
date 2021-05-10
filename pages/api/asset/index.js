@@ -69,7 +69,7 @@ const updateAsset = async (req, res) => {
     await DB.Asset.findById(data.id, (error, doc) => {
       if (!error) { 
         doc.sub_id = data.sub_id;
-        doc.title = data.title;
+        doc.title = data.name;
         doc.purchased_price = data.purchased_price;
         doc.serial = data.serial;
         doc.company_name = data.company_name;
@@ -79,9 +79,7 @@ const updateAsset = async (req, res) => {
         doc.description = data.description; 
         doc.purchased_date = data.purchased_date;  
         doc.save();
-        res.status(200).json({
-          exist,
-          check_record,
+        res.status(200).json({  
           message: "Asset updated successfully",
         }); 
     }

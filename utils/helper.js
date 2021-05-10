@@ -13,12 +13,6 @@ const helper = {
     return slug;
   },
 
-  useDate: () => {
-    const today = new Date();
-    var mm = String(today.getMonth() + 1).padStart(2, "0");
-    var dd = String(today.getDate()).padStart(2, "0");
-    return today.getFullYear() + "/" + mm + "/" + dd;
-  },
 
   getRandomNo: () => {
     var i = new Date().getTime();
