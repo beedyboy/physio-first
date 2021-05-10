@@ -31,7 +31,7 @@ class Ticket {
       fetchTicket: action,
       fetchMyTicket: action,
       assignTicket: action,
-      createTicket: action,
+      addTicket: action,
       updateTicket: action,
       getTicketById: action,
       removeTicket: action, 
@@ -42,24 +42,23 @@ class Ticket {
     this.loading = true;
     backend.get("ticket").then((res) => {
       // console.log(res.data)
-      this.tickets = res.data.data;
+      this.tickets = res.data;
       this.loading = false;
     });
   };
   fetchMyTicket = () => {
     this.loading = true;
     backend.get("ticket/myticket").then((res) => {
-      this.staffTickets = res.data.data;
+      this.staffTickets = res.data;
       this.loading = false;
     });
   };
-  createTicket = (data) => {
+  addTicket = (data) => {
     try {
       this.sending = true;
-      backend.post("ticket", data).then((res) => {
+      backend.post("ticket/myticket", data).then((res) => {
         this.sending = false;
-        if (res.status === 201) {
-          this.fetchTicket();
+        if (res.status === 201) { 
           this.fetchMyTicket();
          this.message = res.data.message; 
           this.saved = true;
@@ -81,7 +80,7 @@ class Ticket {
       this.sending = true;
       backend.post("ticket/update", data).then((res) => {
         this.sending = false;
-        if (res.data === 200) {
+        if (res.status === 200) {
           this.fetchTicket();
          this.message = res.data.message;
          
@@ -104,8 +103,8 @@ class Ticket {
           this.loading = false;
           if (res.data === 500) {
             // Utility.logout();
-          } else if (res.data === 200) {
-            this.ticket = res.data.data[0];
+          } else if (res.status === 200) {
+            this.ticket = res.data;
           }
         })
         .catch((err) => {
@@ -122,7 +121,7 @@ class Ticket {
       this.sending = true;
       backend.post("ticket/assign", data).then((res) => {
         this.sending = false;
-        if (res.data === 200) {
+        if (res.status === 200) {
           this.fetchTicket();
          this.message = res.data.message;
          
@@ -140,7 +139,7 @@ class Ticket {
       this.sending = true;
       backend.post("ticket/status", data).then((res) => {
         this.sending = false;
-        if (res.data === 200) {
+        if (res.status === 200) {
           this.fetchTicket();
          this.message = res.data.message;
          

@@ -1,14 +1,9 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
-import Link from "next/link";
-import { useMobxStores } from "../../stores/stores";
+import Link from "next/link"; 
 
-const TicketList = () => {
-  const { ticketStore } = useMobxStores();
-  const { fetchMyTicket, myTickets: data } = ticketStore;
-  useEffect(() => {
-    fetchMyTicket();
-  }, []);
+const TicketList = ({data}) => { 
+ 
   const columns = [
     {
       name: "Subject",

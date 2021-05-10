@@ -10,12 +10,9 @@ import {
   FormLabel,
   FormControl,
   FormErrorMessage,
-} from "@chakra-ui/react"; 
-import { observer } from "mobx-react-lite";
-
+} from "@chakra-ui/react";  
 import SunEditor from "suneditor-react";
-import "suneditor/dist/css/suneditor.min.css"; 
-import { useMobxStores } from '../../stores/stores';
+import "suneditor/dist/css/suneditor.min.css";  
 const schema = {
   name: {
     isEmpty: false,
@@ -33,10 +30,8 @@ const schema = {
   },
 };
 
-const CreateTicket = () => {
-  const {ticketStore} = useMobxStores();
-  const { createTicket, sending, saved, toggleClose } = ticketStore;
-
+const CreateTicket = ({saved, message, error, addTicket, sending}) => { 
+const toast = useToast();
   const [formState, setFormState] = useState({
     values: {
       id: "",
@@ -65,10 +60,45 @@ const CreateTicket = () => {
   }, [formState.values]);
   useEffect(() => {
     if (saved === true) {
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
       resetForm();
-      toggleClose();
+      handleClose();
     }
+    return () => {
+      reset("saved", false);
+      reset("message", ""); 
+      resetForm();
+      handleClose();
+    };
   }, [saved]);
+
+  useEffect(() => {
+    if (error === true) {
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+    return () => {
+      reset("error", false);
+      reset("message", "");
+      reset("action", "");
+      resetForm();
+      handleClose();
+    };
+  }, [error]);
+
   const handleChange = (event) => {
     event.persist();
     setFormState((formState) => ({
@@ -102,7 +132,7 @@ const CreateTicket = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createTicket(formState.values);
+    addTicket(formState.values);
   };
   const resetForm = () => {
     setFormState((prev) => ({
@@ -232,4 +262,4 @@ const CreateTicket = () => {
   );
 };
 
-export default observer(CreateTicket);
+export default CreateTicket;
