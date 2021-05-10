@@ -4,7 +4,7 @@ import Authenticated from "../../../helpers/Authenticated";
 connectDB();
 
 export default async (req, res) => {
-  switch (req.method) { 
+  switch (req.method) {
     case "GET":
       await getTickets(req, res);
       break;
@@ -14,16 +14,18 @@ export default async (req, res) => {
   }
 };
 
-
 const getTickets = Authenticated(async (req, res) => {
   try {
     const { userId } = req;
-    const assets = await DB.Ticket.find({staff: userId}).populate("sub_id", "sub_name -_id cat_id");
+    const assets = await DB.Ticket.find({ staff: userId })
+      .populate("sub_id", "sub_name -_id cat_id")
+      .populate("assigned_to", "firstname lastname")
+      .populate("staff", "firstname lastname");
     return res.status(200).json(assets);
   } catch (err) {
     console.log(err);
   }
-}); 
+});
 
 const addTicket = Authenticated(async (req, res) => {
   const {
@@ -39,10 +41,7 @@ const addTicket = Authenticated(async (req, res) => {
     purchased_date,
   } = req.body;
   try {
-    if (
-      !sub_id ||
-      !title  
-    ) {
+    if (!sub_id || !title) {
       return res.status(422).json({ error: "Please add all the fields" });
     }
 

@@ -157,7 +157,7 @@ const toast = useToast();
   return (
     <Fragment>
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
-        <Stack spacing="24px">
+        <Stack spacing="24px"  boxShadow="base" p="6" rounded="md" bg="white">
           <Box>
             <FormControl isRequired my="3" isInvalid={hasError("name")}>
               <FormLabel htmlFor="name">Subject</FormLabel>

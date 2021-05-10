@@ -1,24 +1,25 @@
-
-import React from 'react' 
-import { Box, Divider, Heading } from '@chakra-ui/react'
-import Link from 'next/link'
+import React from "react";
+import { Box, Divider, Text } from "@chakra-ui/react";
+import Link from "next/link";
 
 const TicketHome = () => {
-    return (
-        <div>
-            <Box>
-        <Heading as="h1">Ticket Management</Heading>
-        <p className="lead">Your satisfaction is our joy</p>
-        <Divider my={2}/>
-        <p>If you have any issue with any of our products and services, you can submit a ticket by selecting the appropriate category.</p>
-        <p className="lead">
+  return (
+    <>
+      <Box boxShadow="base" p="6" rounded="md" bg="white">
+       <Text as="p">Your satisfaction is our joy</Text>
+        <Divider my={2} />
+       <Text>
+          If you have any issue with any of our products and services, you can
+          submit a ticket by selecting the appropriate category.
+       </Text>
+       <Text as="p">
           <Link href="/ticket/create">
             <a>Create Ticket</a>
           </Link>
-        </p>
+       </Text>
       </Box>
-        </div>
-    )
-}
+    </>
+  );
+};
 
-export default TicketHome
+export default TicketHome;

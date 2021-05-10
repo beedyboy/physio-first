@@ -20,9 +20,9 @@ class Ticket {
       sending: observable,
       removed: observable,
       deleting: observable,
-      saved: observable, 
-      error: observable, 
-      info: computed,  
+      saved: observable,
+      error: observable,
+      info: computed,
       saved: observable,
       ticket: observable,
       staffTickets: observable,
@@ -35,7 +35,7 @@ class Ticket {
       addTicket: action,
       updateTicket: action,
       getTicketById: action,
-      removeTicket: action, 
+      removeTicket: action,
       resetProperty: action,
     });
   }
@@ -59,12 +59,12 @@ class Ticket {
       this.sending = true;
       backend.post("ticket/myticket", data).then((res) => {
         this.sending = false;
-        if (res.status === 201) { 
+        if (res.status === 201) {
           this.fetchMyTicket();
-         this.message = res.data.message; 
+          this.message = res.data.message;
           this.saved = true;
         } else {
-          this.message = res.data.error; 
+          this.message = res.data.error;
           this.error = true;
         }
       });
@@ -85,11 +85,10 @@ class Ticket {
         this.sending = false;
         if (res.status === 200) {
           this.fetchTicket();
-         this.message = res.data.message;
-         
+          this.message = res.data.message;
         } else {
-         this.message = res.data.error;
-         this.error = true;
+          this.message = res.data.error;
+          this.error = true;
         }
       });
     } catch (error) {
@@ -122,14 +121,13 @@ class Ticket {
   assignTicket = (data) => {
     try {
       this.sending = true;
-      backend.post("ticket/assign", data).then((res) => {
+      backend.put("ticket/admin", data).then((res) => {
         this.sending = false;
         if (res.status === 200) {
           this.fetchTicket();
-         this.message = res.data.message;
-         
+          this.message = res.data.message;
         } else {
-         this.message = res.data.error;
+          this.message = res.data.error;
         }
       });
     } catch (error) {
@@ -140,14 +138,13 @@ class Ticket {
   toggleStatus = (data) => {
     try {
       this.sending = true;
-      backend.post("ticket/status", data).then((res) => {
+      backend.put("ticket/admin", data).then((res) => {
         this.sending = false;
         if (res.status === 200) {
           this.fetchTicket();
-         this.message = res.data.message;
-         
+          this.message = res.data.message;
         } else {
-         this.message = res.data.error;
+          this.message = res.data.error;
         }
       });
     } catch (error) {
@@ -160,10 +157,10 @@ class Ticket {
       backend.delete("ticket/" + id).then((res) => {
         this.deleting = false;
         if (res.status === 200) {
-         this.message = res.data.message;
+          this.message = res.data.message;
           this.fetchTicket();
         } else {
-         this.message = res.data.error;
+          this.message = res.data.error;
         }
       });
     } catch (error) {
