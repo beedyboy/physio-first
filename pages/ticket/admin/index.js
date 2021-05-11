@@ -69,7 +69,7 @@ const index = (props) => {
         <title>Physio First | Ticket management</title>
       </Head>
       <Layout>
-        {!canManage ?
+        {canManage ?
         <>
         <Flex
           direction="column"

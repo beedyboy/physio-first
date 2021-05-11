@@ -39,7 +39,7 @@ function Login() {
   const { authStore } = useMobxStores();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-  const { isAuthenticated, resetProperty, login, message, sending } = authStore;
+  const { isAuthenticated, resetProperty, login, message, error, errMessage, sending } = authStore;
   const [formState, setFormState] = useState({
     isValid: false,
     values: {
@@ -100,9 +100,20 @@ function Login() {
       resetProperty("message", "");
     };
   }, [isAuthenticated]);
-
+  useEffect(() => {
+    if (error === true) { 
+      toast({
+        title: "Server Response.",
+        description: errMessage,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      }); 
+    } 
+  }, [error]);
   const hasError = (field) => touched[field] && errors[field].error;
-
+console.log({error})
   return (
     <>
       <Head>

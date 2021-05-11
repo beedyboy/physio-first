@@ -3,15 +3,21 @@ import {
   Box,
   Flex,
   Avatar, 
+  Link,
   IconButton,
   CloseButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   useColorModeValue,
   
 } from "@chakra-ui/react";
 import { AiOutlineMenu } from "react-icons/ai";
+import Utility from "../../../services/UtilityService";
 
 const MobileNav = (props) => {
-  const { company, isOpen, onOpen, onClose } = props;
+  const { company, user, isOpen, onOpen, onClose } = props;
   return (
     <Fragment>
       <Box d="flex" w="100%" bg="nav.50">
@@ -33,11 +39,20 @@ const MobileNav = (props) => {
             )}
           </Box>
           <Box>{company}</Box>
-          <Avatar
-            size="sm"
-            name="Kent Dodds"
-            src="https://bit.ly/kent-c-dodds"
-          />
+          <Menu>
+          <MenuButton
+            as={Avatar}
+            size="md"
+            name={user}
+            src="https://bit.ly/dan-abramov" 
+          ></MenuButton>
+          <MenuList>
+            <MenuItem as={Link} href="/profile">
+              Profile
+            </MenuItem>
+            <MenuItem onClick={() => Utility.logout()}>Logout</MenuItem>
+          </MenuList>
+        </Menu>
         </Flex>
       </Box>
     </Fragment>

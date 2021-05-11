@@ -4,7 +4,7 @@ import Menus from "./Components/Menus";
 import MobileNav from "./Components/MobileNav";
 
 const MobileLayout = (props) => {
-  const { company, routes, isOpen, onOpen, onClose, children } = props;
+  const { company, routes, isOpen, user, onOpen, onClose, children } = props;
   return (
     <Fragment>
       <MobileNav
@@ -12,6 +12,7 @@ const MobileLayout = (props) => {
         onClose={onClose}
         onOpen={onOpen}
         company={company}
+        user={user} 
       />
       <Flex direction="column">
         <Box w="100px"></Box>

@@ -4,7 +4,7 @@ import Menus from "./Components/Menus";
 import DesktopNav from "./Components/DesktopNav";
 
 const DesktopLayout = (props) => {
-  const { company, pathname, user, routes, children, acl } = props;
+  const { company, pathname, user, routes, children } = props;
   return (
     <Fragment>
       <Flex w="100%">
