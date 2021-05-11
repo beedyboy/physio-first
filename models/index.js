@@ -12,6 +12,7 @@ import Ticket from './Ticket';
 import Leave from './Leave';
 import Vacation from './Vacation';
 import Conversation from './Conversation';
+import Director from './Director';
 
 export default {
     User,
@@ -26,5 +27,6 @@ export default {
     Ticket,
     Allocation,
     Conversation,
+    Director,
     SubCategory
 };
