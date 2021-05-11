@@ -43,6 +43,7 @@ const TicketForm = ({
   addTicket,
   sending,
   users,
+  reset,
   initial_data,
 }) => {
   const toast = useToast();
@@ -204,6 +205,7 @@ const TicketForm = ({
       errors: {},
     }));
   };
+
   return (
     <Fragment>
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -264,7 +266,7 @@ const TicketForm = ({
                   placeholder="Select Option"
                   name="staff"
                   value={formState.values.staff || ""}
-                  onChange={handleStaff}
+                  onChange={handleChange}
                 >
                   {users &&
                     users.map((user) => {

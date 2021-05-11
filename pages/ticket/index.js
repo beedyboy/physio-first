@@ -78,7 +78,7 @@ function index(props) {
                 <Box d={page === "home" ? "flex" : "none"}>
                   <TicketHome />
                 </Box>
-                <Box d={page === "view" ? "flex" : "none"}>
+                <Box d={page === "view" ? "block" : "none"}>
                   <TicketList data={tickets} removeData={removeTicket} />
                 </Box>
                 <Box d={page === "create" ? "flex" : "none"}>

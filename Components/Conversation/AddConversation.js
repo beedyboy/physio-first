@@ -23,12 +23,13 @@ const schema = {
 
 const AddConversation = ({ id, respondent }) => {
   const toast = useToast();
-  const conversationStore = useMobxStores();
+  const {conversationStore} = useMobxStores();
   const {
     createConversation,
     sending,
     saved,
     error,
+    resetProperty,
     message,
   } = conversationStore;
   const [formState, setFormState] = useState({
@@ -61,8 +62,8 @@ const AddConversation = ({ id, respondent }) => {
       handleClose();
     }
     return () => {
-      reset("saved", false);
-      reset("message", "");
+      resetProperty("saved", false);
+      resetProperty("message", "");
       resetForm();
     };
   }, [saved]);
@@ -79,9 +80,9 @@ const AddConversation = ({ id, respondent }) => {
       });
     }
     return () => {
-      reset("error", false);
-      reset("message", "");
-      reset("action", "");
+      resetProperty("error", false);
+      resetProperty("message", "");
+      resetProperty("action", "");
       resetForm();
     };
   }, [error]);

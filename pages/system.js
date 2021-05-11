@@ -11,6 +11,7 @@ import SubCategory from "../views/system/SubCategory";
 import Leave from "../views/system/Leave";
 
 function system(props) {
+  console.log({props})
   return (
     <>
       <Head>

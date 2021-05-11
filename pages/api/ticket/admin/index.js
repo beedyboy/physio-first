@@ -37,9 +37,7 @@ const updateTicket = async (req, res) => {
       }
       
       doc.save();
-      res.status(200).json({
-        exist,
-        check_record,
+      res.status(200).json({ 
         message: "Ticket updated successfully",
       });
     } else {

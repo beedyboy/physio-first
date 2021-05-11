@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
+import PerfectScrollBar from "react-perfect-scrollbar";
 import { Badge, IconButton, Wrap, WrapItem  } from "@chakra-ui/react";
 import Link from "next/link"; 
 import { MdDelete } from "react-icons/md";
@@ -10,11 +11,11 @@ const TicketList = ({data, removeData}) => {
     {
       name: "Subject", 
       sortable: true,
-      cell: (row) => {
-        <Link href={`/ticket/${row.id}`}>
+      cell: (row) => (
+        <Link href={`/ticket/${row._id}`}>
            <a> {row.title}</a>
           </Link>
-      }
+      )
     },
     {
       name: "Ticket date",
@@ -60,6 +61,7 @@ const TicketList = ({data, removeData}) => {
   };
   return (
     <Fragment>
+      <PerfectScrollBar>
       <DataTable
         title="My Tickets"
         columns={columns}
@@ -67,6 +69,7 @@ const TicketList = ({data, removeData}) => {
         pagination={true}
         theme="solarized"
       />
+      </PerfectScrollBar>
     </Fragment>
   );
 };

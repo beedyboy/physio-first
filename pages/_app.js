@@ -7,10 +7,20 @@ import "../styles/globals.css";
 import "aos/dist/aos.css";
 import Aos from "aos"; 
 import theme from "../styles/theme";
+import Utility from '../services/UtilityService';
 
 function MyApp({ Component, pageProps }) { 
-	const store = getStores();
+	const store = getStores(); 
  
+	const loggedIn = Utility.get("staff_token") ? false : true;
+let access;
+if(loggedIn === false) {
+  const obj = Utility.get("acl");
+  if(obj &&  obj !== 'undefined') {
+    access = JSON.parse(obj); 
+  }
+  // console.log({access})
+} 
 	useEffect(() => {
 		Aos.init({ duration: 2000 });
 	}, []);
@@ -52,7 +62,7 @@ function MyApp({ Component, pageProps }) {
 			</Head>
 
 			<StoreProvider value={store}>
-				<Component {...pageProps} /> 
+				<Component {...pageProps} access={access} /> 
 			</StoreProvider>
 		</ChakraProvider>
 	);

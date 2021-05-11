@@ -6,10 +6,10 @@ const TicketSummary = memo(({ row }) => {
   return (
     <Fragment>
       <Box my={1}>
-        <Text as="span" className="text-muted">
+        {/* <Text as="span" className="text-muted">
           {" "}
           #{row._id}
-        </Text>
+        </Text> */}
         <Link href={`/ticket/${row._id}`}>
           <a> {row.title}</a>
         </Link>

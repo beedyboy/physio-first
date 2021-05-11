@@ -5,24 +5,24 @@ import {
   Box,
   Flex,
   Heading,
-  IconButton,
   Badge,
+  IconButton,
   Stack,
   Text,
   Wrap,
   WrapItem, 
 } from "@chakra-ui/react";
-import { observer } from "mobx-react-lite";
-import { useMobxStores } from "../../../stores/stores";
+import { observer } from "mobx-react-lite"; 
 import { MdEdit } from "react-icons/md";
-import ModalWidget from "../../../widgets/ModalWidget";
-import Status from "../../../Components/AdminTicket/Status";
-import Conversation from "../../../Components/Conversation/Conversation";
-import Layout from "../../../templates/Private/Layout";
-const AdminTicketDetails = (props) => {
+import ModalWidget from "../../widgets/ModalWidget"; 
+import Conversation from "../../Components/Conversation/Conversation";
+import Status from '../../Components/Ticket/Status';
+import { useMobxStores } from '../../stores/stores';
+import Layout from "../../templates/Private/Layout";
+const TicketDetails = (props) => {
   const { query } = props; 
   const { ticketStore } = useMobxStores();
-  const { getTicketById, ticket, toggleStatus, sending, error, action } = ticketStore;
+  const { getTicketById, ticket, toggleStatus, sending, action } = ticketStore;
 
   useEffect(() => {
     const { id } = query;
@@ -30,10 +30,9 @@ const AdminTicketDetails = (props) => {
   }, []);
 
   const [modal, setModal] = useState({
-    status: false,
-    assign: false,
+    status: false, 
   });
-  const { assign, status } = modal;
+  const { status } = modal;
 
   const toggleModal = (id) => {
     setModal((state) => ({
@@ -60,7 +59,7 @@ const AdminTicketDetails = (props) => {
               Conversation
             </Heading>
             <Box>
-              <Conversation id={query.id} respondent="TaskPerson" />
+              <Conversation id={query.id} respondent="Requester" />
             </Box>
           </Box>
           <Box flex="1" ml={2}>
@@ -122,7 +121,6 @@ const AdminTicketDetails = (props) => {
                   <Status
                     sending={sending}
                     data={ticket}
-                    error={error}
                     toggle={toggleModal}
                     toggleStatus={toggleStatus}
                     action={action}
@@ -139,12 +137,12 @@ const AdminTicketDetails = (props) => {
         </Flex>
       </Flex>
       </PerfectScrollBar>
-         </Layout>
+       </Layout>
           </>
   );
 };
-AdminTicketDetails.getInitialProps = async ({ query }) => {
+TicketDetails.getInitialProps = async ({ query }) => {
   return { query };
 };
 
-export default observer(AdminTicketDetails);
+export default observer(TicketDetails);

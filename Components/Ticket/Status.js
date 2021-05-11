@@ -1,79 +1,106 @@
-import React, { Fragment, useState, useEffect } from 'react'
-import{ Button, Card, CardBody, FormGroup,  Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
-import Select from 'react-select'; 
+import React, { Fragment, useState, useEffect } from "react";
+import {
+  Box,
+  Stack,
+  Button,
+  Select,
+  useToast,
+  FormLabel,
+  FormControl,
+} from "@chakra-ui/react"; 
+const Status = ({ data, sending, toggleStatus, action, toggle }) => {
+  const toast = useToast();
+  const [status, setStatus] = useState("");
+  const [id, setId] = useState("");
 
-const Status = ({data, sending, toggleStatus, toggleClose, open, close, handleClose}) => { 
-    const [status, setStatus] = useState('');
-    const options = [
-        {value: 'Pending', label: 'Pending'},
-        {value: 'Active', label: 'Active'},
-        {value: 'InProgress', label: 'InProgress'},
-        {value: 'Closed', label: 'Closed'}
-    ];
-    useEffect(() => {
-       setStatus(data);
-        
-      }, [data])
-
-    useEffect(() => {
-        if(close === true) { 
-         handleClose(); 
-        }
-        return() => {
-          toggleClose()
-        }
-      }, [close])  
-const handleChange = e => {  
-    setStatus(e.value)
-  }
-const handleSubmit = e => {
-    e.preventDefault();
-    toggleStatus(status)
-}
-const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button>;
+  useEffect(() => {
+    setStatus(data.status);
+    setId(data._id);
+  }, [data]);
  
-    return (
-        <Fragment>
-            
-        <Modal isOpen={open} toggle={handleClose}>
-            <ModalHeader toggle={handleClose} close={closeBtn}>Update Status</ModalHeader>
-         <form noValidate autoComplete="off"  onSubmit={handleSubmit}> 
-    <ModalBody>
-    <Card>
-      <CardBody>  
-          <Row> 
-          <Col md="12">  
-              <FormGroup >
-            <Label for="status">Status</Label> 
-               <Select
-                 placeholder="Select Option"
-                 name="status"
-                 value={options.filter(obj => obj.value === status) || ''} 
-                 onChange={handleChange}   
-                 options={options} 
-             /> 
-          </FormGroup> 
-              </Col>
-          </Row>
-     </CardBody>
-    </Card> 
-    </ModalBody>
-    <ModalFooter>
-        <Button color="secondary" onClick={handleClose}>
-            Close
-        </Button> {" "}
-        <Button color="primary" disabled={ sending}  type="submit">
-        {sending ? (
-            <span> Saving status  <i className="fa fa-spinner"></i></span>
-            ): 'Save status'}
-        </Button>
-    </ModalFooter>
-      </form>
-</Modal>
-          
-     
-        </Fragment>
-    )
-}
+  useEffect(() => {
+    if (action === "statusChangedError") {
+        toast({
+          title: "Server Response.",
+          description: message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+          position: "top-right",
+        });
+      } else if(action === "statusChanged") {
+        toast({
+            title: "Server Response.",
+            description: message,
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+            position: "top-right",
+          });
+      }
+    return () => {
+      reset("error", false);
+      reset("action", "");
+      reset("message", "");
+      resetForm();
+      toggle('status');
+    };
+  }, [error]);
+  const handleChange = (e) => {
+    setStatus(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const subData = {
+      status,
+      id,
+    };
+    toggleStatus(subData);
+  };
+  return (
+    <Fragment>
+      <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+        <Stack spacing="24px" boxShadow="base" p="6" rounded="md" bg="white">
+          <Box>
+            <FormControl my="3">
+              <FormLabel htmlFor="status">Status</FormLabel>
+              <Select
+                value={formState.values.status || ""}
+                placeholder="Priority"
+                name="status"
+                id="status"
+                onChange={handleChange}
+              >
+                <option value="Pending">Pending</option>
+                <option value="Active">Active</option>
+                <option value="InProgress">InProgress</option>
+                <option value="Closed">Closed</option>
+              </Select>
+            </FormControl>
+          </Box>
+        </Stack>
 
-export default Status
+        <Button
+          disabled={sending}
+          colorScheme="blue"
+          onClick={handleSubmit}
+          isLoading={sending}
+          bg="brand.mainAccent"
+          color="brand.white"
+          variant="ghost"
+          _hover={{
+            borderColor: "brand.mainAccent",
+            bg: "brand.white",
+            color: "brand.mainAccent",
+            boxShadow: "md",
+          }}
+          _focus={{}}
+        >
+          Update Status
+        </Button>
+      </form>
+    </Fragment>
+  );
+};
+
+export default Status;

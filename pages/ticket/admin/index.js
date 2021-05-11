@@ -13,7 +13,11 @@ import {
 } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import TicketForm from "../../../Components/AdminTicket/TicketForm";
-const index = () => {
+import { MdAdd } from "react-icons/md";
+const index = (props) => {
+  const { access } = props;
+  const canManage = access && access.ticket && access.ticket.manage;
+  // console.log({canManage})
   const toast = useToast();
   const { ticketStore, userStore } = useMobxStores();
   const {
@@ -65,6 +69,8 @@ const index = () => {
         <title>Physio First | Ticket management</title>
       </Head>
       <Layout>
+        {!canManage ?
+        <>
         <Flex
           direction="column"
           w="100%"
@@ -93,6 +99,10 @@ const index = () => {
             />
           </Box>
         </Flex>
+     </>
+     :
+<Heading as="h1">You do not have access to this page</Heading>
+        }
       </Layout>
       <TicketForm
         mode={mode}

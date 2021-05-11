@@ -8,7 +8,7 @@ import {
   FormLabel,
   FormControl,
 } from "@chakra-ui/react"; 
-const Status = ({ data, sending, toggleStatus, action, toggle }) => {
+const Status = ({ data, sending, toggleStatus, action, error, toggle }) => {
   const toast = useToast();
   const [status, setStatus] = useState("");
   const [id, setId] = useState("");
@@ -65,7 +65,7 @@ const Status = ({ data, sending, toggleStatus, action, toggle }) => {
             <FormControl my="3">
               <FormLabel htmlFor="status">Status</FormLabel>
               <Select
-                value={formState.values.status || ""}
+                value={status || ""}
                 placeholder="Priority"
                 name="status"
                 id="status"

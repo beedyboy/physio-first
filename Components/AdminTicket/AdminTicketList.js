@@ -7,13 +7,13 @@ import { CgAssign } from "react-icons/cg";
 const AdminTicketList = ({ data, setMode, rowData, toggle }) => {
   const columns = [
     {
-      name: "Subject",
+      name: "Subject", 
       sortable: true,
-      cell: (row) => {
-        <Link href={`/ticket/${row.id}`}>
-          <a> {row.title}</a>
-        </Link>;
-      },
+      cell: (row) => (
+        <Link href={`/ticket/admin/${row._id}`}>
+           <a> {row.title}</a>
+          </Link>
+      )
     },
     {
       name: "Email",

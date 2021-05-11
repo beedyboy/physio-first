@@ -58,6 +58,11 @@ const router  = useRouter();
       icon: <MdCheckCircle />,
     },
     {
+      label: "Admin Ticket",
+      href: "/ticket/admin",
+      icon: <MdCheckCircle />,
+    },
+    {
       label: "Vacation",
       href: "/vacation",
       icon: <FaUmbrellaBeach />,
@@ -102,5 +107,5 @@ const router  = useRouter();
     </Fragment>
   );
 };
-
+// Layout.acl = acl;
 export default Layout;
