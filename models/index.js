@@ -13,6 +13,7 @@ import Leave from './Leave';
 import Vacation from './Vacation';
 import Conversation from './Conversation';
 import Director from './Director';
+import Document from './Document';
 
 export default {
     User,
@@ -28,5 +29,6 @@ export default {
     Allocation,
     Conversation,
     Director,
+    Document,
     SubCategory
 };
