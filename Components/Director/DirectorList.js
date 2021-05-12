@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import ReactHtmlParser from "react-html-parser";
-import PerfectScrollbar from "react-perfect-scrollbar";
-import { Button, Card, CardBody, CardTitle } from "reactstrap";
-import { Button, Box, Text, Wrap, WrapItem, Image } from "@chakra-ui/react";
+import PerfectScrollbar from "react-perfect-scrollbar"; 
+import { IconButton, Box, Text, Wrap, WrapItem, Image } from "@chakra-ui/react";
+import { MdEdit, MdDelete } from "react-icons/md";
 
 const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
   const editData = (e, row) => {
@@ -48,22 +48,35 @@ const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
               </Box>
             </Box>
           </Box>
-          <Button size="sm" color="warning" onClick={(e) => editData(e, data)}>
-            <i className="fa fa-edit"></i>Edit
-          </Button>{" "}
-          <Button
-            size="sm"
-            color="danger"
-            onClick={(e) => {
-              if (window.confirm("Delete this director?")) {
-                deleteData(e, data.id);
-              }
-            }}
-          >
-            <i className="fa fa-trash"></i> Delete
-          </Button>
+          
         </Box>
       </Stack>
+      <Wrap spacing="20px">
+          <WrapItem>
+            <IconButton
+              variant="outline"
+              colorScheme="teal"
+              aria-label="Edit director"
+              fontSize="20px"
+              icon={<MdEdit />}
+              onClick={(e) => editData(e, row)}
+            />
+          </WrapItem>
+          <WrapItem>
+            <IconButton
+              variant="outline"
+              colorScheme="teal"
+              aria-label="Edit director"
+              fontSize="20px"
+              icon={<MdDelete />}
+              onClick={(key) => {
+                if (window.confirm("Delete this director?")) {
+                  deleteData(row._id);
+                }
+              }}
+            />
+          </WrapItem>
+        </Wrap>
     </Fragment>
   );
 };

@@ -18,23 +18,24 @@ function Director() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
   const [rowData, setRowData] = useState();
-  const { DirectorStore } = useMobxStores();
+  const { directorStore } = useMobxStores();
   const {
     error,
-    saved, 
+    saved,
     message,
     removed,
     sending,
-    links, 
+    checking,
+    directors,
     resetProperty,
-    getLinks,
-    addLink,
-    updateLink,
-    deleteLink,
-  } = DirectorStore;
+    removeDirector,
+    confirmDirector,
+    createDirector,
+    updateDirector,
+  } = directorStore;
 
   useEffect(() => {
-    getLinks();
+    getdirectors();
   }, []);
 
   useEffect(() => {
@@ -82,10 +83,10 @@ function Director() {
         </Box>
         <Box>
           <DirectorList
-            data={links}
+            data={directors}
             setMode={setMode}
             toggle={onOpen}
-            removeData={deleteLink}
+            removeData={removeDirector}
             rowData={setRowData}
           />
         </Box>
@@ -94,14 +95,17 @@ function Director() {
         mode={mode}
         open={isOpen}
         saved={saved}
-        error={error} 
+        error={error}
+        exist={exist}
+        checking={checking}
+        confirm={confirmDirector}
         message={message}
-        sending={sending} 
-        handleClose={onClose} 
+        sending={sending}
+        handleClose={onClose}
         initial_data={rowData}
         reset={resetProperty}
-        addLink={addLink}
-        updateLink={updateLink}
+        createDirector={createDirector}
+        updateDirector={updateDirector}
       />
     </Fragment>
   );

@@ -1,18 +1,19 @@
 import React from "react";
 
 // import { enableStaticRendering } from "mobx-react-lite";
- 
+
 import User from "./User";
-import Branch from "./Branch";
-import Category from "./Category";
-import Department from "./Department";
-import Marketing from "./Marketing";
-import SubCategory from "./SubCategory";
-import Leave from "./Leave";
 import Auth from "./Auth";
 import Asset from "./Asset";
+import Leave from "./Leave";
 import Ticket from "./Ticket";
+import Branch from "./Branch";
 import Vacation from "./Vacation";
+import Category from "./Category";
+import Director from "./Director";
+import Marketing from "./Marketing";
+import Department from "./Department";
+import SubCategory from "./SubCategory";
 import Conversation from "./Conversation";
 
 const isServer = typeof window === "undefined";
@@ -21,50 +22,53 @@ const isServer = typeof window === "undefined";
 let store;
 
 export function getStores(
-  initialData = { 
-    userStore: {},
-    branchStore: {},
-    categoryStore: {},
-    departmentStores: {},
-    marketingStore: {},
-    subCategoryStore: {},
-    leaveStore: {},
+  initialData = {
     authStore: {},
+    userStore: {},
+    leaveStore: {},
     assetStore: {},
     ticketStore: {},
+    branchStore: {},
+    categoryStore: {},
+    directorStore: {},
     vacationStore: {},
+    marketingStore: {},
+    departmentStores: {},
+    subCategoryStore: {},
     conversationStore: {},
   }
 ) {
   if (isServer) {
-    return { 
+    return {
       userStore: new User(initialData.userStore),
-      branchStore: new Branch(initialData.branchStore),
-      categoryStore: new Category(initialData.categoryStore),
-      departmentStore: new Department(initialData.departmentStore),
-      marketingStore: new Marketing(initialData.marketingStore),
-      subCategoryStore: new SubCategory(initialData.subCategoryStore),
+      authStore: new Auth(initialData.authStore),
       leaveStore: new Leave(initialData.leaveStore),
       assetStore: new Asset(initialData.assetStore),
-      authStore: new Auth(initialData.authStore),
+      branchStore: new Branch(initialData.branchStore),
       ticketStore: new Ticket(initialData.ticketStore),
       vacationStore: new Vacation(initialData.vacationStore),
+      directorStore: new Director(initialData.directorStore),
+      categoryStore: new Category(initialData.categoryStore),
+      marketingStore: new Marketing(initialData.marketingStore),
+      departmentStore: new Department(initialData.departmentStore),
+      subCategoryStore: new SubCategory(initialData.subCategoryStore),
       conversationStore: new Conversation(initialData.conversationStore),
     };
   }
   if (!store) {
-    store = { 
+    store = {
       userStore: new User(initialData.userStore),
-      branchStore: new Branch(initialData.branchStore),
-      categoryStore: new Category(initialData.categoryStore),
-      departmentStore: new Department(initialData.departmentStore),
-      marketingStore: new Marketing(initialData.marketingStore),
-      subCategoryStore: new SubCategory(initialData.subCategoryStore),
+      authStore: new Auth(initialData.authStore),
       leaveStore: new Leave(initialData.leaveStore),
       assetStore: new Asset(initialData.assetStore),
+      branchStore: new Branch(initialData.branchStore),
       ticketStore: new Ticket(initialData.ticketStore),
-      authStore: new Auth(initialData.authStore),
       vacationStore: new Vacation(initialData.vacationStore),
+      directorStore: new Director(initialData.directorStore),
+      categoryStore: new Category(initialData.categoryStore),
+      marketingStore: new Marketing(initialData.marketingStore),
+      departmentStore: new Department(initialData.departmentStore),
+      subCategoryStore: new SubCategory(initialData.subCategoryStore),
       conversationStore: new Conversation(initialData.conversationStore),
     };
   }

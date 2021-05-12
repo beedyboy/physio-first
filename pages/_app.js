@@ -2,8 +2,10 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Head from "next/head"; 
 import { getStores, StoreProvider } from "../stores/stores";
+import "react-perfect-scrollbar/dist/css/styles.css";
 import { ChakraProvider } from "@chakra-ui/react"
 import "../styles/globals.css";  
+import "../styles/flip.css";  
 import "aos/dist/aos.css";
 import Aos from "aos"; 
 import theme from "../styles/theme";
