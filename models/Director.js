@@ -22,7 +22,7 @@ const directorSchema = new mongoose.Schema(
     },  
     story: {
       type: String,
-      maxlength: 500,
+      maxlength: 1500,
     },
     images: {
       type: String,

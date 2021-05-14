@@ -18,7 +18,7 @@ const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
       name: "Fullname", 
       sortable: true,
       cell: (row) => (
-       <Text>{row.lastname + " "+ row.firstame}</Text>
+       <Text>{row.lastname + " "+ row.firstname}</Text>
       )
     },
     {
