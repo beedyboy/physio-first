@@ -224,21 +224,21 @@ const DirectorForm = ({
   const readURI = (e) => {
     e.persist();
     let reader = new FileReader();
-    if (e.target.files) {  
-        /* Get files in array form */
-        const files = Array.from(e.target.files);  
-        // setUploadImage(files)
-        reader.onloadend = () => {
-          setUploadImage((state) => ({
-            ...state,
-            touched: true,
-            preview: reader.result,
-            file: files,
-          }));
-        };
-        reader.readAsDataURL(files[0]);
+    if (e.target.files) {
+      /* Get files in array form */
+      const files = Array.from(e.target.files);
+      // setUploadImage(files)
+      reader.onloadend = () => {
+        setUploadImage((state) => ({
+          ...state,
+          touched: true,
+          preview: reader.result,
+          file: files,
+        }));
+      };
+      reader.readAsDataURL(files[0]);
     }
-}
+  };
   const resetForm = () => {
     setFormState((prev) => ({
       ...prev,
@@ -255,9 +255,9 @@ const DirectorForm = ({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const fd = new FormData();   
-    for(var x = 0; x < uploadImage.file.length; x++) { 
-    fd.append('image', uploadImage.file[x]);
+    const fd = new FormData();
+    for (var x = 0; x < uploadImage.file.length; x++) {
+      fd.append("image", uploadImage.file[x]);
     }
     // fd.append("image", uploadImage.file);
     fd.append("firstname", formState.values.firstname);
@@ -370,32 +370,36 @@ const DirectorForm = ({
                     />
                   </FormControl>
                 </Box>
-                <Box>
-                  <FormControl my="3">
-                    <FormLabel htmlFor="image">Image</FormLabel>
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      name="image"
-                      id="image"
-                      onChange={readURI}
-                    />
+                {mode === "Add" ? (
+                  <>
+                    {" "}
+                    <Box>
+                      <FormControl my="3">
+                        <FormLabel htmlFor="image">Image</FormLabel>
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          name="image"
+                          id="image"
+                          onChange={readURI}
+                        />
 
-                    <FormHelperText color="red">
-                      {uploadImage.touched ? null : "Image is important"}
-                    </FormHelperText>
-                  </FormControl>
-                </Box>
-                <Box>
-                  {uploadImage.touched ? (
-                    <img
-                      src={uploadImage.preview}
-                      alt="First"
-                      style={{ width: "100%", height: 90 }}
-                    />
-                  ) : null}
-                </Box>
-
+                        <FormHelperText color="red">
+                          {uploadImage.touched ? null : "Image is important"}
+                        </FormHelperText>
+                      </FormControl>
+                    </Box>
+                    <Box>
+                      {uploadImage.touched ? (
+                        <img
+                          src={uploadImage.preview}
+                          alt="First"
+                          style={{ width: "100%", height: 90 }}
+                        />
+                      ) : null}
+                    </Box>
+                  </>
+                ) : null}
                 <Box>
                   <FormControl my="3">
                     <FormLabel htmlFor="story">Story</FormLabel>
