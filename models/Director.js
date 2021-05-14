@@ -1,5 +1,8 @@
 import mongoose from "mongoose"; 
 
+function imageArray(data) {
+  return JSON.parse(data);
+}
 const directorSchema = new mongoose.Schema(
   {
     firstname: {
@@ -22,7 +25,8 @@ const directorSchema = new mongoose.Schema(
       maxlength: 500,
     },
     images: {
-      type: String
+      type: String,
+      get: imageArray
     },
     status: {
       type: String,
@@ -34,5 +38,6 @@ const directorSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
+directorSchema.set('toObject', {getters: true});
+directorSchema.set('toJSON', {getters: true});
 export default mongoose.models.Director || mongoose.model("Director", directorSchema);
