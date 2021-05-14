@@ -1,4 +1,3 @@
-import { dataUri } from './multer';
 import { cloudinary } from '../utils/cloudinary';
 const moment =  require('moment');
 
@@ -22,22 +21,19 @@ const Assistant = {
     var mm = String(today.getMonth() + 1).padStart(2, "0");
     var dd = String(today.getDate()).padStart(2, "0");
     return today.getFullYear() + "/" + mm + "/" + dd;
-  },
-  uploader: async (file) => {
-    var reply = null;
-    const image = dataUri(file).content;
-    await cloudinary.uploader
-      .upload(image)
-      .then((data) => {
-        reply = data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    return reply;
-  },
- 
+  }, 
+  uploader: async (image) => {
+    var reply = null; 
+   //  console.log({image})
+     await cloudinary.uploader.upload(image).then( data => {
+       reply = data;
+     }).catch(err => {
+       console.log(err);
+      }); 
+     
+     return reply;
+      
+   },
 };
 
 module.exports = Assistant;

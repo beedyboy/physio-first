@@ -6,6 +6,9 @@ import {
   Button,
   Heading,
   useToast,
+  Text,
+  Skeleton,
+  SimpleGrid,
   useDisclosure,
 } from "@chakra-ui/react";
 import DirectorList from "../../Components/Director/DirectorList";
@@ -22,11 +25,14 @@ function Director() {
   const {
     error,
     saved,
+    exist,
     message,
     removed,
+    loading,
     sending,
     checking,
     directors,
+    fetchDirector,
     resetProperty,
     removeDirector,
     confirmDirector,
@@ -35,7 +41,7 @@ function Director() {
   } = directorStore;
 
   useEffect(() => {
-    getdirectors();
+    fetchDirector();
   }, []);
 
   useEffect(() => {
@@ -81,15 +87,39 @@ function Director() {
             Add New
           </Button>
         </Box>
-        <Box>
-          <DirectorList
-            data={directors}
-            setMode={setMode}
-            toggle={onOpen}
-            removeData={removeDirector}
-            rowData={setRowData}
-          />
-        </Box>
+        <Skeleton isLoaded={!loading}>
+            <SimpleGrid columns={{ sm: 1, md: 2, xl: 2 }} spacing="10px">
+            {directors && directors.length < 1 ?
+            <Text as="p" fontWeight="bolder">No record found!</Text>
+            :
+            directors &&
+              directors.map((director) => (
+                <DirectorList
+                data={director}
+                setMode={setMode}
+                toggle={onOpen}
+                removeData={removeDirector}
+                rowData={setRowData}
+              />
+              ))}
+            </SimpleGrid>
+          </Skeleton>
+        {/* <Box> 
+            {directors && directors.length < 1 ?
+            <Text as="p" fontWeight="bolder">No record found!</Text>
+            :
+            directors &&
+              directors.map((director) => (
+                <DirectorList
+                data={director}
+                setMode={setMode}
+                toggle={onOpen}
+                removeData={removeDirector}
+                rowData={setRowData}
+              />
+              ))}
+                 
+        </Box> */}
       </Flex>
       <DirectorForm
         mode={mode}

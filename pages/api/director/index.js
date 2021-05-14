@@ -1,98 +1,106 @@
+import nextConnect from "next-connect";
 import DB from "../../../models";
-import connectDB from "../../../services/database";
-import { multerUploads } from "../../../helpers/multer";
+import connectDB from "../../../services/database"; 
 import Assistant from "../../../helpers/Assistant";
-connectDB();
-var upload = multerUploads.single("image");
-export default async (req, res) => {
-  switch (req.method) {
-    case "GET":
-      await getDirectors(req, res);
-      break;
-    case "POST":
-      await saveDirector(req, res);
-      break;
-    case "PUT":
-      await updateDirector(req, res);
-      break;
-  }
-};
+import middleware from '../../../middleware/middleware';
+// import { IncomingForm } from 'formidable'
 
-const getDirectors = async (req, res) => {
+import dotenv from "dotenv"; 
+const handler = nextConnect();
+
+dotenv.config();
+handler.use(middleware); 
+connectDB(); 
+  
+// const updateDirector = async (req, res) => {
+//   const data = req.body; 
+  
+//     await DB.Director.findById(data.id, (error, doc) => {
+//       if (!error) {
+        
+//         doc.firstname = data.firstname;
+//         doc.lastname = data.lastname;
+//         doc.position = data.position;
+//         doc.date_joined = data.date_joined;
+//         doc.story = data.story;
+//         doc.save();
+//         res.status(200).json({ 
+//           message: "Director updated successfully",
+//         });
+//       } else {
+//         return res.status(422).json({ error: "Error updating Director" });
+//       }
+//     }); 
+// };
+
+handler.post(async (req, res) => {
+  try {
+   
+  const { firstname, lastname, position, story, date_joined } = req.body;
+    let urls = [];
+    var image = JSON.parse(JSON.stringify(req.files)).image;
+console.log('image', image.path)
+    // var imageSize = Object.keys(image).length; 
+    // let count = 0;
+
+    // if (imageSize > 0) {
+       
+    //   for (const [key, value] of Object.entries(image)) {
+    //     console.log("path: ", key);
+    //     await Assistant.uploader(value.path).then((newPath) => {
+    //       console.log(newPath.url);
+    //       urls.push(newPath.url);
+    //       // fs.unlinkSync(value[0].path);
+    //     });
+    //     count += 1;
+    //   }
+    // }
+    await Assistant.uploader(image.path).then((newPath) => {
+      console.log(newPath.url);
+      urls.push(newPath.url);
+      // fs.unlinkSync(value[0].path);
+    });
+    // do stuff with files and body
+ 
+      let images = JSON.stringify(urls);
+      const newDirector = await DB.Director({
+        firstname,
+        lastname,
+        position,
+        images: images,
+        date_joined,
+        story,
+      });
+      
+      newDirector.save((err, doc) => {
+        if (err) {
+          res.status(404).json({
+            error: "Director was not created",
+          });
+        } else {
+          res.status(201).json({ message: "New director created successfully" });
+        }
+        
+      }); 
+  } catch (err) {
+    res.status(500).json({ error: "internal server error" });
+  }
+});
+
+
+handler.get(async (req, res) => {
   try {
     const directors = await DB.Director.find({});
     res.status(200).json(directors);
   } catch (err) {
     console.log(err);
   }
-};
-
-const saveDirector = upload(async (req, res) => {
-  const { firstname, lastname, position, story, date_joined } = req.body;
-  try {
-    if (!firstname || !lastname || !position) {
-      return res.status(422).json({ error: "Please add all the fields" });
-    }
-    var image = req.file;
-    let images = "";
-
-    var count = 0;
-    await Assistant.uploader(image).then((newPath) => {
-      console.log(newPath.url);
-      images = newPath.url;
-      count += 1;
-    });
-    if (count === 1) {
-      await DB.Director({
-        firstname,
-        lastname,
-        position,
-        date_joined,
-        story,
-      }).save();
-      res.status(201).json({ message: "New director created successfully" });
-    } else {
-      res.status(404).json({
-        error: "Director was not created",
-      });
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "internal server error" });
-  }
 });
-const updateDirector = async (req, res) => {
-  const data = req.body;
-  console.log({ data });
-  const url_linkRegex = new RegExp(data.url_link, "i");
-  const check_record = await DB.Director.findOne({ url_link: url_linkRegex });
-  const exist = check_record
-    ? check_record && check_record._id.toString() === data.id
-      ? false
-      : true
-    : false;
 
-  if (exist === false) {
-    await DB.Director.findById(data.id, (error, doc) => {
-      if (!error) {
-        if (check_record.url_link !== data.url_link) {
-          doc.url_link = data.url_link;
-        }
-        doc.description = data.description;
-        doc.status = data.status;
-        doc.save();
-        res.status(200).json({
-          exist,
-          check_record,
-          message: "Director updated successfully",
-        });
-      } else {
-        return res.status(422).json({ error: "Error updating Director" });
-      }
-    });
-  } else {
-    return res.status(422).json({
-      error: "Duplicate Director url_link is not allowed",
-    });
-  }
+export const config = {
+  api: {
+    bodyParser: false,
+  },
 };
+
+export default handler;

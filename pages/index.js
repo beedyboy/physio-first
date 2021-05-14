@@ -39,7 +39,7 @@ function Dashboard() {
           <Heading mb={4}>System's Statistics</Heading>
         </Box>
         <SimpleGrid minChildWidth="120px" spacing="40px">
-          <Box bg="green" height="80px">
+          <Box bg="green" height="80px"  boxShadow="base" p="3" rounded="md">
             <Stat>
               <StatLabel>Total branch</StatLabel>
               <StatNumber>{totalBranch || 0}</StatNumber>
@@ -49,7 +49,7 @@ function Dashboard() {
               </StatHelpText>
             </Stat>
           </Box>
-          <Box bg="tomato" height="80px">
+          <Box bg="tomato" height="80px"  boxShadow="base" p="3" rounded="md">
             <Stat>
               <StatLabel>Total Assets</StatLabel>
               <StatNumber>3</StatNumber>
@@ -59,7 +59,7 @@ function Dashboard() {
               </StatHelpText>
             </Stat>
           </Box>
-          <Box bg="magenta" height="80px">
+          <Box bg="magenta" height="80px"  boxShadow="base" p="3" rounded="md">
             <Stat>
               <StatLabel>Vacations</StatLabel>
               <StatNumber>{pendingVac || 0}</StatNumber>
@@ -70,7 +70,7 @@ function Dashboard() {
             </Stat>
           </Box>
           
-          <Box bg="teal.500" height="80px">
+          <Box bg="teal.500" height="80px"  boxShadow="base" p="3" rounded="md">
             <Stat>
               <StatLabel>Total Product</StatLabel>
               <StatNumber>3</StatNumber>
@@ -80,7 +80,7 @@ function Dashboard() {
               </StatHelpText>
             </Stat>
           </Box>
-          <Box bg="purple" height="80px">
+          <Box bg="purple" height="80px"  boxShadow="base" p="3" rounded="md">
             <Stat>
               <StatLabel>Total user</StatLabel>
               <StatNumber>{totalUser || 0}</StatNumber>

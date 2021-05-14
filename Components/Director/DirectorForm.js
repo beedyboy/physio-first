@@ -207,21 +207,38 @@ const DirectorForm = ({
   };
   const hasError = (field) => touched[field] && errors[field].error;
 
+  // const readURI = (e) => {
+  //   e.persist();
+  //   let reader = new FileReader();
+  //   let image = e.target.files[0];
+  //   reader.onloadend = () => {
+  //     setUploadImage((state) => ({
+  //       ...state,
+  //       touched: true,
+  //       preview: reader.result,
+  //       file: image,
+  //     }));
+  //   };
+  //   reader.readAsDataURL(image);
+  // };
   const readURI = (e) => {
     e.persist();
     let reader = new FileReader();
-    let image = e.target.files[0];
-    reader.onloadend = () => {
-      setUploadImage((state) => ({
-        ...state,
-        touched: true,
-        preview: reader.result,
-        file: image,
-      }));
-    };
-    reader.readAsDataURL(image);
-  };
-
+    if (e.target.files) {  
+        /* Get files in array form */
+        const files = Array.from(e.target.files);  
+        // setUploadImage(files)
+        reader.onloadend = () => {
+          setUploadImage((state) => ({
+            ...state,
+            touched: true,
+            preview: reader.result,
+            file: files,
+          }));
+        };
+        reader.readAsDataURL(files[0]);
+    }
+}
   const resetForm = () => {
     setFormState((prev) => ({
       ...prev,
@@ -238,8 +255,11 @@ const DirectorForm = ({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const fd = new FormData();
-    fd.append("image", uploadImage.file);
+    const fd = new FormData();   
+    for(var x = 0; x < uploadImage.file.length; x++) { 
+    fd.append('image', uploadImage.file[x]);
+    }
+    // fd.append("image", uploadImage.file);
     fd.append("firstname", formState.values.firstname);
     fd.append("lastname", formState.values.lastname);
     fd.append("date_joined", formState.values.date_joined);

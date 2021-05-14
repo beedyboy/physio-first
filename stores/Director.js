@@ -40,26 +40,39 @@ class Director {
       info: computed,
     });
   }
-
-  setFilter = (data) => {
-    this.filter = data;
-  };
-
-  toggleClose = () => {
-    this.close = false;
-  };
-
+ 
   fetchDirector = () => {
     this.loading = true;
-    backend.get("director").then((res) => {
-      this.directors = res.data;
-      this.loading = false;
-    });
+    try {
+      backend
+        .get("director")
+        .then((res) => {
+          this.loading = false;
+          if (res.status === 200) {
+            this.error = false;
+            this.directors = res.data;
+          }
+        })
+        .catch((err) => {
+          console.log({ err });
+          this.loading = false;
+          this.error = true;
+          this.message = err.response
+            ? "failed to load users"
+            : "Network Connection seems slow.";
+        });
+    } catch (error) {
+      console.log({ error });
+      console.log(error.response);
+    }
   };
 
-  confirmDirector = (cat, branch, name) => {
+  confirmDirector = (firstname, lastname, position) => {
+    const data = {
+      firstname, lastname, position
+    }
     try {
-      backend.get("director/" + cat + "/" + branch + "/" + name).then((res) => {
+      backend.post(`director/${position}`, data).then((res) => {
         this.exist = res.data.exist;
       });
     } catch (error) {

@@ -9,6 +9,7 @@ import Department from "../views/system/Department";
 import Marketing from "../views/system/Marketing";
 import SubCategory from "../views/system/SubCategory";
 import Leave from "../views/system/Leave";
+import Director from "../views/system/Director";
 
 function system(props) {
   console.log({props})
@@ -24,6 +25,7 @@ function system(props) {
             <Tab>Branch</Tab>
             <Tab>Category</Tab>
             <Tab>Department</Tab>
+            <Tab>Director</Tab>
             <Tab>Marketing</Tab>
             <Tab>SubCategory</Tab>
             <Tab>Vacation</Tab>
@@ -40,6 +42,9 @@ function system(props) {
             </TabPanel>
             <TabPanel>
               <Department />
+            </TabPanel>
+            <TabPanel>
+              <Director />
             </TabPanel>
             <TabPanel>
               <Marketing />

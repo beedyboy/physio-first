@@ -18,14 +18,12 @@ export default async (req, res) => {
 
 const subExist = async (req, res) => {
   try {
-    const { cat_id, sub_name } = req.body;
-    console.log(req.body) 
+    const { cat_id, sub_name } = req.body; 
     const subRegex = new RegExp(sub_name, "i");
     const check_record = await DB.SubCategory.findOne({
       cat_id: cat_id,
       sub_name: subRegex
-    });
-    console.log({check_record})
+    }); 
     const exist = check_record ? true : false;
     const message = check_record ? "Duplicate record not allowed" : null;
     res.status(200).json({ exist, message });

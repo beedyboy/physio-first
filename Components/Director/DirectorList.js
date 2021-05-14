@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import ReactHtmlParser from "react-html-parser";
 import PerfectScrollbar from "react-perfect-scrollbar"; 
-import { IconButton, Box, Text, Wrap, WrapItem, Image } from "@chakra-ui/react";
+import { IconButton, Box, Text, Stack, Wrap, WrapItem, Image } from "@chakra-ui/react";
 import { MdEdit, MdDelete } from "react-icons/md";
 
 const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
@@ -14,7 +14,7 @@ const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
   const deleteData = (id) => {
     removeData(id);
   };
-
+let images = JSON.parse(data.images)
   return (
     <Fragment>
       <Stack spacing="24px" director="column">
@@ -26,7 +26,7 @@ const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
                   top
                   width="100%"
                   style={{ height: "280px", maxHeight: "280px", width: "100%" }}
-                  src={data.images}
+                  src={images[0]}
                   alt={data.id}
                 />
               </Box>
@@ -59,7 +59,7 @@ const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
               aria-label="Edit director"
               fontSize="20px"
               icon={<MdEdit />}
-              onClick={(e) => editData(e, row)}
+              onClick={(e) => editData(e, data)}
             />
           </WrapItem>
           <WrapItem>
@@ -71,7 +71,7 @@ const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
               icon={<MdDelete />}
               onClick={(key) => {
                 if (window.confirm("Delete this director?")) {
-                  deleteData(row._id);
+                  deleteData(data._id);
                 }
               }}
             />
