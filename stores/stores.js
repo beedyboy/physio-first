@@ -10,6 +10,7 @@ import Ticket from "./Ticket";
 import Branch from "./Branch";
 import Vacation from "./Vacation";
 import Category from "./Category";
+import Document from "./Document";
 import Director from "./Director";
 import Marketing from "./Marketing";
 import Department from "./Department";
@@ -47,6 +48,7 @@ export function getStores(
       branchStore: new Branch(initialData.branchStore),
       ticketStore: new Ticket(initialData.ticketStore),
       vacationStore: new Vacation(initialData.vacationStore),
+      documentStore: new Document(initialData.documentStore),
       directorStore: new Director(initialData.directorStore),
       categoryStore: new Category(initialData.categoryStore),
       marketingStore: new Marketing(initialData.marketingStore),
@@ -65,6 +67,7 @@ export function getStores(
       ticketStore: new Ticket(initialData.ticketStore),
       vacationStore: new Vacation(initialData.vacationStore),
       directorStore: new Director(initialData.directorStore),
+      documentStore: new Document(initialData.documentStore),
       categoryStore: new Category(initialData.categoryStore),
       marketingStore: new Marketing(initialData.marketingStore),
       departmentStore: new Department(initialData.departmentStore),

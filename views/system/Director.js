@@ -5,10 +5,7 @@ import {
   Flex,
   Button,
   Heading,
-  useToast,
-  Text,
-  Skeleton,
-  SimpleGrid,
+  useToast, 
   useDisclosure,
 } from "@chakra-ui/react";
 import DirectorList from "../../Components/Director/DirectorList";
@@ -87,39 +84,16 @@ function Director() {
             Add New
           </Button>
         </Box>
-        <Skeleton isLoaded={!loading}>
-            <SimpleGrid columns={{ sm: 1, md: 2, xl: 2 }} spacing="10px">
-            {directors && directors.length < 1 ?
-            <Text as="p" fontWeight="bolder">No record found!</Text>
-            :
-            directors &&
-              directors.map((director) => (
-                <DirectorList
+        
+        <Box> 
+        <DirectorList
                 data={director}
                 setMode={setMode}
                 toggle={onOpen}
                 removeData={removeDirector}
                 rowData={setRowData}
               />
-              ))}
-            </SimpleGrid>
-          </Skeleton>
-        {/* <Box> 
-            {directors && directors.length < 1 ?
-            <Text as="p" fontWeight="bolder">No record found!</Text>
-            :
-            directors &&
-              directors.map((director) => (
-                <DirectorList
-                data={director}
-                setMode={setMode}
-                toggle={onOpen}
-                removeData={removeDirector}
-                rowData={setRowData}
-              />
-              ))}
-                 
-        </Box> */}
+        </Box>
       </Flex>
       <DirectorForm
         mode={mode}

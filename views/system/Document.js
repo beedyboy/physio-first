@@ -6,9 +6,6 @@ import {
   Button,
   Heading,
   useToast,
-  Text,
-  Skeleton,
-  SimpleGrid,
   useDisclosure,
 } from "@chakra-ui/react";
 import DocumentList from "../../Components/Document/DocumentList";
@@ -21,7 +18,7 @@ function Document() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
   const [rowData, setRowData] = useState();
-  const { DocumentStore } = useMobxStores();
+  const { directorStore } = useMobxStores();
   const {
     error,
     saved,
@@ -31,14 +28,14 @@ function Document() {
     loading,
     sending,
     checking,
-    Documents,
+    documents,
     fetchDocument,
     resetProperty,
     removeDocument,
     confirmDocument,
     createDocument,
     updateDocument,
-  } = DocumentStore;
+  } = directorStore;
 
   useEffect(() => {
     fetchDocument();
@@ -87,39 +84,15 @@ function Document() {
             Add New
           </Button>
         </Box>
-        <Skeleton isLoaded={!loading}>
-            <SimpleGrid columns={{ sm: 1, md: 2, xl: 2 }} spacing="10px">
-            {Documents && Documents.length < 1 ?
-            <Text as="p" fontWeight="bolder">No record found!</Text>
-            :
-            Documents &&
-              Documents.map((Document) => (
-                <DocumentList
-                data={Document}
-                setMode={setMode}
-                toggle={onOpen}
-                removeData={removeDocument}
-                rowData={setRowData}
-              />
-              ))}
-            </SimpleGrid>
-          </Skeleton>
-        {/* <Box> 
-            {Documents && Documents.length < 1 ?
-            <Text as="p" fontWeight="bolder">No record found!</Text>
-            :
-            Documents &&
-              Documents.map((Document) => (
-                <DocumentList
-                data={Document}
-                setMode={setMode}
-                toggle={onOpen}
-                removeData={removeDocument}
-                rowData={setRowData}
-              />
-              ))}
-                 
-        </Box> */}
+        <Box>
+          <DocumentList
+            data={Document}
+            setMode={setMode}
+            toggle={onOpen}
+            removeData={removeDocument}
+            rowData={setRowData}
+          />
+        </Box>
       </Flex>
       <DocumentForm
         mode={mode}
