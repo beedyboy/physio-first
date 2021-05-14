@@ -12,7 +12,7 @@ import Leave from "../views/system/Leave";
 import Director from "../views/system/Director";
 
 function system(props) {
-  console.log({ props });
+  // console.log({ props });
   const { access } = props;
   // const canManage = access && access.ticket && access.ticket.manage;
   const catAdd = access && access.category && access.category.add;
@@ -60,10 +60,7 @@ function system(props) {
           <TabPanels>
             <TabPanel>
               <Help />
-            </TabPanel>
-            {totalBranch || totalCategory || totalDept ? (
-              <>
-                {" "}
+            </TabPanel> 
                 <TabPanel>
                   <Branch
                     pageAccess={totalBranch}
@@ -98,9 +95,7 @@ function system(props) {
                 <TabPanel>
                   <Leave />
                 </TabPanel>
-              </>
-            ) : null}
-          </TabPanels>
+           </TabPanels>
         </Tabs>
       </Layout>
     </>

@@ -8,12 +8,14 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
+import NoAccess from "../../widgets/NoAccess";
 import CategoryList from "../../Components/Category/CategoryList";
 import { useMobxStores } from "../../stores/stores";
 import CategoryForm from "../../Components/Category/CategoryForm";
 
 import { MdAdd } from "react-icons/md";
-function Category() {
+function Category(props) {
+  const { pageAccess, canAdd } = props;
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
@@ -64,6 +66,7 @@ function Category() {
 
   return (
     <Fragment>
+       
       <Flex
         direction="column"
         w="100%"
@@ -71,17 +74,21 @@ function Category() {
         borderRadius="lg"
         overflow="hidden"
       >
+        {pageAccess ?
+        <>
         <Box d="flex" justifyContent="space-between">
           <Heading mb={4}>Category</Heading>
 
+         {canAdd ? 
           <Button
-            leftIcon={<MdAdd />}
-            colorScheme="teal"
-            p="2rem"
-            onClick={newCategory}
-          >
-            Add New
-          </Button>
+          leftIcon={<MdAdd />}
+          colorScheme="teal"
+          p="2rem"
+          onClick={newCategory}
+        >
+          Add New
+        </Button>
+        : null}
         </Box>
         <Box>
           <CategoryList
@@ -90,8 +97,13 @@ function Category() {
             toggle={onOpen}
             removeData={removeCategory}
             rowData={setRowData}
+            {...props}
           />
         </Box>
+     </>
+       : (
+        <NoAccess page="category" />
+      )}{" "} 
       </Flex>
       <CategoryForm
         mode={mode}

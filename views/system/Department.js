@@ -8,12 +8,14 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
+import NoAccess from "../../widgets/NoAccess";
 import DepartmentList from "../../Components/Department/DepartmentList";
 import { useMobxStores } from "../../stores/stores";
 import DepartmentForm from "../../Components/Department/DepartmentForm";
 
 import { MdAdd } from "react-icons/md";
-function Department() {
+function Department(props) {
+  const { pageAccess, canAdd } = props;
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
@@ -71,9 +73,12 @@ function Department() {
         borderRadius="lg"
         overflow="hidden"
       >
+         {pageAccess ? 
+        <>
         <Box d="flex" justifyContent="space-between">
           <Heading mb={4}>Department</Heading>
 
+        {canAdd ?
           <Button
             leftIcon={<MdAdd />}
             colorScheme="teal"
@@ -82,6 +87,7 @@ function Department() {
           >
             Add New
           </Button>
+          : null}
         </Box>
         <Box>
           <DepartmentList
@@ -90,8 +96,13 @@ function Department() {
             toggle={onOpen}
             removeData={removeDepartment}
             rowData={setRowData}
+            {...props}
           />
         </Box>
+        </>
+       : (
+        <NoAccess page="category" />
+      )}{" "} 
       </Flex>
       <DepartmentForm
         mode={mode}

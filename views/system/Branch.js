@@ -36,17 +36,18 @@ function Branch(props) {
 
   return (
     <Fragment>
-      {pageAccess ? (
-        <>
+     
           <Flex
             direction="column"
             w="100%"
             borderWidth="1px"
             borderRadius="lg"
             overflow="hidden"
-          >
+          > {pageAccess ? (
+        <>
             <Box d="flex" justifyContent="space-between">
               <Heading mb={4}>Branch</Heading>
+              <Box>
               {canAdd ? (
                 <Button
                   leftIcon={<MdAdd />}
@@ -57,6 +58,7 @@ function Branch(props) {
                   Add New
                 </Button>
               ) : null}
+              </Box>
             </Box>
             <Box>
               <BranchList
@@ -68,12 +70,13 @@ function Branch(props) {
                 {...props}
               />
             </Box>
-          </Flex>
         </>
       ) : (
         <NoAccess page="branch" />
       )}{" "}
-      <BranchForm
+      
+          </Flex>
+       <BranchForm
         mode={mode}
         open={isOpen}
         saved={saved}

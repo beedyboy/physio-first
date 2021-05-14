@@ -4,7 +4,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import { Box, Text, Stack, Image } from "@chakra-ui/react";
 
 const DirectorCard = ({ data }) => {
-  let images = JSON.parse(data.images);
+  // let images = JSON.parse(data.images);
   return (
     <Fragment>
       <Stack
@@ -27,7 +27,7 @@ const DirectorCard = ({ data }) => {
                   top
                   width="100%"
                   style={{ height: "280px", maxHeight: "280px", width: "100%" }}
-                  src={images[0]}
+                  src={data.images[0]}
                   alt={data._id}
                 />
               </Box>
