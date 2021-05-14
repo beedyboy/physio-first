@@ -43,6 +43,11 @@ const router  = useRouter();
       icon: <GrResources />,
     },
     {
+      label: "Onboarding",
+      href: "/onboarding",
+      icon: <GrResources />,
+    },
+    {
       label: "Ticket",
       href: "/ticket",
       icon: <GrTicket />,
