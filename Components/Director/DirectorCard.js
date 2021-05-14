@@ -1,14 +1,24 @@
 import React, { Fragment } from "react";
 import ReactHtmlParser from "react-html-parser";
-import PerfectScrollbar from "react-perfect-scrollbar"; 
-import {  Box, Text, Stack, Image } from "@chakra-ui/react"; 
+import PerfectScrollbar from "react-perfect-scrollbar";
+import { Box, Text, Stack, Image } from "@chakra-ui/react";
 
-const DirectorCard = ({ data}) => {
-  
-let images = JSON.parse(data.images)
+const DirectorCard = ({ data }) => {
+  let images = JSON.parse(data.images);
   return (
     <Fragment>
-      <Stack spacing="24px" director="column">
+      <Stack
+        mt="5px"
+        mb="2rem"
+        height="300px"
+        backgroundColor="white"
+        w={[300, 360, 460]}
+        borderWidth="1px"
+        borderRadius="lg"
+        overflow="hidden"
+        spacing="24px"
+        direction="column"
+      >
         <Box className="lt-cardBody">
           <Box className="flip-card">
             <Box className="flip-content">
@@ -39,10 +49,9 @@ let images = JSON.parse(data.images)
               </Box>
             </Box>
           </Box>
-          
         </Box>
       </Stack>
-        </Fragment>
+    </Fragment>
   );
 };
 
