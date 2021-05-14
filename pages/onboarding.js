@@ -28,7 +28,7 @@ function onboarding(props) {
   return (
     <>
       <Head>
-        <title>Physio First | Onboardng</title>
+        <title>Physio First | Onboarding</title>
       </Head>
       <Layout>
         <Tabs>

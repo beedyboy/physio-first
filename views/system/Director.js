@@ -87,7 +87,7 @@ function Director() {
         
         <Box> 
         <DirectorList
-                data={director}
+                data={directors}
                 setMode={setMode}
                 toggle={onOpen}
                 removeData={removeDirector}

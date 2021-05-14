@@ -21,18 +21,15 @@ function Document() {
   const { directorStore } = useMobxStores();
   const {
     error,
-    saved,
-    exist,
+    saved, 
     message,
     removed,
     loading,
-    sending,
-    checking,
+    sending, 
     documents,
     fetchDocument,
     resetProperty,
-    removeDocument,
-    confirmDocument,
+    removeDocument, 
     createDocument,
     updateDocument,
   } = directorStore;
@@ -86,7 +83,7 @@ function Document() {
         </Box>
         <Box>
           <DocumentList
-            data={Document}
+            data={documents}
             setMode={setMode}
             toggle={onOpen}
             removeData={removeDocument}
@@ -98,10 +95,7 @@ function Document() {
         mode={mode}
         open={isOpen}
         saved={saved}
-        error={error}
-        exist={exist}
-        checking={checking}
-        confirm={confirmDocument}
+        error={error}  
         message={message}
         sending={sending}
         handleClose={onClose}

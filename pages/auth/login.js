@@ -21,6 +21,14 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useMobxStores } from "../../stores/stores";
+
+// import bgImgArray from "/assets/img/banners";
+const bgImgArray = [
+  '/assets/img/banners/banner1.jpeg',
+  '/assets/img/banners/banner2.jpeg',
+  '/assets/img/banners/banner3.jpeg',
+];
+const colorArray = ['orange.500', 'teal', 'pink.600']
 const schema = {
   email: {
     email: true,
@@ -39,7 +47,25 @@ function Login() {
   const { authStore } = useMobxStores();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-  const { isAuthenticated, resetProperty, login, message, error, errMessage, sending } = authStore;
+   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => setIndex(i => i + 1), 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const bgImg = bgImgArray[index % bgImgArray.length];
+  const color = colorArray[index % colorArray.length];
+
+  const {
+    isAuthenticated,
+    resetProperty,
+    login,
+    message,
+    error,
+    errMessage,
+    sending,
+  } = authStore;
   const [formState, setFormState] = useState({
     isValid: false,
     values: {
@@ -80,11 +106,11 @@ function Login() {
 
   const handleSignIn = (event) => {
     event.preventDefault();
-    login(formState.values); 
+    login(formState.values);
   };
- 
+
   useEffect(() => {
-    if (isAuthenticated === true) { 
+    if (isAuthenticated === true) {
       toast({
         title: "Server Response.",
         description: message,
@@ -101,7 +127,7 @@ function Login() {
     };
   }, [isAuthenticated]);
   useEffect(() => {
-    if (error === true) { 
+    if (error === true) {
       toast({
         title: "Server Response.",
         description: errMessage,
@@ -109,17 +135,17 @@ function Login() {
         duration: 9000,
         isClosable: true,
         position: "top-right",
-      }); 
-    } 
+      });
+    }
   }, [error]);
-  const hasError = (field) => touched[field] && errors[field].error;
-console.log({error})
+  const hasError = (field) => touched[field] && errors[field].error; 
   return (
     <>
       <Head>
         <title> Login</title>
       </Head>
-      <Flex h="100vh" w="100vw" justify="center" align="center">
+      <Flex h="100vh" w="100vw" justify="center" align="center" 
+      bgImage={`url(${bgImg})`} color={color}>
         <Box align="center">
           <Center w="50vw" h="100vh">
             <Flex direction="column" w="40vw">
@@ -130,7 +156,7 @@ console.log({error})
                 <Text>Enter your login details</Text>
               </Box>
               <form mt="1" onSubmit={handleSignIn}>
-                <Stack spacing={4} marginBottom="1rem">
+                <Stack spacing={4} marginBottom="1rem"   boxShadow="base"  rounded="md" bg="smoke-white">
                   <Box>
                     <FormControl
                       isRequired

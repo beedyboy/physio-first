@@ -6,9 +6,11 @@ import {
 import DesktopLayout from "./DesktopLayout";
 import { useRouter } from "next/router";
 import MobileLayout from "./MobileLayout";
-import { MdCheckCircle, MdDashboard, MdSettings } from "react-icons/md";
+import { MdDashboard, MdSettings } from "react-icons/md";
+import { TiTicket } from "react-icons/ti";
+import { RiAdminFill } from "react-icons/ri";
 import { FaUmbrellaBeach } from "react-icons/fa";
-import { GrTicket, GrResources } from "react-icons/gr";
+import { GrTicket, GrResources, GrIntegration } from "react-icons/gr";
 import Utility from "../../services/UtilityService";
 
  
@@ -45,7 +47,7 @@ const router  = useRouter();
     {
       label: "Onboarding",
       href: "/onboarding",
-      icon: <GrResources />,
+      icon: <GrIntegration />,
     },
     {
       label: "Ticket",
@@ -60,12 +62,12 @@ const router  = useRouter();
     {
       label: "Admin",
       href: "/admin",
-      icon: <MdCheckCircle />,
+      icon: <RiAdminFill />,
     },
     {
       label: "Admin Ticket",
       href: "/ticket/admin",
-      icon: <MdCheckCircle />,
+      icon: <TiTicket />,
     },
     {
       label: "Vacation",
