@@ -47,7 +47,7 @@ function onboarding(props) {
                     ) : (
                       directors &&
                       directors.map((director) => (
-                        <DirectorCard data={director} />
+                        <DirectorCard data={director} key={director._id} />
                       ))
                     )}
                   </SimpleGrid>
