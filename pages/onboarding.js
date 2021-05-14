@@ -14,8 +14,7 @@ import {
 import Layout from "../templates/Private/Layout";
 import { useMobxStores } from "../stores/stores";
 import { observer } from "mobx-react-lite";
-import DirectorCard from "../Components/Director/DirectorCard";
-import { DocumentInitialProps } from '../build/server/pages/_document';
+import DirectorCard from "../Components/Director/DirectorCard"; 
 
 function onboarding(props) {
   const { directorStore } = useMobxStores();
