@@ -130,6 +130,49 @@ const AddConversation = ({ id, respondent }) => {
                 onChange={handleContentChange}
                 name="description"
                 setContents={formState.values.description}
+               
+    showToolbar={true}
+    setOptions={{
+      buttonList: [
+          // default
+          ['undo', 'redo'],
+          ["font",
+          "fontSize",
+          "formatBlock",
+          "paragraphStyle",
+          "fontColor",
+          "blockquote",'bold', 'underline', 'italic', 'list'],
+          ['table', 'link', 'image', 'video'],
+          ['fullScreen'],
+          [
+            "image",
+            "video",
+            "audio"],
+          [ 
+          "strike",
+          "subscript",
+          "superscript",
+          "hiliteColor",
+          "textStyle",
+          "removeFormat",
+          "outdent",
+          "indent",
+          "align",
+          "horizontalRule", 
+          "lineHeight",
+          "table",
+          "link", 
+          "fullScreen",
+          "showBlocks",
+          "codeView"
+         ],
+         [ "preview",
+         "print",
+         "save",
+         "template"]
+      ]
+  
+  }}
               />
               <FormErrorMessage>
                 {hasError("description")

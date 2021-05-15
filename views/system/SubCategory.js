@@ -8,28 +8,27 @@ import {
   useToast,
   useDisclosure,
 } from "@chakra-ui/react";
+import NoAccess from "../../widgets/NoAccess";
 import SubCategoryList from "../../Components/SubCategory/SubCategoryList";
 import { useMobxStores } from "../../stores/stores";
 import SubCategoryForm from "../../Components/SubCategory/SubCategoryForm";
 
 import { MdAdd } from "react-icons/md";
-function SubCategory() {
+function SubCategory(props) {
+  const { pageAccess, canAdd, canView } = props;
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
   const [rowData, setRowData] = useState();
   const { subCategoryStore, categoryStore } = useMobxStores();
-  const { 
-    category, 
-    getCategories, 
-  } = categoryStore;
+  const { category, getCategories } = categoryStore;
   const {
     error,
     saved,
     exist,
     message,
     removed,
-    sending, 
+    sending,
     subcategory,
     checking,
     confirmRow,
@@ -76,27 +75,40 @@ function SubCategory() {
         borderRadius="lg"
         overflow="hidden"
       >
-        <Box d="flex" justifyContent="space-between">
-          <Heading mb={4}>SubCategory</Heading>
+        {pageAccess ? (
+          <>
+            <Box d="flex" justifyContent="space-between">
+              <Heading mb={4}>SubCategory</Heading>
 
-          <Button
-            leftIcon={<MdAdd />}
-            colorScheme="teal"
-            p="2rem"
-            onClick={newCategory}
-          >
-            Add New
-          </Button>
-        </Box>
-        <Box>
-          <SubCategoryList
-            data={subcategory}
-            setMode={setMode}
-            toggle={onOpen}
-            removeData={deleteSubCat}
-            rowData={setRowData}
-          />
-        </Box>
+              {canAdd ? (
+                <Button
+                  leftIcon={<MdAdd />}
+                  colorScheme="teal"
+                  p="2rem"
+                  onClick={newCategory}
+                >
+                  Add New
+                </Button>
+              ) : null}
+            </Box>
+            {canView ? (
+              <>
+                <Box>
+                  <SubCategoryList
+                    data={subcategory}
+                    setMode={setMode}
+                    toggle={onOpen}
+                    removeData={deleteSubCat}
+                    rowData={setRowData}
+                    {...props}
+                  />
+                </Box>{" "}
+              </>
+            ) : null}
+          </>
+        ) : (
+          <NoAccess page="sub-category" />
+        )}{" "}
       </Flex>
       <SubCategoryForm
         mode={mode}

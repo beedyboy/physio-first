@@ -505,6 +505,15 @@ const ACLForm = ({
                   Del
                 </Checkbox>
               </WrapItem> 
+              <WrapItem>
+                <Checkbox
+                  isChecked={priviledges.staff.modify || false}
+                  name="modify"
+                  onChange={(event) => handleRoleChange(event, "staff")}
+                >
+                  Modify
+                </Checkbox>
+              </WrapItem>
             </Wrap>
           </FormControl>
         </Box>

@@ -1,18 +1,20 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react'
-import UserStore from '../../../stores/UserStore';
-import TicketStore from '../../../stores/TicketStore';
+import React, { Fragment, useEffect, useState } from 'react' 
 import { observer } from 'mobx-react';
-import{ Button, Card, CardBody, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, ModalFooter, Row, Col } from 'reactstrap';  
-
-const AssignTicket = ({ticket, open, handleClose}) => {
-    const userStore = useContext(UserStore);
-    const tickStore = useContext(TicketStore);
-    const { info:users, fetchUsers} = userStore;  
+import {
+  Box,
+  Stack,
+  Button,
+  Select,
+  useToast,
+  FormLabel,
+  FormControl,
+} from "@chakra-ui/react"; 
+const AssignTicket   = ({ data, sending, users, assignManager, action, reset, error, toggle }) => {
+      const toast = useToast(); 
     const [formState, setFormState] = useState({
         assigned_to: '',
         ticket_id: ''
-    });
-    const { assignTicket, sending, close, toggleClose } = tickStore;
+    }); 
     useEffect(() => {
         fetchUsers(); 
       }, [])
@@ -24,14 +26,35 @@ const AssignTicket = ({ticket, open, handleClose}) => {
             }))
       }, [ticket]);
 
+ 
       useEffect(() => {
-        if(close === true) { 
-         handleClose(); 
-        }
-        return() => {
-          toggleClose()
-        }
-      }, [close])  
+        if (action === "statusChangedError") {
+            toast({
+              title: "Server Response.",
+              description: message,
+              status: "error",
+              duration: 9000,
+              isClosable: true,
+              position: "top-right",
+            });
+          } else if(action === "statusChanged") {
+            toast({
+                title: "Server Response.",
+                description: message,
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+                position: "top-right",
+              });
+          }
+        return () => {
+          reset("error", false);
+          reset("action", "");
+          reset("message", "");
+          resetForm();
+          toggle('status');
+        };
+      }, [action]);
 const handleChange = e => {   
     setFormState(state => ({
         ...state,
@@ -40,54 +63,51 @@ const handleChange = e => {
   }
 const handleSubmit = e => {
     e.preventDefault();
-    assignTicket(formState)
-}
-const closeBtn = <Button className="close" onClick={handleClose}>&times;</Button>;
- 
+    assignManager(formState)
+} 
     return (
-        <Fragment>
-          <Modal isOpen={open} toggle={handleClose}>
-            <ModalHeader toggle={handleClose} close={closeBtn}>Assign Staff</ModalHeader>
-         <form noValidate autoComplete="off"  onSubmit={handleSubmit}> 
-    <ModalBody>
-    <Card>
-      <CardBody>  
-          <Row> 
-          <Col md="12">  
-              <FormGroup >
-            <Label for="status">Staff</Label> 
-               <Input
-                 type="select"
-                 name="assigned_to"
-                 value={formState.assigned_to || ''} 
-                 onChange={handleChange}   
-                 users={users} 
-             >
-                 <option value="">Select One</option>
+        
+         <Fragment>
+         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+           <Stack spacing="24px" boxShadow="base" p="6" rounded="md" bg="white">
+             <Box>
+               <FormControl my="3">
+                 <FormLabel htmlFor="assigned_to">Staff</FormLabel>
+                 <Select
+                   value={formState.assigned_to}
+                   placeholder="Select Manager"
+                   name="assigned_to"
+                   id="assigned_to"
+                   onChange={handleChange}
+                 >
                  {users && users.map((user) =>(
-                      <option key={user.id} value={user.id}>{`${user.firstname} ${user.lastname} `}</option>
+                      <option key={user._id} value={user._id}>{`${user.firstname} ${user.lastname} `}</option>
                  ))}
-             </Input>
-          </FormGroup> 
-              </Col>
-          </Row>
-     </CardBody>
-    </Card> 
-    </ModalBody>
-    <ModalFooter>
-        <Button color="secondary" onClick={handleClose}>
-            Close
-        </Button> {" "}
-        <Button color="primary" disabled={ sending}  type="submit">
-        {sending ? (
-            <span> Saving changes  <i className="fa fa-spinner"></i></span>
-            ): 'Save changes'}
-        </Button>
-    </ModalFooter>
-      </form>
-</Modal>
-          
-        </Fragment>
+                 </Select>
+               </FormControl>
+             </Box>
+           </Stack>
+   
+           <Button
+             disabled={sending}
+             colorScheme="blue"
+             onClick={handleSubmit}
+             isLoading={sending}
+             bg="brand.mainAccent"
+             color="brand.white"
+             variant="ghost"
+             _hover={{
+               borderColor: "brand.mainAccent",
+               bg: "brand.white",
+               color: "brand.mainAccent",
+               boxShadow: "md",
+             }}
+             _focus={{}}
+           >
+             Update Status
+           </Button>
+         </form>
+       </Fragment>
     )
 }
 

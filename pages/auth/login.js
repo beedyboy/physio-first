@@ -24,11 +24,11 @@ import { useMobxStores } from "../../stores/stores";
 
 // import bgImgArray from "/assets/img/banners";
 const bgImgArray = [
-  '/assets/img/banners/banner1.jpeg',
-  '/assets/img/banners/banner2.jpeg',
-  '/assets/img/banners/banner3.jpeg',
+  "/assets/img/banners/banner1.jpeg",
+  "/assets/img/banners/banner2.jpeg",
+  "/assets/img/banners/banner3.jpeg",
 ];
-const colorArray = ['orange.500', 'teal', 'pink.600']
+const colorArray = ["orange.500", "teal", "pink.600"];
 const schema = {
   email: {
     email: true,
@@ -47,10 +47,10 @@ function Login() {
   const { authStore } = useMobxStores();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-   const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => setIndex(i => i + 1), 5000);
+    const timer = setInterval(() => setIndex((i) => i + 1), 5000);
     return () => clearInterval(timer);
   }, []);
 
@@ -138,14 +138,22 @@ function Login() {
       });
     }
   }, [error]);
-  const hasError = (field) => touched[field] && errors[field].error; 
+  const hasError = (field) => touched[field] && errors[field].error;
   return (
     <>
       <Head>
         <title> Login</title>
       </Head>
-      <Flex h="100vh" w="100vw" justify="center" align="center" 
-      bgImage={`url(${bgImg})`} color={color}>
+      <Flex
+        h="100vh"
+        w="100vw"
+        justify="center"
+        align="center"
+        bgImage={`url(${bgImg})`}
+        color={color}
+        bgRepeat="no-repeat"
+        backgroundSize="cover"
+      >
         <Box align="center">
           <Center w="50vw" h="100vh">
             <Flex direction="column" w="40vw">
@@ -156,7 +164,13 @@ function Login() {
                 <Text>Enter your login details</Text>
               </Box>
               <form mt="1" onSubmit={handleSignIn}>
-                <Stack spacing={4} marginBottom="1rem"   boxShadow="base"  rounded="md" bg="smoke-white">
+                <Stack
+                  spacing={4}
+                  marginBottom="1rem"
+                  boxShadow="base"
+                  rounded="md"
+                  bg="smoke-white"
+                >
                   <Box>
                     <FormControl
                       isRequired

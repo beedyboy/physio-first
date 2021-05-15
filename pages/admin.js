@@ -7,6 +7,7 @@ import Account from "../views/admin/Account";
 import Vacation from "../views/admin/Vacation";
 
 function admin(props) {
+  const { access } = props;
   const leaveAdd = access && access.leave && access.leave.add;
   const leaveView = access && access.leave && access.leave.view;
   const leaveDel = access && access.leave && access.leave.del;

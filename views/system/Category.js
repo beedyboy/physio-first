@@ -15,7 +15,7 @@ import CategoryForm from "../../Components/Category/CategoryForm";
 
 import { MdAdd } from "react-icons/md";
 function Category(props) {
-  const { pageAccess, canAdd } = props;
+  const { pageAccess, canAdd, canView } = props;
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
@@ -90,6 +90,8 @@ function Category(props) {
         </Button>
         : null}
         </Box>
+        {canView ?
+        <>
         <Box>
           <CategoryList
             data={category}
@@ -100,6 +102,8 @@ function Category(props) {
             {...props}
           />
         </Box>
+        </>
+          : null}
      </>
        : (
         <NoAccess page="category" />

@@ -22,7 +22,7 @@ import Layout from "../../../templates/Private/Layout";
 const AdminTicketDetails = (props) => {
   const { query } = props; 
   const { ticketStore } = useMobxStores();
-  const { getTicketById, ticket, toggleStatus, sending, error, action } = ticketStore;
+  const { getTicketById, ticket, toggleStatus, sending, error, action, resetProperty } = ticketStore;
 
   useEffect(() => {
     const { id } = query;
@@ -126,6 +126,7 @@ const AdminTicketDetails = (props) => {
                     toggle={toggleModal}
                     toggleStatus={toggleStatus}
                     action={action}
+                    reset={resetProperty}
                   />
                 </ModalWidget>
               </Box>

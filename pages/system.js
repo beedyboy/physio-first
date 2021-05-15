@@ -89,7 +89,10 @@ function system(props) {
                   <Marketing />
                 </TabPanel>
                 <TabPanel>
-                  <SubCategory />
+                  <SubCategory  pageAccess={totalCategory}
+                    canAdd={catAdd}
+                    canView={catView}
+                    canDel={catDel} />
                 </TabPanel>
                 <TabPanel>
                   <Leave />
