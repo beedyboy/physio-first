@@ -129,8 +129,10 @@ class Ticket {
         if (res.status === 200) {
           this.fetchTicket();
           this.message = res.data.message;
+          this.action = "managerAssigned"
         } else {
           this.message = res.data.error;
+          this.action = "managerAssignedError"
         }
       });
     } catch (error) {
@@ -150,6 +152,7 @@ class Ticket {
           this.action = "statusChanged"
         } else {
           this.message = res.data.error;
+          this.action = "statusChangedError"
         }
       });
     } catch (error) {

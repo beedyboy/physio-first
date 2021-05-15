@@ -28,7 +28,7 @@ const AssignTicket   = ({ data, sending, users, assignManager, action, reset, er
 
  
       useEffect(() => {
-        if (action === "statusChangedError") {
+        if (action === "managerAssignedError") {
             toast({
               title: "Server Response.",
               description: message,
@@ -37,7 +37,7 @@ const AssignTicket   = ({ data, sending, users, assignManager, action, reset, er
               isClosable: true,
               position: "top-right",
             });
-          } else if(action === "statusChanged") {
+          } else if(action === "managerAssigned") {
             toast({
                 title: "Server Response.",
                 description: message,
