@@ -8,14 +8,14 @@ import {
   FormLabel,
   FormControl,
 } from "@chakra-ui/react"; 
-const AssignTicket   = ({ data, sending, users, assignManager, action, reset, error, toggle }) => {
+const AssignTicket   = ({ data, sending, loading, getUsers, users, assignManager, action, reset, error, toggle }) => {
       const toast = useToast(); 
     const [formState, setFormState] = useState({
         assigned_to: '',
         id: ''
     }); 
     useEffect(() => {
-        fetchUsers(); 
+      getUsers(); 
       }, [])
        
       useEffect(() => { 

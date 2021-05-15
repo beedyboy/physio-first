@@ -11,6 +11,7 @@ import {
   Text,
   Wrap,
   WrapItem, 
+  Skeleton
 } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { useMobxStores } from "../../../stores/stores";
@@ -22,9 +23,9 @@ import Layout from "../../../templates/Private/Layout";
 import AssignTicket from "../../../Components/AdminTicket/AssignTicket";
 const AdminTicketDetails = (props) => {
   const { query } = props; 
-  const { ticketStore } = useMobxStores();
-  const { getTicketById, assignManager, ticket, toggleStatus, sending, error, action, resetProperty } = ticketStore;
-
+  const { ticketStore, userStore } = useMobxStores();
+  const { getTicketById, loading, assignManager, ticket, toggleStatus, sending, error, action, resetProperty } = ticketStore;
+const { getUsers, users, loading: userLoading } = userStore;
   useEffect(() => {
     const { id } = query;
     getTicketById(id);
@@ -53,10 +54,14 @@ const AdminTicketDetails = (props) => {
         align="space-between"
       >
         {/* do a breadcrumb here */}
+        {/* <Box padding="6" boxShadow="lg" bg="white">
+  <SkeletonCircle size="10" />
+  <SkeletonText mt="4" noOfLines={6} spacing="4" />
+</Box> */}
+<Skeleton isLoaded={!loading}>
 
         <Flex>
-          <Box w="63%">
-            {/* conversation here */}
+          <Box w="63%"> 
             <Heading mb={2} as="h6">
               Conversation
             </Heading>
@@ -101,7 +106,7 @@ const AdminTicketDetails = (props) => {
                       fontSize="20px"
                       icon={<MdEdit />}
                       onClick={(e) => toggleModal("assign")}
-                    />
+                      />
               </Box>
               <Box>
                 <Text as="p" fontWeight="bolder">
@@ -119,7 +124,7 @@ const AdminTicketDetails = (props) => {
                       fontSize="20px"
                       icon={<MdEdit />}
                       onClick={(e) => toggleModal("status")}
-                    />
+                      />
                   </WrapItem>
                 </Wrap>
                 <ModalWidget
@@ -127,7 +132,7 @@ const AdminTicketDetails = (props) => {
                   open={status}
                   id="status"
                   toggle={toggleModal}
-                >
+                  >
                   <Status
                     sending={sending}
                     data={ticket}
@@ -136,19 +141,22 @@ const AdminTicketDetails = (props) => {
                     toggleStatus={toggleStatus}
                     action={action}
                     reset={resetProperty}
-                  />
+                    />
                 </ModalWidget>
                 <ModalWidget
                   title="Assign Manager"
                   open={assign}
                   id="assign"
                   toggle={toggleModal}
-                >
+                  >
                   <AssignTicket assignManager={assignManager}  sending={sending}
                     data={ticket}
                     error={error}
                     toggle={toggleModal} 
                     action={action}
+                    users={users}
+                    getUsers={getUsers}
+                    loading={userLoading}
                     reset={resetProperty} />
 
                 </ModalWidget>
@@ -161,6 +169,8 @@ const AdminTicketDetails = (props) => {
             </Stack>
           </Box>
         </Flex>
+                    </Skeleton>
+    
       </Flex>
       </PerfectScrollBar>
          </Layout>
