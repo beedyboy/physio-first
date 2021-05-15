@@ -150,7 +150,7 @@ function Login() {
           <Center w="50vw" h="100vh">
             <Flex direction="column" w="40vw">
               <Box>
-                <Heading as="h4">Welcome back</Heading>
+                <Heading as="h4">You have been captured</Heading>
               </Box>
               <Box mt="2">
                 <Text>Enter your login details</Text>

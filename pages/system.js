@@ -11,8 +11,7 @@ import SubCategory from "../views/system/SubCategory";
 import Leave from "../views/system/Leave";
 import Director from "../views/system/Director";
 
-function system(props) {
-  // console.log({ props });
+function system(props) { 
   const { access } = props;
   // const canManage = access && access.ticket && access.ticket.manage;
   const catAdd = access && access.category && access.category.add;

@@ -7,6 +7,18 @@ import Account from "../views/admin/Account";
 import Vacation from "../views/admin/Vacation";
 
 function admin(props) {
+  const leaveAdd = access && access.leave && access.leave.add;
+  const leaveView = access && access.leave && access.leave.view;
+  const leaveDel = access && access.leave && access.leave.del;
+
+  const staffAdd = access && access.staff && access.staff.add;
+  const staffView = access && access.staff && access.staff.view;
+  const staffDel = access && access.staff && access.staff.del;
+  const staffModify = access && access.staff && access.staff.modify;
+
+  let totalLeave = leaveAdd || leaveView || leaveDel;
+  let totalStaff = staffAdd || staffView || staffDel || staffModify;
+
   return (
     <>
       <Head>
@@ -16,18 +28,33 @@ function admin(props) {
         <Tabs>
           <TabList>
             <Tab>Help</Tab>
-            <Tab>Staff</Tab>
-            <Tab>Vacation</Tab>
+            {totalLeave || totalStaff ? (
+              <>
+                <Tab>Staff</Tab>
+                <Tab>Vacation</Tab>
+              </>
+            ) : null}
           </TabList>
           <TabPanels>
             <TabPanel>
               <Help />
             </TabPanel>
             <TabPanel>
-              <Account />
+              <Account
+                pageAccess={totalStaff}
+                canAdd={staffAdd}
+                canView={staffView}
+                canDel={staffDel}
+                canModify={staffModify}
+              />
             </TabPanel>
             <TabPanel>
-              <Vacation />
+              <Vacation
+                pageAccess={totalLeave}
+                canAdd={leaveAdd}
+                canView={leaveView}
+                canDel={leaveDel}
+              />
             </TabPanel>
           </TabPanels>
         </Tabs>

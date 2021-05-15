@@ -72,9 +72,8 @@ const Status = ({ data, sending, toggleStatus, action, toggle }) => {
                 onChange={handleChange}
               >
                 <option value="Pending">Pending</option>
-                <option value="Active">Active</option>
-                <option value="InProgress">InProgress</option>
-                <option value="Closed">Closed</option>
+                <option value="Active">Active</option> 
+                <option value="Closed">Close</option>
               </Select>
             </FormControl>
           </Box>

@@ -9,6 +9,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useMobxStores } from "../../stores/stores";
+import NoAccess from "../../widgets/NoAccess";
 
 import { MdAdd } from "react-icons/md";
 import ACL from "../../Components/Account/ACL";
@@ -17,7 +18,8 @@ import AccountList from "../../Components/Account/AccountList";
 import ModalWidget from "../../widgets/ModalWidget";
 import AccountLogin from "../../Components/Account/AccountLogin";
 import Onboard from "../../Components/Account/Onboard";
-const Account = () => {
+const Account = (props) => {
+  const { pageAccess, canAdd } = props;
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
@@ -94,28 +96,37 @@ const Account = () => {
         borderRadius="lg"
         overflow="hidden"
       >
-        <Box d="flex" justifyContent="space-between">
-          <Heading mb={4}> Account</Heading>
+        {pageAccess ? (
+          <>
+            <Box d="flex" justifyContent="space-between">
+              <Heading mb={4}> Account</Heading>
 
-          <Button
-            leftIcon={<MdAdd />}
-            colorScheme="teal"
-            p="2rem"
-            onClick={newAccount}
-          >
-            Add New
-          </Button>
-        </Box>
-        <Box>
-          <AccountList
-            data={users}
-            setMode={setMode}
-            toggle={onOpen}
-            removeData={removeStaff}
-            rowData={setRowData}
-            setModal={toggleModal}
-          />
-        </Box>
+              {canAdd ? (
+                <Button
+                  leftIcon={<MdAdd />}
+                  colorScheme="teal"
+                  p="2rem"
+                  onClick={newAccount}
+                >
+                  Add New
+                </Button>
+              ) : null}
+            </Box>
+            <Box>
+              <AccountList
+                data={users}
+                setMode={setMode}
+                toggle={onOpen}
+                removeData={removeStaff}
+                rowData={setRowData}
+                setModal={toggleModal}
+                {...props}
+              />
+            </Box>
+          </>
+        ) : (
+          <NoAccess page="account" />
+        )}{" "}
       </Flex>
       <AccountForm
         mode={mode}

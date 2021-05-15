@@ -23,10 +23,9 @@ const DesktopNav = (props) => {
             {pathname}
           </Heading>
         </Box>
-        <Menu cursor="pointer">
+        <Menu cursor="pointer" mr={2}>
           <MenuButton
-            as={Avatar}
-             cursor="cursor"
+            as={Avatar} 
             size="md"
             name={user}
             src="https://bit.ly/dan-abramov" 

@@ -15,6 +15,8 @@ const AccountList = ({
   removeData,
   rowData,
   toggle,
+  canDel,
+  canModify,
 }) => {
   const columns = [
     {
@@ -71,40 +73,46 @@ const AccountList = ({
             </MenuButton>
 
             <MenuList>
-              <MenuItem
-                onClick={(e) => setActionData(e, row, "role")}
-                icon={<GiKeyLock />}
-              >
-                Set Role
-              </MenuItem>
-              {row.can_login ? null : (
+              {canModify ? (
+                <>
+                  <MenuItem
+                    onClick={(e) => setActionData(e, row, "role")}
+                    icon={<GiKeyLock />}
+                  >
+                    Set Role
+                  </MenuItem>
+                  {row.can_login ? null : (
+                    <MenuItem
+                      onClick={(e) => setActionData(e, row, "login")}
+                      icon={<CgLogIn />}
+                    >
+                      Set Login
+                    </MenuItem>
+                  )}
+
+                  <MenuItem
+                    onClick={(e) => setActionData(e, row, "onboard")}
+                    icon={<GrIntegration />}
+                  >
+                    Onboard
+                  </MenuItem>
+                  <MenuItem onClick={(e) => editData(e, row)} icon={<MdEdit />}>
+                    Edit
+                  </MenuItem>
+                </>
+              ) : null}
+              {canDel ? (
                 <MenuItem
-                  onClick={(e) => setActionData(e, row, "login")}
-                  icon={<CgLogIn />}
+                  icon={<MdDelete />}
+                  onClick={() => {
+                    if (window.confirm("Delete this Account?")) {
+                      deleteData(row._id);
+                    }
+                  }}
                 >
-                  Set Login
+                  Delete
                 </MenuItem>
-              )}
-             
-              <MenuItem
-                onClick={(e) => setActionData(e, row, "onboard")}
-                icon={<GrIntegration />}
-              >
-                Onboard
-              </MenuItem>
-              <MenuItem onClick={(e) => editData(e, row)} icon={<MdEdit />}>
-                Edit
-              </MenuItem>
-              <MenuItem
-                icon={<MdDelete />}
-                onClick={() => {
-                  if (window.confirm("Delete this Account?")) {
-                    deleteData(row._id);
-                  }
-                }}
-              >
-                Delete
-              </MenuItem>
+              ) : null}
             </MenuList>
           </Menu>
         </Fragment>
