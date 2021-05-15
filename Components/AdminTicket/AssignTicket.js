@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react' 
-import { observer } from 'mobx-react';
+import React, { Fragment, useEffect, useState } from 'react'  
 import {
   Box,
   Stack,
@@ -13,7 +12,7 @@ const AssignTicket   = ({ data, sending, users, assignManager, action, reset, er
       const toast = useToast(); 
     const [formState, setFormState] = useState({
         assigned_to: '',
-        ticket_id: ''
+        id: ''
     }); 
     useEffect(() => {
         fetchUsers(); 
@@ -22,9 +21,9 @@ const AssignTicket   = ({ data, sending, users, assignManager, action, reset, er
       useEffect(() => { 
             setFormState(state => ({
                 ...state,
-                ticket_id: ticket
+                id: data._id
             }))
-      }, [ticket]);
+      }, [data]);
 
  
       useEffect(() => {
@@ -52,7 +51,7 @@ const AssignTicket   = ({ data, sending, users, assignManager, action, reset, er
           reset("action", "");
           reset("message", "");
           resetForm();
-          toggle('status');
+          toggle('assign');
         };
       }, [action]);
 const handleChange = e => {   
@@ -65,6 +64,16 @@ const handleSubmit = e => {
     e.preventDefault();
     assignManager(formState)
 } 
+
+const resetForm = () => {
+  setFormState((prev) => ({
+    ...prev, 
+      id: "",
+      assigned_to: "", 
+    touched: {},
+    errors: {},
+  }));
+};
     return (
         
          <Fragment>
@@ -111,4 +120,4 @@ const handleSubmit = e => {
     )
 }
 
-export default observer(AssignTicket)
+export default AssignTicket;

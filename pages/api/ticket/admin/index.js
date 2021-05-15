@@ -42,7 +42,7 @@ const updateTicket = async (req, res) => {
       });
     } else {
       return res.status(422).json({
-        error: "Error updating asset",
+        error: "Error updating ticket",
       });
     }
   });

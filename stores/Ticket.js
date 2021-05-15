@@ -31,7 +31,7 @@ class Ticket {
       tickets: observable,
       fetchTicket: action,
       fetchMyTicket: action,
-      assignTicket: action,
+      assignManager: action,
       addTicket: action,
       updateTicket: action,
       getTicketById: action,
@@ -121,7 +121,7 @@ class Ticket {
       console.error(e);
     }
   };
-  assignTicket = (data) => {
+  assignManager = (data) => {
     try {
       this.sending = true;
       backend.put("ticket/admin", data).then((res) => {

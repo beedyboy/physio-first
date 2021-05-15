@@ -19,10 +19,11 @@ import ModalWidget from "../../../widgets/ModalWidget";
 import Status from "../../../Components/AdminTicket/Status";
 import Conversation from "../../../Components/Conversation/Conversation";
 import Layout from "../../../templates/Private/Layout";
+import AssignTicket from "../../../Components/AdminTicket/AssignTicket";
 const AdminTicketDetails = (props) => {
   const { query } = props; 
   const { ticketStore } = useMobxStores();
-  const { getTicketById, ticket, toggleStatus, sending, error, action, resetProperty } = ticketStore;
+  const { getTicketById, assignManager, ticket, toggleStatus, sending, error, action, resetProperty } = ticketStore;
 
   useEffect(() => {
     const { id } = query;
@@ -93,6 +94,14 @@ const AdminTicketDetails = (props) => {
                     ticket && ticket.assigned_to && ticket.assigned_to.lastname
                   }`}
                 </Text>
+                <IconButton
+                      variant="outline"
+                      colorScheme="teal"
+                      aria-label="Assign Manager"
+                      fontSize="20px"
+                      icon={<MdEdit />}
+                      onClick={(e) => toggleModal("assign")}
+                    />
               </Box>
               <Box>
                 <Text as="p" fontWeight="bolder">
@@ -128,6 +137,20 @@ const AdminTicketDetails = (props) => {
                     action={action}
                     reset={resetProperty}
                   />
+                </ModalWidget>
+                <ModalWidget
+                  title="Assign Manager"
+                  open={assign}
+                  id="assign"
+                  toggle={toggleModal}
+                >
+                  <AssignTicket assignManager={assignManager}  sending={sending}
+                    data={ticket}
+                    error={error}
+                    toggle={toggleModal} 
+                    action={action}
+                    reset={resetProperty} />
+
                 </ModalWidget>
               </Box>
               <Box>

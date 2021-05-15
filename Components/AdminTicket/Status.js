@@ -8,7 +8,7 @@ import {
   FormLabel,
   FormControl,
 } from "@chakra-ui/react"; 
-const Status = ({ data, sending, toggleStatus, action, reset, error, toggle }) => {
+const Status = ({ data, sending, toggleStatus, action, reset,  toggle }) => {
   const toast = useToast();
   const [status, setStatus] = useState("");
   const [id, setId] = useState("");
@@ -48,6 +48,19 @@ const Status = ({ data, sending, toggleStatus, action, reset, error, toggle }) =
   }, [action]);
   const handleChange = (e) => {
     setStatus(e.target.value);
+  };
+
+  const resetForm = () => {
+    setFormState((prev) => ({
+      ...prev,
+      values: {
+        ...prev.values,
+        id: "",
+        status: "",
+      },
+      touched: {},
+      errors: {},
+    }));
   };
   const handleSubmit = (e) => {
     e.preventDefault();
