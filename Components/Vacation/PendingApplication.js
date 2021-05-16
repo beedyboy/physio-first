@@ -5,7 +5,14 @@ import { IconButton, Wrap, WrapItem } from "@chakra-ui/react";
 import { MdEdit, MdDelete } from "react-icons/md";
 import Link from "next/link";
 
-const PendingApplication = ({ data, removeData, rowData, toggle }) => {
+const PendingApplication = ({
+  data,
+  canDel,
+  canAdd,
+  removeData,
+  rowData,
+  toggle,
+}) => {
   const columns = [
     {
       name: "Type",
@@ -32,42 +39,51 @@ const PendingApplication = ({ data, removeData, rowData, toggle }) => {
       name: "End date",
       selector: "leave_end_date",
       sortable: true,
-    }, 
+    },
     {
       name: "Actions",
       sortable: true,
       cell: (row) => (
         <Wrap spacing="20px">
-          <WrapItem>
-            <IconButton
-              variant="outline"
-              colorScheme="teal"
-              aria-label="Edit Status"
-              fontSize="20px"
-              icon={<MdEdit />}
-              onClick={(e) => editData(e, row)}
-            />
-          </WrapItem>
-          <WrapItem>
-            <IconButton
-              variant="outline"
-              colorScheme="teal"
-              aria-label="Delete Vacation"
-              fontSize="20px"
-              icon={<MdDelete />}
-              onClick={(key) => {
-                if (window.confirm("Delete this Vacation?")) {
-                  deleteData(row._id);
-                }
-              }}
-            />
-          </WrapItem>
+          {canAdd ? (
+            <>
+              {" "}
+              <WrapItem>
+                <IconButton
+                  variant="outline"
+                  colorScheme="teal"
+                  aria-label="Edit Status"
+                  fontSize="20px"
+                  icon={<MdEdit />}
+                  onClick={(e) => editData(e, row)}
+                />
+              </WrapItem>
+            </>
+          ) : null}
+          {canDel ? (
+            <>
+              <WrapItem>
+                <IconButton
+                  variant="outline"
+                  colorScheme="teal"
+                  aria-label="Delete Vacation"
+                  fontSize="20px"
+                  icon={<MdDelete />}
+                  onClick={(key) => {
+                    if (window.confirm("Delete this Vacation?")) {
+                      deleteData(row._id);
+                    }
+                  }}
+                />
+              </WrapItem>
+            </>
+          ) : null}
         </Wrap>
       ),
     },
   ];
   const editData = (e, row) => {
-    e.persist(); 
+    e.persist();
     rowData(row);
     toggle(true);
   };

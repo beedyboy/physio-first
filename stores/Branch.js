@@ -84,7 +84,7 @@ class Branch {
   updateBranch = (branch) => {
     try {
       this.sending = true;
-      backend.get(`branch/${branch}`).then((res) => {
+      backend.put(`branch`, branch).then((res) => {
         this.sending = false;
         if (res.status === 200) {
           this.getBranches();

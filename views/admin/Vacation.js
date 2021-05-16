@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import { observer } from "mobx-react-lite";
 import {
   Box,
-  Flex, 
+  Flex,
   Heading,
   useToast,
   useDisclosure,
@@ -13,12 +13,14 @@ import {
   TabPanel,
 } from "@chakra-ui/react";
 import { useMobxStores } from "../../stores/stores";
- 
+
 import AcceptedApplications from "../../Components/Vacation/AcceptedApplications";
 import PendingApplication from "../../Components/Vacation/PendingApplication";
-import CancelledApplication from "../../Components/Vacation/CancelledApplication"; 
-import AdminStatusAction from "../../Components/Vacation/AdminStatusAction"; 
-const Vacation = () => {
+import CancelledApplication from "../../Components/Vacation/CancelledApplication";
+import AdminStatusAction from "../../Components/Vacation/AdminStatusAction";
+import NoAccess from "../../widgets/NoAccess";
+const Vacation = (props) => {
+  const { pageAccess } = props;
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
@@ -73,47 +75,54 @@ const Vacation = () => {
         <Box d="flex" justifyContent="space-between">
           <Heading mb={4}> Vacation Applications</Heading>
         </Box>
-        <Box>
-          <Tabs>
-            <TabList>
-              <Tab>Pending</Tab>
-              <Tab>Accepted</Tab>
-              <Tab>Cancelled</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <PendingApplication
-                  data={pendingApplications}
-                  
-                  toggle={onOpen}
-                  removeData={delVacation}
-                  rowData={setRowData}
-                  // setModal={toggleModal}
-                />
-              </TabPanel>
-              <TabPanel>
-                {" "}
-                <AcceptedApplications data={approvedApplications} />
-              </TabPanel>
-              <TabPanel>
-                {" "}
-                <CancelledApplication data={rejectedApplications} />
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Box>
+        {pageAccess ? (
+          <>
+            <Box>
+              <Tabs>
+                <TabList>
+                  <Tab>Pending</Tab>
+                  <Tab>Accepted</Tab>
+                  <Tab>Cancelled</Tab>
+                </TabList>
+                <TabPanels>
+                  <TabPanel>
+                    <PendingApplication
+                      data={pendingApplications}
+                     {...props}
+                      toggle={onOpen}
+                      removeData={delVacation}
+                      rowData={setRowData}
+                      // setModal={toggleModal}
+                    />
+                  </TabPanel>
+                  <TabPanel>
+                    {" "}
+                    <AcceptedApplications data={approvedApplications} />
+                  </TabPanel>
+                  <TabPanel>
+                    {" "}
+                    <CancelledApplication data={rejectedApplications} />
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+            </Box>
+          </>
+        ) : (
+          <NoAccess page="vacation management" />
+        )}{" "}
       </Flex>
-      <AdminStatusAction  
+      <AdminStatusAction
         open={isOpen}
         action={action}
         saved={saved}
-        error={error} 
+        error={error}
         message={message}
-        sending={sending} 
+        sending={sending}
         handleClose={onClose}
         initial_data={rowData}
-        reset={resetProperty} 
-        updateApp={adminUpdate} />
+        reset={resetProperty}
+        updateApp={adminUpdate}
+      />
     </Fragment>
   );
 };

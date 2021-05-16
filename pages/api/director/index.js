@@ -76,6 +76,7 @@ console.log('image', image.path)
         if (err) {
           res.status(404).json({
             error: "Director was not created",
+            err
           });
         } else {
           res.status(201).json({ message: "New director created successfully" });

@@ -43,18 +43,37 @@ const saveBranch = async (req, res) => {
     res.status(500).json({ error: "internal server error" });
   }
 };
+ 
 const updateBranch = async (req, res) => {
-  let branchData = {};
-  const data = req.body;
-  if (data.name) branchData.name = data.name;
-  if (data.email) branchData.email = data.email;
-  if (data.address) branchData.address = data.address;
-  if (data.phone) branchData.phone = data.phone;
+  const data = req.body; 
+  const nameRegex = new RegExp(data.email, "i");
+  const check_record = await DB.Branch.findOne({ email: nameRegex }); 
+  const exist = check_record
+    ? check_record && check_record._id.toString() === data.id
+      ? false
+      : true
+    : false;
 
-  const branch_record = await DB.Branch.findByIdAndUpdate(data.id, branchData);
-  if (branch_record) {
-    res.status(200).json({ message: "Branch updated successfully" });
+  if (exist === false) {
+    await DB.Branch.findById(data.id, (error, doc) => {
+      if (!error) {
+        doc.name = data.name;
+        doc.email = data.email;
+        doc.address = data.address;
+        doc.phone = data.phone;
+        doc.save();
+        res.status(200).json({
+          exist,
+          check_record,
+          message: "Branch updated successfully",
+        });
+      } else {
+        return res.status(422).json({ error: "Error updating branch" });
+      }
+    });
   } else {
-    return res.status(422).json({ error: "Error updating branch" });
+    return res.status(422).json({
+      error: "Duplicate branch email is not allowed",
+    });
   }
 };
