@@ -4,19 +4,12 @@ import {
   Text,
   Badge, 
   Divider,
-  Button,
-  useDisclosure,
+  Button, 
 } from "@chakra-ui/react";
-import React, { Fragment } from "react";
-import DrawalWidget from "../../widgets/DrawalWidget"; 
-import ProfileForm from "./ProfileForm";
-import { MdEdit } from "react-icons/md";
+import React, { Fragment } from "react"; 
 
-function ProfileDetails(props) {
-  const { data } = props;
-  const { isOpen, onOpen, onClose } = useDisclosure(); 
-  let access = data && data.acl;
-  let acl;
+function StaffProfile(props) {
+  const { data } = props; 
 
   const stretchAccess = (item) => {
     var result = [];
@@ -53,10 +46,7 @@ function ProfileDetails(props) {
       </ul>
     );
   };
- 
-  const editProfile = () => { 
-    onOpen();
-  };
+  
   return (
     <Fragment>
       <Stack  direction={["column", "row"]} spacing="24px">
@@ -126,9 +116,7 @@ function ProfileDetails(props) {
             
          
           </Stack>
-          <Button leftIcon={<MdEdit />}  size="sm" onClick={editProfile} colorScheme="teal" mt={5} variant="solid">
-    Edit
-  </Button>
+         
         </Flex>
 
         <Flex direction="column" justifyContent="space-between" w="100%">
@@ -140,15 +128,9 @@ function ProfileDetails(props) {
         </Flex>
       </Stack>
 
-      <DrawalWidget title="Edit Profile" open={isOpen} handleClose={onClose}>
-        <ProfileForm 
-           {...props}
-          toggle={onClose}
-          initial_data={data}
-        />
-      </DrawalWidget>
+       
     </Fragment>
   );
 }
 
-export default ProfileDetails;
+export default StaffProfile;

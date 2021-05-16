@@ -14,6 +14,7 @@ class User {
   message = "";
   errMessage = "";
   myProfile = [];
+  profile = [];
   users = [];
   action = null;
 
@@ -24,6 +25,7 @@ class User {
       action: observable,
       user: observable,
       myProfile: observable,
+      profile: observable,
       sending: observable,
       removed: observable,
       profileLoading: observable,
@@ -320,14 +322,32 @@ class User {
         });
     } catch (error) {}
   };
+ 
 
   getProfileById = (id) => {
-    backend.get("user/profile/" + id).then((res) => {
-      if (res.data.status === 200) {
-        this.profile = res.data.data;
-      }
-    });
+    this.profileLoading = true;
+    try {
+      backend
+        .get(`account/staff/${id}`)
+        .then((res) => {
+          if (res.status === 200) {
+            this.profile = res.data;
+            this.profileLoading = false;
+          }
+        })
+        .catch((err) => {
+          this.profileLoading = false;
+          this.error = true;
+          if (err && err.response && err.response.status === 401) {
+            this.errMessage = err.response.data.error;
+            this.action = "logout";
+          } else {
+            this.message = "Network Connection seems slow.";
+          }
+        });
+    } catch (error) {}
   };
+ 
 
   updateProfile = (data) => {
     this.sending = true;

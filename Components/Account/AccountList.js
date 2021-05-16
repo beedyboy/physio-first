@@ -24,7 +24,7 @@ const AccountList = ({
       sortable: true,
       cell: (row) => (
         <Fragment>
-          <Link href={`/staff/${row._id}/view`}>
+          <Link href={`/staff/${row._id}`}>
             <a> {row.firstname + " " + row.lastname}</a>
           </Link>
         </Fragment>

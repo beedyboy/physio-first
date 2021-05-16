@@ -10,17 +10,27 @@ import {
   Stack,
   Text,
   Wrap,
+
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
   WrapItem, 
-  Skeleton
+  SkeletonCircle,
+  SkeletonText
 } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { useMobxStores } from "../../../stores/stores";
 import { MdEdit } from "react-icons/md";
+import { BiChevronRight } from "react-icons/bi";
 import ModalWidget from "../../../widgets/ModalWidget";
 import Status from "../../../Components/AdminTicket/Status";
 import Conversation from "../../../Components/Conversation/Conversation";
 import Layout from "../../../templates/Private/Layout";
-import AssignTicket from "../../../Components/AdminTicket/AssignTicket";
+import AssignTicket from "../../../Components/AdminTicket/AssignTicket"; 
+import Link from "next/link";
+import moment from "moment";
+
 const AdminTicketDetails = (props) => {
   const { query } = props; 
   const { ticketStore, userStore } = useMobxStores();
@@ -54,11 +64,28 @@ const { getUsers, users, loading: userLoading } = userStore;
         align="space-between"
       >
         {/* do a breadcrumb here */}
-        {/* <Box padding="6" boxShadow="lg" bg="white">
+       { loading ?
+       <>
+      
+        <Box padding="6" boxShadow="lg" bg="white">
   <SkeletonCircle size="10" />
   <SkeletonText mt="4" noOfLines={6} spacing="4" />
-</Box> */}
-<Skeleton isLoaded={!loading}>
+</Box>
+</> : 
+<> 
+ <Breadcrumb spacing="8px" separator={<BiChevronRight color="gray.500" />}>
+  <BreadcrumbItem>
+    <BreadcrumbLink as={Link} href="/"><a>Home</a></BreadcrumbLink>
+  </BreadcrumbItem>
+
+  <BreadcrumbItem>
+    <BreadcrumbLink as={Link} href="/ticket/admin"><a>Ticket</a></BreadcrumbLink>
+  </BreadcrumbItem>
+
+  <BreadcrumbItem isCurrentPage>
+    <BreadcrumbLink as={Link} href={`/ticket/admin/${ticket._id}`}><a>{ticket && ticket.title}</a></BreadcrumbLink>
+  </BreadcrumbItem>
+</Breadcrumb>
 
         <Flex>
           <Box w="63%"> 
@@ -83,9 +110,24 @@ const { getUsers, users, loading: userLoading } = userStore;
               </Box>
               <Box>
                 <Text as="p" fontWeight="bolder">
+                  Category
+                </Text>
+                <Text as="h6"> {ticket && ticket.category}</Text>
+              </Box>
+              <Box>
+                <Text as="p" fontWeight="bolder">
+                  Priority
+                </Text>
+                <Text as="h6"> {ticket && ticket.priority}</Text>
+              </Box>
+              <Box>
+                <Text as="p" fontWeight="bolder">
                   Created On
                 </Text>
-                <Text as="h6"> {ticket && ticket.createdAt}</Text>
+                <Text as="h6"> 
+                { moment(ticket && ticket.createdAt).format('h:mma MMMM d, YYYY')}
+                </Text>
+              
               </Box>
               <Box>
                 <Text as="p" fontWeight="bolder">
@@ -97,8 +139,7 @@ const { getUsers, users, loading: userLoading } = userStore;
                     ticket && ticket.assigned_to && ticket.assigned_to.firstname
                   }  ${
                     ticket && ticket.assigned_to && ticket.assigned_to.lastname
-                  }`}
-                </Text>
+                  }`}  {" "}
                 <IconButton
                       variant="outline"
                       colorScheme="teal"
@@ -107,6 +148,7 @@ const { getUsers, users, loading: userLoading } = userStore;
                       icon={<MdEdit />}
                       onClick={(e) => toggleModal("assign")}
                       />
+                </Text>
               </Box>
               <Box>
                 <Text as="p" fontWeight="bolder">
@@ -169,7 +211,8 @@ const { getUsers, users, loading: userLoading } = userStore;
             </Stack>
           </Box>
         </Flex>
-                    </Skeleton>
+        </>
+        }
     
       </Flex>
       </PerfectScrollBar>

@@ -1,14 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Box, Flex, Button, Stack, Text } from "@chakra-ui/react";
+import { Box, Flex, Button, Stack, Text, Divider } from "@chakra-ui/react";
 import ReactHtmlParser from "react-html-parser";
 import { observer } from "mobx-react-lite";
 import AddConversation from "./AddConversation";
 import { useMobxStores } from "../../stores/stores";
+import moment from "moment";
 
 const Conversation = ({ id, respondent }) => {
   const { conversationStore } = useMobxStores();
   const {
-    allConversations: conversations,
+  conversations,
     fetchConversation,
   } = conversationStore;
   const [reply, setReply] = useState(false);
@@ -28,10 +29,18 @@ const Conversation = ({ id, respondent }) => {
           </Stack>
         </Box>
         <Box>
-          {conversations &&
+          {conversations && conversations.length < 1 ?
+<>
+<Text> No conversation found for this ticket</Text>
+</>
+          :
             conversations.map((convo) => (
-              <Stack className="p-2" key={convo._id}>
-                <Text as="p">{convo.createdAt}</Text>
+              <Stack p={2} key={convo._id}  boxShadow="base" mt={2} rounded="md" bg="white">
+               <Box d="flex" justifyContent="space-between">
+                <Text fontWeight="bolder">{convo.respondent === "TaskPerson" ? "Admin" : "Client"} </Text>
+                <Text as="p">{ moment(convo.createdAt).format('h:mma') + " "+ moment(convo.createdAt).format('MMMM d, YYYY')}</Text>
+                </Box>
+                <Divider />
                 <Box>{ReactHtmlParser(convo.description)}</Box>
               </Stack>
             ))}

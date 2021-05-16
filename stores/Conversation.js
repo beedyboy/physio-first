@@ -97,7 +97,7 @@ class Conversation {
           this.loading = false;
           if (res.data.status === 500) {
             // Utility.logout();
-          } else if (res.data.status === 200) {
+          } else if (res.status === 200) {
             this.conversations = res.data;
           }
         })
