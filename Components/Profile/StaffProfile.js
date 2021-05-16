@@ -17,7 +17,7 @@ function StaffProfile(props) {
     var result = [];
     for (var property in item) {
       result.push(
-        <Badge colorScheme={item[property] === true ? "green" : "red"}>
+        <Badge key={shortId.generate()} colorScheme={item[property] === true ? "green" : "red"}>
           {item[property] === true ? `Can ${property} ` : `Cannot ${property} `}
         </Badge>
       );
