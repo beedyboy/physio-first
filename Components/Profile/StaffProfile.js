@@ -34,9 +34,9 @@ function StaffProfile(props) {
       <ul>
         {access &&
           access.length > 0 &&
-          Object.keys(access[0]).map((key) => {
+          Object.keys(access[0]).map((key, i) => {
             return (
-              <Fragment>
+              <Fragment key={i}>
                 <li key={shortId.generate()}>
                   {" "}
                   {key.toUpperCase()}  {" "}
