@@ -4,7 +4,15 @@ import { IconButton, Wrap, WrapItem } from "@chakra-ui/react";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import { MdEdit, MdDelete } from "react-icons/md";
 
-const BranchList = ({ data, canDel, setMode, removeData, rowData, toggle }) => {
+const BranchList = ({
+  data,
+  canDel,
+  canEdit,
+  setMode,
+  removeData,
+  rowData,
+  toggle,
+}) => {
   const columns = [
     {
       name: "Name",
@@ -39,16 +47,21 @@ const BranchList = ({ data, canDel, setMode, removeData, rowData, toggle }) => {
       sortable: true,
       cell: (row) => (
         <Wrap spacing="20px">
-          <WrapItem>
-            <IconButton
-              variant="outline"
-              colorScheme="teal"
-              aria-label="Edit Branch"
-              fontSize="20px"
-              icon={<MdEdit />}
-              onClick={(e) => editData(e, row)}
-            />
-          </WrapItem>
+          {canEdit ? (
+            <>
+              {" "}
+              <WrapItem>
+                <IconButton
+                  variant="outline"
+                  colorScheme="teal"
+                  aria-label="Edit Branch"
+                  fontSize="20px"
+                  icon={<MdEdit />}
+                  onClick={(e) => editData(e, row)}
+                />
+              </WrapItem>
+            </>
+          ) : null}
           {canDel ? (
             <>
               <WrapItem>

@@ -31,16 +31,27 @@ const saveBranch = async (req, res) => {
     if (!name || !email) {
       return res.status(422).json({ error: "Please add all the fields" });
     }
-    const Branch = await DB.Branch({
+    const newBranch = await DB.Branch({
       name,
       email,
       address,
       phone,
-    }).save();
-    res.status(201).json({ message: "New Branch added successfully" });
+    });
+    newBranch.save((err, doc) => {
+      if (err) {
+        res.status(404).json({
+          error: "branch was not created",
+          err
+        });
+      } else {
+        res.status(201).json({ message: "New Branch added successfully" });
+      }
+      
+    }); 
+    
   } catch (err) {
     console.log(err);
-    res.status(500).json({ error: "internal server error" });
+    res.status(500).json({ error: "internal server error", err });
   }
 };
  
@@ -68,7 +79,7 @@ const updateBranch = async (req, res) => {
           message: "Branch updated successfully",
         });
       } else {
-        return res.status(422).json({ error: "Error updating branch" });
+        return res.status(422).json({ error: "Error updating branch", err: error });
       }
     });
   } else {

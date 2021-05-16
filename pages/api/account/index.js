@@ -90,7 +90,7 @@ const updateAccount = async (req, res) => {
         res.status(200).json({
           exist,
           check_record,
-          message: "account updated successfully",
+          message: "Account updated successfully",
         });
       } else {
         return res.status(422).json({ error: "Error updating record" });
