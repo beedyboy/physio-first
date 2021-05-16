@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
+import Head from "next/head";
 import PerfectScrollBar from "react-perfect-scrollbar";
-import { SkeletonCircle, SkeletonText, Flex } from "@chakra-ui/react";
+import { SkeletonCircle, SkeletonText, Flex, Box } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
 import { useMobxStores } from "../../stores/stores";
 import Layout from "../../templates/Private/Layout";

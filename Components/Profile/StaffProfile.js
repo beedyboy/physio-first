@@ -7,10 +7,12 @@ import {
   Button, 
 } from "@chakra-ui/react";
 import React, { Fragment } from "react"; 
+import shortId from "short-id";
 
 function StaffProfile(props) {
   const { data } = props; 
 
+  let access = data && data.acl;
   const stretchAccess = (item) => {
     var result = [];
     for (var property in item) {
@@ -34,19 +36,18 @@ function StaffProfile(props) {
           access.length > 0 &&
           Object.keys(access[0]).map((key) => {
             return (
-              <>
-                <li>
+              <Fragment>
+                <li key={shortId.generate()}>
                   {" "}
                   {key.toUpperCase()}  {" "}
                 </li>
                   {stretchAccess(access[0][key])}
-              </>
-            );
+              </Fragment>
+            )
           })}
       </ul>
     );
   };
-  
   return (
     <Fragment>
       <Stack  direction={["column", "row"]} spacing="24px">

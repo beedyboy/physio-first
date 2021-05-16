@@ -11,12 +11,12 @@ import React, { Fragment } from "react";
 import DrawalWidget from "../../widgets/DrawalWidget"; 
 import ProfileForm from "./ProfileForm";
 import { MdEdit } from "react-icons/md";
+import shortId from "short-id";
 
 function ProfileDetails(props) {
   const { data } = props;
   const { isOpen, onOpen, onClose } = useDisclosure(); 
-  let access = data && data.acl;
-  let acl;
+  let access = data && data.acl; 
 
   const stretchAccess = (item) => {
     var result = [];
@@ -41,14 +41,14 @@ function ProfileDetails(props) {
           access.length > 0 &&
           Object.keys(access[0]).map((key) => {
             return (
-              <>
-                <li>
+              <Fragment>
+                <li key={shortId.generate()}>
                   {" "}
                   {key.toUpperCase()}  {" "}
                 </li>
                   {stretchAccess(access[0][key])}
-              </>
-            );
+              </Fragment>
+            )
           })}
       </ul>
     );

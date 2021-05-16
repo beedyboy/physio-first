@@ -1,5 +1,6 @@
-import DB from "../../../models";
-import connectDB from "../../../services/database";
+import DB from "../../../../models";
+import connectDB from "../../../../services/database";
+import Authenticated from "../../../../helpers/Authenticated";
 connectDB();
 
 export default async (req, res) => {
