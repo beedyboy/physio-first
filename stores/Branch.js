@@ -109,7 +109,7 @@ class Branch {
   };
   removeBranch = (id) => {
     try {
-      backend.delete(`branch/${branch}`).then((res) => {
+      backend.delete(`branch/${id}`).then((res) => {
         if (res.status === 200) {
           this.getBranches();
           this.message = res.data.message;

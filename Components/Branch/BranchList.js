@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
-import { IconButton, Wrap, WrapItem } from "@chakra-ui/react";
+import { IconButton, Wrap, WrapItem,  } from "@chakra-ui/react";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import { MdEdit, MdDelete } from "react-icons/md";
 

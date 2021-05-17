@@ -28,7 +28,7 @@ const bgImgArray = [
   "/assets/img/banners/banner2.jpeg",
   "/assets/img/banners/banner3.jpeg",
 ];
-const colorArray = ["orange.500", "teal", "pink.600"];
+const colorArray = ["black.500", "green", "#469F98"];
 const schema = {
   email: {
     email: true,

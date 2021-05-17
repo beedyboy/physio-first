@@ -69,7 +69,7 @@ function profile(props) {
             <Box mt={3} mx="auto" mr={3} align="right" mb={3}>
               <FormControl display="flex" alignItems="center">
                 <FormLabel htmlFor="email-alerts" mb="0">
-                  Toggle
+                  Culture book
                 </FormLabel>
                 <Switch id="page" isChecked={page} onChange={handlePage} />
               </FormControl>

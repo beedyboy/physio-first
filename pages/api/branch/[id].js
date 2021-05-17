@@ -15,8 +15,8 @@ export default async (req, res) => {
 
 const branchExist = async (req, res) => {
   try {
-    const { branch } = req.query;
-    const nameRegex = new RegExp(branch, "i");
+    const { id } = req.query;
+    const nameRegex = new RegExp(id, "i");
     const check_record = await DB.Branch.findOne({ name: nameRegex });
     const exist = check_record ? true : false;
     const message = check_record ? "Duplicate branch not allowed" : "";
