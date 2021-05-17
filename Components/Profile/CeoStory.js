@@ -100,7 +100,7 @@ const CEOSTORY = (props) => {
       >
         <Box>
          
-          <iframe width="100%" src="/assets/docs/Ceo_story_word.pdf"></iframe>
+          <iframe height="00px" width="100%" src="/assets/docs/Ceo_story_word.pdf"></iframe>
         </Box>
         
 

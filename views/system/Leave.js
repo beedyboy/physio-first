@@ -9,11 +9,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import LeaveList from "../../Components/Leave/LeaveList";
+import NoAccess from "../../widgets/NoAccess";
 import { useMobxStores } from "../../stores/stores";
 import LeaveForm from "../../Components/Leave/LeaveForm";
 
 import { MdAdd } from "react-icons/md";
-function Leave() {
+function Leave(props) {
+  const { pageAccess, canAdd, canView } = props;
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
@@ -71,27 +73,39 @@ function Leave() {
         borderRadius="lg"
         overflow="hidden"
       >
-        <Box d="flex" justifyContent="space-between">
-          <Heading mb={4}>Leave</Heading>
-
-          <Button
-            leftIcon={<MdAdd />}
-            colorScheme="teal"
-            p="2rem"
-            onClick={newLeave}
-          >
-            Add New
-          </Button>
-        </Box>
-        <Box>
-          <LeaveList
-            data={leaves}
-            setMode={setMode}
-            toggle={onOpen}
-            removeData={removeLeave}
-            rowData={setRowData}
-          />
-        </Box>
+        {pageAccess ? (
+          <>
+            <Box d="flex" justifyContent="space-between">
+              <Heading mb={4}>Leave</Heading>
+              {canAdd ? (
+                <Button
+                  leftIcon={<MdAdd />}
+                  colorScheme="teal"
+                  p="2rem"
+                  onClick={newLeave}
+                >
+                  Add New
+                </Button>
+              ) : null}
+            </Box>
+            {canView ? (
+              <>
+                <Box>
+                  <LeaveList
+                    data={leaves}
+                    setMode={setMode}
+                    toggle={onOpen}
+                    {...props}
+                    removeData={removeLeave}
+                    rowData={setRowData}
+                  />
+                </Box>
+              </>
+            ) : null}
+          </>
+        ) : (
+          <NoAccess page="vacation management" />
+        )}{" "}
       </Flex>
       <LeaveForm
         mode={mode}

@@ -8,7 +8,7 @@ const DepartmentList = ({
   data,
   setMode,
   canDel,
-  canEdit,
+  canAdd,
   removeData,
   rowData,
   toggle,
@@ -37,7 +37,7 @@ const DepartmentList = ({
       sortable: true,
       cell: (row) => (
         <Wrap spacing="20px">
-          {canEdit ? (
+          {canAdd ? (
             <>
               {" "}
               <WrapItem>

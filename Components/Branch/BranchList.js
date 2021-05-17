@@ -7,7 +7,7 @@ import { MdEdit, MdDelete } from "react-icons/md";
 const BranchList = ({
   data,
   canDel,
-  canEdit,
+  canAdd,
   setMode,
   removeData,
   rowData,
@@ -47,7 +47,7 @@ const BranchList = ({
       sortable: true,
       cell: (row) => (
         <Wrap spacing="20px">
-          {canEdit ? (
+          {canAdd ? (
             <>
               {" "}
               <WrapItem>

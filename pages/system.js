@@ -13,7 +13,10 @@ import Director from "../views/system/Director";
 
 function system(props) { 
   const { access } = props;
-  // const canManage = access && access.ticket && access.ticket.manage;
+  const leaveAdd = access && access.leave && access.leave.add;
+  const leaveView = access && access.leave && access.leave.view;
+  const leaveDel = access && access.leave && access.leave.del;
+
   const catAdd = access && access.category && access.category.add;
   const catView = access && access.category && access.category.view;
   const catDel = access && access.category && access.category.del;
@@ -27,6 +30,8 @@ function system(props) {
   const branchDel = access && access.branch && access.branch.del;
 
   let company = access && access.company && access.company.manage;
+
+  let totalLeave = leaveAdd || leaveView || leaveDel;
 
   let totalBranch = branchAdd || branchView || branchDel;
 
@@ -95,7 +100,11 @@ function system(props) {
                     canDel={catDel} />
                 </TabPanel>
                 <TabPanel>
-                  <Leave />
+                  <Leave 
+                pageAccess={totalLeave}
+                canAdd={leaveAdd}
+                canView={leaveView}
+                canDel={leaveDel} />
                 </TabPanel>
            </TabPanels>
         </Tabs>

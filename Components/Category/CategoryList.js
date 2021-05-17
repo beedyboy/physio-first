@@ -8,7 +8,7 @@ const CategoryList = ({
   data,
   setMode,
   canDel,
-  canEdit,
+  canAdd,
   removeData,
   rowData,
   toggle,
@@ -37,7 +37,7 @@ const CategoryList = ({
       sortable: true,
       cell: (row) => (
         <Wrap spacing="20px">
-          {canEdit ? (
+          {canAdd ? (
             <>
               {" "}
               <WrapItem>
