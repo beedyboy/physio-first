@@ -113,7 +113,7 @@ class Vacation {
         console.log({res})
         this.sending = false;
         if (res.status === 200) {
-          this.getMyApplications();
+          this.getApplications();
           this.message = res.data.message;
           this.action = "adminUpdate";
           this.saved = true;

@@ -6,9 +6,16 @@ import {
   Stack,
   Button,
   Select,
+  Drawer,
   useToast,
   FormLabel,
+  DrawerBody,
   FormControl,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent, 
+  DrawerCloseButton,
   FormErrorMessage,
 } from "@chakra-ui/react";
 import SunEditor from "suneditor-react";
@@ -44,10 +51,14 @@ const TicketForm = ({
   sending,
   users,
   reset,
+  open,
+  getUsers,
+  handleClose,
   initial_data,
 }) => {
   const toast = useToast();
-
+  const [title, setTitle] = useState("Create Ticket");
+  
   const [formState, setFormState] = useState({
     values: {
       id: "",
@@ -65,7 +76,11 @@ const TicketForm = ({
 
   const { touched, errors, values, isValid } = formState;
   useEffect(() => {
+
+    getUsers();
+
     if (mode === "Edit") {
+      setTitle("Edit Ticket");
       let shouldSetData = typeof initial_data !== "undefined" ? true : false;
       if (shouldSetData) {
         const data = initial_data;
@@ -208,6 +223,19 @@ const TicketForm = ({
 
   return (
     <Fragment>
+       <Drawer
+        isOpen={open}
+        size="md"
+        placement="right"
+        // initialFocusRef={firstField}
+        onClose={handleClose}
+      >
+        <DrawerOverlay>
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader borderBottomWidth="1px">{title}</DrawerHeader>
+
+            <DrawerBody> 
       <form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <Stack spacing="24px" boxShadow="base" p="6" rounded="md" bg="white">
           <Box>
@@ -294,7 +322,12 @@ const TicketForm = ({
             </FormControl>
           </Box>
         </Stack>
-        <Button variant="outline" disabled={sending} mr={3} onClick={resetForm}>
+       
+      </form>
+      </DrawerBody>
+
+<DrawerFooter borderTopWidth="1px">
+<Button variant="outline" disabled={sending} mr={3} onClick={resetForm}>
           Reset
         </Button>
         <Button
@@ -315,8 +348,11 @@ const TicketForm = ({
         >
           Submit Ticket
         </Button>
-      </form>
-    </Fragment>
+</DrawerFooter>
+</DrawerContent>
+</DrawerOverlay>
+</Drawer>
+ </Fragment>
   );
 };
 

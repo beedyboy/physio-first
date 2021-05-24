@@ -37,7 +37,7 @@ const Conversation = ({ id, respondent }) => {
             conversations.map((convo) => (
               <Stack p={2} key={convo._id}  boxShadow="base" mt={2} rounded="md" bg="white">
                <Box d="flex" justifyContent="space-between">
-                <Text fontWeight="bolder">{convo.respondent === "TaskPerson" ? "Admin" : "Client"} </Text>
+                <Text fontWeight="bolder">{convo.respondent === "TaskPerson" ? "Admin" : "Staff"} </Text>
                 <Text as="p">{ moment(convo.createdAt).format('h:mma') + " "+ moment(convo.createdAt).format('MMMM d, YYYY')}</Text>
                 </Box>
                 <Divider />

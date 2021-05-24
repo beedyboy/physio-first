@@ -51,16 +51,9 @@ const Status = ({ data, sending, toggleStatus, action, reset,  toggle }) => {
   };
 
   const resetForm = () => {
-    setFormState((prev) => ({
-      ...prev,
-      values: {
-        ...prev.values,
-        id: "",
-        status: "",
-      },
-      touched: {},
-      errors: {},
-    }));
+    setStatus("");
+    setId("")
+    
   };
   const handleSubmit = (e) => {
     e.preventDefault();

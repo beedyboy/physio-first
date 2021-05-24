@@ -29,7 +29,7 @@ if(loggedIn === false) {
 } 
 const router  = useRouter();
   const { pathname } = useRouter();
-  const company = "Physio First"
+  const company = "Capture Therapeutic"
   const { isOpen, onOpen, onClose } = useDisclosure();
   const showOnBreakpoint = useBreakpointValue({ base: true, lg: false });
 

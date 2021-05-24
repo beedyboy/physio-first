@@ -39,7 +39,7 @@ const index = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     fetchTicket();
-    getUsers();
+    // getUsers();
   }, []);
 
   useEffect(() => {
@@ -111,6 +111,7 @@ const index = (props) => {
         error={error}
         users={users}
         message={message}
+        getUsers={getUsers}
         sending={sending}
         handleClose={onClose}
         initial_data={rowData}

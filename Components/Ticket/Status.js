@@ -7,7 +7,7 @@ import {
   useToast,
   FormLabel,
   FormControl,
-} from "@chakra-ui/react"; 
+} from "@chakra-ui/react";
 const Status = ({ data, sending, toggleStatus, action, toggle }) => {
   const toast = useToast();
   const [status, setStatus] = useState("");
@@ -17,33 +17,33 @@ const Status = ({ data, sending, toggleStatus, action, toggle }) => {
     setStatus(data.status);
     setId(data._id);
   }, [data]);
- 
+
   useEffect(() => {
     if (action === "statusChangedError") {
-        toast({
-          title: "Server Response.",
-          description: message,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-          position: "top-right",
-        });
-      } else if(action === "statusChanged") {
-        toast({
-            title: "Server Response.",
-            description: message,
-            status: "success",
-            duration: 9000,
-            isClosable: true,
-            position: "top-right",
-          });
-      }
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+    } else if (action === "statusChanged") {
+      toast({
+        title: "Server Response.",
+        description: message,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
     return () => {
       reset("error", false);
       reset("action", "");
       reset("message", "");
       resetForm();
-      toggle('status');
+      toggle("status");
     };
   }, [error]);
   const handleChange = (e) => {
@@ -51,16 +51,8 @@ const Status = ({ data, sending, toggleStatus, action, toggle }) => {
   };
 
   const resetForm = () => {
-    setFormState((prev) => ({
-      ...prev,
-      values: {
-        ...prev.values,
-        id: "",
-        status: "",
-      },
-      touched: {},
-      errors: {},
-    }));
+    setStatus("");
+    setId("");
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -85,7 +77,7 @@ const Status = ({ data, sending, toggleStatus, action, toggle }) => {
                 onChange={handleChange}
               >
                 <option value="Pending">Pending</option>
-                <option value="Active">Active</option> 
+                <option value="Active">Active</option>
                 <option value="Closed">Close</option>
               </Select>
             </FormControl>

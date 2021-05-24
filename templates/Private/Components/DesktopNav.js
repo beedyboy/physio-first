@@ -28,7 +28,7 @@ const DesktopNav = (props) => {
             as={Avatar} 
             size="md"
             name={user}
-            src="https://bit.ly/dan-abramov" 
+            src="https://youarecaptured.org/dan-abramov" 
           ></MenuButton>
           <MenuList>
             <MenuItem as={Link} href="/profile">

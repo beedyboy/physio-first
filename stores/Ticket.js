@@ -127,9 +127,9 @@ class Ticket {
       backend.put("ticket/admin", data).then((res) => {
         this.sending = false;
         if (res.status === 200) {
-          this.fetchTicket();
           this.message = res.data.message;
           this.action = "managerAssigned"
+          this.fetchTicket();
         } else {
           this.message = res.data.error;
           this.action = "managerAssignedError"
@@ -147,9 +147,9 @@ class Ticket {
       backend.put("ticket/admin", data).then((res) => {
         this.sending = false;
         if (res.status === 200) {
-          this.fetchTicket();
           this.message = res.data.message;
           this.action = "statusChanged"
+          this.fetchTicket();
         } else {
           this.message = res.data.error;
           this.action = "statusChangedError"

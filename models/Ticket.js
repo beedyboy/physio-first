@@ -22,7 +22,9 @@ const ticketSchema = new mongoose.Schema(
     ticket_date: {
       type: String,
     },   
-      
+    description: {
+      type: Text,
+    },   
     requester: {
       type: String,
       enum: ['Staff', 'Customer'] 

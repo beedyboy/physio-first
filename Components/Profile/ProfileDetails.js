@@ -62,7 +62,7 @@ function ProfileDetails(props) {
       <Stack  direction={["column", "row"]} spacing="24px">
         <Flex direction="column" justifyContent="flex-start" w="100%">
          
-        <Text fontSize="md" fontWeight="bolder" color="green" mt={3}>Information</Text>
+        <Text fontSize="md" fontWeight="bolder" color="green" mt={3}>Profile Information</Text>
           <Divider />
           <Stack mt={2} mb={2} spacing="24px">
             <Stack  direction={["column", "row"]} spacing="44px">
