@@ -23,7 +23,7 @@ const ticketSchema = new mongoose.Schema(
       type: String,
     },   
     description: {
-      type: Text,
+      type: String,
     },   
     requester: {
       type: String,
