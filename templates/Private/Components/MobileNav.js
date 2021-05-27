@@ -43,8 +43,7 @@ const MobileNav = (props) => {
           <MenuButton
             as={Avatar}
             size="md"
-            name={user}
-            src="https://youarecaptured.org/dan-abramov" 
+            name={user} 
           ></MenuButton>
           <MenuList>
             <MenuItem as={Link} href="/profile">

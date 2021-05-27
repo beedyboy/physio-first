@@ -5,15 +5,17 @@ import {
   Flex,
   Button,
   Heading,
-  useToast, 
+  useToast,
   useDisclosure,
 } from "@chakra-ui/react";
 import DirectorList from "../../Components/Director/DirectorList";
-import { useMobxStores } from "../../stores/stores";
 import DirectorForm from "../../Components/Director/DirectorForm";
+import NoAccess from "../../widgets/NoAccess";
+import { useMobxStores } from "../../stores/stores";
 
 import { MdAdd } from "react-icons/md";
-function Director() {
+function Director(props) {
+  const { pageAccess, canAdd } = props;
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mode, setMode] = useState("");
@@ -72,28 +74,37 @@ function Director() {
         borderRadius="lg"
         overflow="hidden"
       >
-        <Box d="flex" justifyContent="space-between">
-          <Heading mb={4}>Director</Heading>
+        {" "}
+        {pageAccess ? (
+          <>
+            <Box d="flex" justifyContent="space-between">
+              <Heading mb={4}>Director</Heading>
 
-          <Button
-            leftIcon={<MdAdd />}
-            colorScheme="teal"
-            p="2rem"
-            onClick={newDirector}
-          >
-            Add New
-          </Button>
-        </Box>
-        
-        <Box> 
-        <DirectorList
+              {canAdd ? (
+                <Button
+                  leftIcon={<MdAdd />}
+                  colorScheme="teal"
+                  p="2rem"
+                  onClick={newDirector}
+                >
+                  Add New
+                </Button>
+              ) : null}
+            </Box>
+            <Box>
+              <DirectorList
                 data={directors}
                 setMode={setMode}
                 toggle={onOpen}
                 removeData={removeDirector}
                 rowData={setRowData}
+                {...props}
               />
-        </Box>
+            </Box>{" "}
+          </>
+        ) : (
+          <NoAccess page="category" />
+        )}{" "}
       </Flex>
       <DirectorForm
         mode={mode}

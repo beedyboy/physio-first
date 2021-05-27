@@ -75,7 +75,7 @@ const LeaveForm = ({
           ...prev.values,
           id: "",
           leave_type: "",
-          allowed_days: 0,
+          allowed_days: "",
           description: "",
         },
       }));
@@ -163,7 +163,7 @@ const LeaveForm = ({
         ...prev.values,
         id: "",
         leave_type: "",
-        allowed_days: 0,
+        allowed_days: "",
         description: "",
       },
       touched: {},
@@ -219,7 +219,7 @@ const LeaveForm = ({
                     <FormLabel htmlFor="allowed_days">Days allowed</FormLabel>
                     <Input
                       type="number"
-                      value={values.allowed_days || 0} 
+                      value={values.allowed_days || ""} 
                       name="allowed_days"
                       id="allowed_days"
                       onChange={handleChange}

@@ -37,6 +37,7 @@
     "react-dom": "17.0.2",
     "react-html-parser": "2.0.2",
     "react-icons": "^4.2.0",
+    "react-iframe": "^1.8.0",
     "react-perfect-scrollbar": "^1.5.8",
     "react-spinners": "^0.10.6",
     "short-id": "^0.1.0-1",

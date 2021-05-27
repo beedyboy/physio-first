@@ -4,7 +4,9 @@ import { IconButton, Wrap, WrapItem, Text, Image } from "@chakra-ui/react";
 import PerfectScrollBar from "react-perfect-scrollbar";
 import { MdEdit, MdDelete } from "react-icons/md";
 
-const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
+const DirectorList = ({ data,
+  canDel,
+  canAdd, setMode, removeData, rowData, toggle }) => {
   const columns = [
     {
       name: "Image", 
@@ -37,7 +39,8 @@ const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
       sortable: true,
       cell: (row) => (
         <Wrap spacing="20px">
-          <WrapItem>
+           {canAdd ? (
+            <> <WrapItem>
             <IconButton
               variant="outline"
               colorScheme="teal"
@@ -46,7 +49,10 @@ const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
               icon={<MdEdit />}
               onClick={(e) => editData(e, row)}
             />
-          </WrapItem>
+          </WrapItem>  </>
+          ) : null}
+          {canDel ? (
+            <>
           <WrapItem>
             <IconButton
               variant="outline"
@@ -61,6 +67,8 @@ const DirectorList = ({ data, setMode, removeData, rowData, toggle }) => {
               }}
             />
           </WrapItem>
+            </>
+          ) : null}
         </Wrap>
       ),
     },

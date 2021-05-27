@@ -11,7 +11,7 @@ import SubCategory from "../views/system/SubCategory";
 import Leave from "../views/system/Leave";
 import Director from "../views/system/Director";
 
-function system(props) { 
+function system(props) {
   const { access } = props;
   const leaveAdd = access && access.leave && access.leave.add;
   const leaveView = access && access.leave && access.leave.view;
@@ -24,6 +24,10 @@ function system(props) {
   const deptAdd = access && access.department && access.department.add;
   const deptView = access && access.department && access.department.view;
   const deptDel = access && access.department && access.department.del;
+
+  const dirAdd = access && access.director && access.director.add;
+  const dirView = access && access.director && access.director.view;
+  const dirDel = access && access.director && access.director.del;
 
   const branchAdd = access && access.branch && access.branch.add;
   const branchView = access && access.branch && access.branch.view;
@@ -38,6 +42,8 @@ function system(props) {
   let totalCategory = catAdd || catView || catDel;
 
   let totalDept = deptAdd || deptView || deptDel;
+
+  let totalDir = dirAdd || dirView || dirDel;
 
   // {"asset":{"add":true,"view":false,"del":false,"modify":false},"branch":{"add":true,"view":true,"del":false},"category":{"add":true,"view":false,"del":false},"company":{"manage":true},"department":{"ad…
   return (
@@ -64,49 +70,59 @@ function system(props) {
           <TabPanels>
             <TabPanel>
               <Help />
-            </TabPanel> 
-                <TabPanel>
-                  <Branch
-                    pageAccess={totalBranch}
-                    canAdd={branchAdd}
-                    canView={branchView}
-                    canDel={branchDel}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  <Category 
-                    pageAccess={totalCategory}
-                    canAdd={catAdd}
-                    canView={catView}
-                    canDel={catDel} />
-                </TabPanel>
-                <TabPanel>
-                  <Department 
-                    pageAccess={totalDept}
-                    canAdd={deptAdd}
-                    canView={deptView}
-                    canDel={deptDel} />
-                </TabPanel>
-                <TabPanel>
-                  <Director />
-                </TabPanel>
-                <TabPanel>
-                  <Marketing />
-                </TabPanel>
-                <TabPanel>
-                  <SubCategory  pageAccess={totalCategory}
-                    canAdd={catAdd}
-                    canView={catView}
-                    canDel={catDel} />
-                </TabPanel>
-                <TabPanel>
-                  <Leave 
+            </TabPanel>
+            <TabPanel>
+              <Branch
+                pageAccess={totalBranch}
+                canAdd={branchAdd}
+                canView={branchView}
+                canDel={branchDel}
+              />
+            </TabPanel>
+            <TabPanel>
+              <Category
+                pageAccess={totalCategory}
+                canAdd={catAdd}
+                canView={catView}
+                canDel={catDel}
+              />
+            </TabPanel>
+            <TabPanel>
+              <Department
+                pageAccess={totalDept}
+                canAdd={deptAdd}
+                canView={deptView}
+                canDel={deptDel}
+              />
+            </TabPanel>
+            <TabPanel>
+              <Director
+                pageAccess={totalDir}
+                canAdd={dirAdd}
+                canView={dirView}
+                canDel={dirDel}
+              />
+            </TabPanel>
+            <TabPanel>
+              <Marketing />
+            </TabPanel>
+            <TabPanel>
+              <SubCategory
+                pageAccess={totalCategory}
+                canAdd={catAdd}
+                canView={catView}
+                canDel={catDel}
+              />
+            </TabPanel>
+            <TabPanel>
+              <Leave
                 pageAccess={totalLeave}
                 canAdd={leaveAdd}
                 canView={leaveView}
-                canDel={leaveDel} />
-                </TabPanel>
-           </TabPanels>
+                canDel={leaveDel}
+              />
+            </TabPanel>
+          </TabPanels>
         </Tabs>
       </Layout>
     </>

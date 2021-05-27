@@ -34,6 +34,7 @@ const ACLForm = ({
     category: { add: false, view: false, del: false },
     company: { manage: false },
     department: { add: false, view: false, del: false },
+    director: { add: false, view: false, del: false },
     leave: { add: false, view: false, del: false },
     pos: { sell: false, view: false, modify: false },
     product: { add: false, view: false, del: false },
@@ -74,6 +75,11 @@ const ACLForm = ({
           add: (data && data.department.add) || false,
           view: (data && data.department.view) || false,
           del: (data && data.department.del) || false,
+        },
+        director: {
+          add: (data && data.director  && data.director.add) || false,
+          view: (data && data.director  && data.director.view) || false,
+          del: (data && data.director  && data.director.del) || false,
         },
         leave: {
           add: (data && data.leave && data.leave.add) || false,
@@ -182,6 +188,7 @@ const ACLForm = ({
         category: { add: false, view: false, del: false },
         company: { manage: false },
         department: { add: false, view: false, del: false },
+        director: { add: false, view: false, del: false },
         leave: { add: false, view: false, del: false },
         pos: { sell: false, view: false, modify: false },
         product: { add: false, view: false, del: false },
@@ -358,6 +365,42 @@ const ACLForm = ({
                   isChecked={priviledges.department.del || false}
                   name="del"
                   onChange={(event) => handleRoleChange(event, "department")}
+                >
+                  Del
+                </Checkbox>
+              </WrapItem> 
+            </Wrap>
+          </FormControl>
+        </Box>
+    
+        
+        <Box>
+          <FormControl id="department">
+            <FormLabel>Director</FormLabel>
+            <Wrap spacing="20px">
+              <WrapItem>
+                <Checkbox
+                  isChecked={priviledges.director.add || false}
+                  name="add"
+                  onChange={(event) => handleRoleChange(event, "director")}
+                >
+                  Add
+                </Checkbox>
+              </WrapItem>
+              <WrapItem>
+                <Checkbox
+                  isChecked={priviledges.director.view || false}
+                  name="view"
+                  onChange={(event) => handleRoleChange(event, "director")}
+                >
+                  View
+                </Checkbox>
+              </WrapItem>
+              <WrapItem>
+                <Checkbox
+                  isChecked={priviledges.director.del || false}
+                  name="del"
+                  onChange={(event) => handleRoleChange(event, "director")}
                 >
                   Del
                 </Checkbox>

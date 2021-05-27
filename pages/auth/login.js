@@ -36,7 +36,7 @@ const schema = {
     message: "A valid email is required",
   },
   password: {
-    min: 5,
+    min: 6,
     isEmpty: false,
     message: "password is required",
   },

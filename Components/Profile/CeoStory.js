@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -7,9 +7,10 @@ import {
   FormControl,
   Input,
   FormLabel,
-  FormErrorMessage, 
+  FormErrorMessage,
   useToast,
 } from "@chakra-ui/react";
+import Iframe from 'react-iframe'
 import { observer } from "mobx-react-lite";
 import dataHero from "data-hero";
 import { useMobxStores } from "../../stores/stores";
@@ -24,7 +25,7 @@ const schema = {
 const CEOSTORY = (props) => {
   const toast = useToast();
   const { userStore } = useMobxStores();
-  const { signStory, sending, action, resetProperty, message } = userStore; 
+  const { signStory, sending, action, resetProperty, message } = userStore;
 
   const { id, signed } = props;
   const [formState, setFormState] = useState({
@@ -57,16 +58,15 @@ const CEOSTORY = (props) => {
           position: "top-right",
         });
       }
-    } 
+    }
     return () => {
       resetProperty("error", false);
       resetProperty("errMessage", "");
       resetProperty("message", "");
-      resetProperty("action", "");  
+      resetProperty("action", "");
     };
   }, [action]);
-  
- 
+
   const handleChange = (event) => {
     event.persist();
     setFormState((formState) => ({
@@ -86,8 +86,9 @@ const CEOSTORY = (props) => {
     e.preventDefault();
     signStory(formState.values);
   };
-  const hasError = (field) => formState.touched[field] && formState.errors[field].error;
- 
+  const hasError = (field) =>
+    formState.touched[field] && formState.errors[field].error;
+
   return (
     <>
       <Stack
@@ -99,10 +100,19 @@ const CEOSTORY = (props) => {
         overflow="hidden"
       >
         <Box>
-         
-          <iframe height="500px" width="100%" src="/assets/docs/Ceo_story_word.pdf"></iframe>
+          {/* <iframe
+            height="500px"
+            width="100%"
+            src="/assets/docs/Ceo_story_word.pdf"
+          ></iframe> */}
+          <Iframe url="/assets/docs/Ceo_story_word.pdf"
+         height="500px"
+         width="100%"
+        id="myId"
+        className="myClassname"
+        display="initial"
+        position="relative"/>
         </Box>
-        
 
         <Box>
           {signed && signed ? null : (

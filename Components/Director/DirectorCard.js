@@ -12,7 +12,7 @@ const DirectorCard = ({ data }) => {
         mb="2rem"
         height="300px"
         backgroundColor="white"
-        w={[300, 360, 460]}
+        w={[250, 300, 400]}
         borderWidth="1px"
         borderRadius="lg"
         overflow="hidden"

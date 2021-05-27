@@ -16,7 +16,7 @@ import Utility from "../../services/UtilityService";
  
 const Layout = (props) => { 
   const loggedIn = Utility.get("staff_token") ? false : true;
- const user = Utility.get("lastname") ?? "guest";
+ const user = Utility.get("name") ?? "guest";
  
 let access, acl;
 if(loggedIn === false) {
