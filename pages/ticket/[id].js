@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import ReactHtmlParser from "react-html-parser";
+import React, { useState, useEffect } from "react"; 
 import PerfectScrollBar from "react-perfect-scrollbar";
 import {
   Box,
@@ -59,7 +58,8 @@ const TicketDetails = (props) => {
               Conversation
             </Heading>
             <Box>
-              <Conversation id={query.id} respondent="Requester" />
+              <Conversation id={query.id} respondent="Requester"  description={(ticket && ticket.description) || ""}
+                        tDate={ticket && ticket.createdAt} />
             </Box>
           </Box>
           <Box flex="1" ml={2}>
@@ -127,11 +127,11 @@ const TicketDetails = (props) => {
                   />
                 </ModalWidget>
               </Box>
-              <Box>
+              {/* <Box>
                 <PerfectScrollBar>
                   {ReactHtmlParser(ticket.description)}
                 </PerfectScrollBar>
-              </Box>
+              </Box> */}
             </Stack>
           </Box>
         </Flex>

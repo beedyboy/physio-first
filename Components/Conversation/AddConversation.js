@@ -59,7 +59,7 @@ const AddConversation = ({ id, respondent }) => {
         position: "top-right",
       });
       resetForm();
-      handleClose();
+      // handleClose();
     }
     return () => {
       resetProperty("saved", false);

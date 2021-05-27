@@ -6,12 +6,9 @@ import AddConversation from "./AddConversation";
 import { useMobxStores } from "../../stores/stores";
 import moment from "moment";
 
-const Conversation = ({ id, respondent }) => {
+const Conversation = ({ id, respondent, description, tDate }) => {
   const { conversationStore } = useMobxStores();
-  const {
-  conversations,
-    fetchConversation,
-  } = conversationStore;
+  const { conversations, fetchConversation } = conversationStore;
   const [reply, setReply] = useState(false);
   useEffect(() => {
     fetchConversation(id);
@@ -29,21 +26,56 @@ const Conversation = ({ id, respondent }) => {
           </Stack>
         </Box>
         <Box>
-          {conversations && conversations.length < 1 ?
-<>
-<Text> No conversation found for this ticket</Text>
-</>
-          :
+        <Stack
+                p={2} 
+                boxShadow="base"
+                mt={2}
+                rounded="md"
+                bg="white"
+              >
+                <Box d="flex" justifyContent="space-between">
+                  <Text fontWeight="bolder">
+                  Staff
+                  </Text>
+                  <Text as="p">
+                    {moment(tDate).format("h:mma") +
+                      " " +
+                      moment(tDate).format("MMMM d, YYYY")}
+                  </Text>
+                </Box>
+                <Divider />
+                <Box>{ReactHtmlParser(description)}</Box>
+              </Stack>
+
+          {conversations && conversations.length < 1 ? (
+            <>
+              <Text mt={2} fontWeight="bolder"> No reply found</Text>
+            </>
+          ) : (
             conversations.map((convo) => (
-              <Stack p={2} key={convo._id}  boxShadow="base" mt={2} rounded="md" bg="white">
-               <Box d="flex" justifyContent="space-between">
-                <Text fontWeight="bolder">{convo.respondent === "TaskPerson" ? "Admin" : "Staff"} </Text>
-                <Text as="p">{ moment(convo.createdAt).format('h:mma') + " "+ moment(convo.createdAt).format('MMMM d, YYYY')}</Text>
+              <Stack
+                p={2}
+                key={convo._id}
+                boxShadow="base"
+                mt={2}
+                rounded="md"
+                bg="white"
+              >
+                <Box d="flex" justifyContent="space-between">
+                  <Text fontWeight="bolder">
+                    {convo.respondent === "TaskPerson" ? "Admin" : "Staff"}{" "}
+                  </Text>
+                  <Text as="p">
+                    {moment(convo.createdAt).format("h:mma") +
+                      " " +
+                      moment(convo.createdAt).format("MMMM d, YYYY")}
+                  </Text>
                 </Box>
                 <Divider />
                 <Box>{ReactHtmlParser(convo.description)}</Box>
               </Stack>
-            ))}
+            ))
+          )}
         </Box>
       </Flex>
     </Fragment>

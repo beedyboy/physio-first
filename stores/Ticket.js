@@ -42,7 +42,7 @@ class Ticket {
   }
   fetchTicket = () => {
     this.loading = true;
-    backend.get("ticket").then((res) => {
+    backend.get("ticket/admin").then((res) => {
       // console.log(res.data)
       this.tickets = res.data;
       this.loading = false;
