@@ -60,7 +60,7 @@ function system(props) {
                 <Tab>Branch</Tab>
                 <Tab>Category</Tab>
                 <Tab>Department</Tab>
-                <Tab>Director</Tab>
+                <Tab>Executives</Tab>
                 <Tab>Marketing</Tab>
                 <Tab>SubCategory</Tab>
                 <Tab>Vacation</Tab>

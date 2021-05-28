@@ -32,7 +32,7 @@ function onboarding(props) {
       <Layout>
         <Tabs>
           <TabList>
-            <Tab>Directors</Tab>
+            <Tab>Executives</Tab>
             <Tab>Document</Tab>
           </TabList>
           <TabPanels>

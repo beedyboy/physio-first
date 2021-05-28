@@ -376,7 +376,7 @@ const ACLForm = ({
         
         <Box>
           <FormControl id="department">
-            <FormLabel>Director</FormLabel>
+            <FormLabel>Executives</FormLabel>
             <Wrap spacing="20px">
               <WrapItem>
                 <Checkbox

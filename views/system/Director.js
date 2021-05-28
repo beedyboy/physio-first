@@ -78,7 +78,7 @@ function Director(props) {
         {pageAccess ? (
           <>
             <Box d="flex" justifyContent="space-between">
-              <Heading mb={4}>Director</Heading>
+              <Heading mb={4}>Executives</Heading>
 
               {canAdd ? (
                 <Button
@@ -103,7 +103,7 @@ function Director(props) {
             </Box>{" "}
           </>
         ) : (
-          <NoAccess page="category" />
+          <NoAccess page="executive" />
         )}{" "}
       </Flex>
       <DirectorForm
