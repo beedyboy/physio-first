@@ -75,11 +75,11 @@ console.log('image', image.path)
       newDirector.save((err, doc) => {
         if (err) {
           res.status(404).json({
-            error: "Director was not created",
+            error: "Executive was not created",
             err
           });
         } else {
-          res.status(201).json({ message: "New director created successfully" });
+          res.status(201).json({ message: "New Executive created successfully" });
         }
         
       }); 

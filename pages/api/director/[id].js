@@ -40,7 +40,7 @@ const removeDirector = async (req, res) => {
       });
     } else {
       return res.status(200).json({
-        message: "Director Record Deleted Successfully",
+        message: "Executive's Record Deleted Successfully",
       });
     }
   }).catch((err) => {
