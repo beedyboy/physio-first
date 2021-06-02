@@ -38,9 +38,7 @@ const Conversation = ({ id, respondent, description, tDate }) => {
                   Staff
                   </Text>
                   <Text as="p">
-                    {moment(tDate).format("h:mma") +
-                      " " +
-                      moment(tDate).format("MMMM d, YYYY")}
+                    {moment(tDate).format("dddd, MMMM Do YYYY, h:mm:ss a")}
                   </Text>
                 </Box>
                 <Divider />
@@ -66,9 +64,7 @@ const Conversation = ({ id, respondent, description, tDate }) => {
                     {convo.respondent === "TaskPerson" ? "Admin" : "Staff"}{" "}
                   </Text>
                   <Text as="p">
-                    {moment(convo.createdAt).format("h:mma") +
-                      " " +
-                      moment(convo.createdAt).format("MMMM d, YYYY")}
+                    {moment(convo.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}
                   </Text>
                 </Box>
                 <Divider />

@@ -38,11 +38,13 @@ const ResetPassword = (props) => {
     resetProperty,
     resetPasswordNow,
     passwordChanged,
-  } = store;
+  } = authStore;
 
   useEffect(() => {
     // let id = parseInt(props.match.params.id);
-    const { id, token } = query;
+    const { reset } = query;
+    let [token, id] = reset;
+    console.log({reset})
     setChange(id, token);
   }, []);
 
@@ -60,7 +62,7 @@ const ResetPassword = (props) => {
     errors: {},
   });
 
-  const setChange = (id, token) => {
+  const setChange = (id, token) => { 
     setFormState((formState) => ({
       ...formState,
       values: {

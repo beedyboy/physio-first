@@ -1,4 +1,4 @@
-const requestEmail = ({full_name, recoveryUrl}) => `
+const requestEmail = ({fullname, recoveryUrl}) => `
 <!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN”
     “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
 
@@ -58,7 +58,7 @@ const requestEmail = ({full_name, recoveryUrl}) => `
     <div class="card">
        
     <p style="font-size: 1em;">
-    hi ${full_name}, 
+    hi ${fullname}, 
     <br />
     You requested to reset your account password. 
 <br />
@@ -67,6 +67,7 @@ Please click on the link below to reset your password.
 <p style="font-size: 1em;">
  ${recoveryUrl}
 </p>
+<p> Note that, your token expires at exactly one hour </p>
 
     </div>
 

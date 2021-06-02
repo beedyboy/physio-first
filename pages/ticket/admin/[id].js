@@ -146,11 +146,11 @@ const AdminTicketDetails = (props) => {
                       </Box>
                       <Box>
                         <Text as="p" fontWeight="bolder">
-                          Created On
+                          Created On 
                         </Text>
-                        <Text as="h6">
+                        <Text as="h6"> 
                           {moment(ticket && ticket.createdAt).format(
-                            "h:mma MMMM d, YYYY"
+                            "dddd, MMMM Do YYYY, h:mm:ss a"
                           )}
                         </Text>
                       </Box>

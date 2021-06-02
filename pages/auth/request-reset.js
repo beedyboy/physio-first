@@ -15,6 +15,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { observer } from "mobx-react-lite";
+import Link from "next/link";
 import { useMobxStores } from "../../stores/stores";
 const schema = {
   email: {
@@ -69,8 +70,7 @@ const RequestRecovery = () => {
   }, [requestSent]);
 
   const handleChange = (event) => {
-    event.persist();
-
+    event.persist(); 
     setFormState((formState) => ({
       ...formState,
       values: {
@@ -137,6 +137,11 @@ const RequestRecovery = () => {
                   </Button>
                 </Stack>
               </form>
+              <Box>
+                <Link href="/auth/login">
+                  <a>Back to login</a>
+                </Link>
+              </Box>
             </Flex>
           </Center>
         </Box>

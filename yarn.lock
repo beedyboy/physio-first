@@ -1735,10 +1735,10 @@ csstype@^3.0.2, csstype@^3.0.6:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.8.tgz#d2266a792729fb227cd216fb572f43728e1ad340"
   integrity sha512-jXKhWqXPmlUeoQnF/EhTtTl4C9SnrxSH/jZUih3jmO6lBKr99rP3/+FmrMj4EFpOXzMtXHAZkd3x0E6h6Fgflw==
 
-data-hero@^1.2.9:
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/data-hero/-/data-hero-1.2.9.tgz#cd257967cd03276a82a2aecf045f8dcaaa797807"
-  integrity sha512-iSVK+a9I8SRc65RMg/M/f4NSDrfjcZCTBHvybTilY23M3lBfCLgbOLyRwSNW9+Z9mFRBFDdrcPMMWo4l+rMKxA==
+data-hero@^1.6.4:
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/data-hero/-/data-hero-1.6.4.tgz#5e7a676ded26bfaa3f9fef13cea9ba0f1fe7a887"
+  integrity sha512-GYUz5U9dGdBkcjwo7qWLcPGAdBdONvyz25eJsjqbY5vlDHn+Liu8z70DwIWNjCkK+Tbve/p5GNlgZQquJ5guVg==
   dependencies:
     typescript "^3.9.3"
 

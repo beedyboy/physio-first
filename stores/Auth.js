@@ -49,6 +49,7 @@ class AuthStore {
           }
         })
         .catch((err) => {
+          this.sending = false;
           if (err.response && err.response.status === 401) {
             console.log("error in axios catch");
             this.message = res.data.error;
@@ -78,15 +79,16 @@ class AuthStore {
         .put("auth/recovery-reset", data)
         .then((res) => {
           this.sending = false;
-          if (res.data.status === 201) {
+          if (res.data.status === 200) {
             this.message = res.data.message;
             this.passwordChanged = true;
           }
         })
         .catch((err) => {
+          this.sending = false;
           if (err.response && err.response.status === 401) {
             console.log("error in axios catch");
-            this.message = res.data.error;
+            this.message = err.response.data.error;
             this.error = true;
           } else {
             console.log({ err });
