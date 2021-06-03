@@ -17,10 +17,12 @@ export default async (req, res) => {
         }
         const { email, password } = req.body;
         const user = await DB.User.findOne({ email });
+        console.log({user});
         if (!user) {
           return res.status(404).json({ error: "user doesn't exist" });
         }
         const check_password = await compare(password, user.password);
+        console.log({check_password})
         if (!check_password) {
           return res
             .status(401)

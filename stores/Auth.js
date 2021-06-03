@@ -43,14 +43,13 @@ class AuthStore {
         .then((res) => {
           this.sending = false;
           if (res.status === 201) {
-            this.message = res.data.message;
-            this.link = res.data.link;
+            this.message = res.data.message; 
             this.requestSent = true;
           }
         })
         .catch((err) => {
           this.sending = false;
-          if (err.response && err.response.status === 401) {
+          if (err.response &&( err.response.status === 401 ||  err.response.status === 404)) {
             console.log("error in axios catch");
             this.message = res.data.error;
             this.error = true;
@@ -60,9 +59,9 @@ class AuthStore {
         });
     } catch (error) {
       this.sending = false;
-      if (error.response && error.response.status === 401) {
+      if (error.response &&( error.response.status === 401 ||  error.response.status === 404)) {
         console.log("There was a problem with the server");
-        this.message = res.data.error;
+        this.message = error.response.data.error;
         this.error = true;
       } else {
         console.log({ error });
@@ -79,14 +78,16 @@ class AuthStore {
         .put("auth/recovery-reset", data)
         .then((res) => {
           this.sending = false;
-          if (res.data.status === 200) {
+          if (res.status === 200) {
             this.message = res.data.message;
             this.passwordChanged = true;
+            console.log('changed')
           }
         })
         .catch((err) => {
+          console.log({ err });
           this.sending = false;
-          if (err.response && err.response.status === 401) {
+          if (err.response &&( err.response.status === 401 ||  err.response.status === 404)) {
             console.log("error in axios catch");
             this.message = err.response.data.error;
             this.error = true;
@@ -96,9 +97,9 @@ class AuthStore {
         });
     } catch (error) {
       this.sending = false;
-      if (error.response && error.response.status === 401) {
+      if (error.response &&( error.response.status === 401 ||  error.response.status === 404)) {
         console.log("There was a problem with the server");
-        this.message = res.data.error;
+        this.message = err.response.data.error;
         this.error = true;
       } else {
         console.log(error);
@@ -127,10 +128,10 @@ class AuthStore {
             this.error = true;
             this.isAuthenticated = false;
           }
-        })
+        }) 
         .catch((err) => {
           this.sending = false;
-          if (err && err.response && err.response.status === 401) {
+          if (err && err.response &&( err.response.status === 401 ||  err.response.status === 404)) {
           console.log({ err });
             console.log("status", err.response.status);
             this.errMessage = err.response.data.error;
@@ -140,7 +141,13 @@ class AuthStore {
         });
     } catch (error) {
       this.sending = false;
-      console.log({ error });
+      if (error.response &&( error.response.status === 401 ||  error.response.status === 404)) {
+        console.log("There was a problem with the server");
+        this.errMessage = error.response.data.error;
+        this.error = true;
+      } else {
+        console.log({ error });
+      }
     }
   };
   resetProperty = (key, value) => {

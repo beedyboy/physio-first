@@ -37,7 +37,7 @@ const recoveryRequest = async (req, res) => {
     const hash = hashSync(resetToken, salt);
     const recoveryUrl = `${clientURL}/auth/${resetToken}/${user._id}`;
     const fullname = user.lastname + " " + user.firstname;
-    const msgBody = {fullname, recoveryUrl};
+    const msgBody = {fullname, email, recoveryUrl};
     let clientOptions = {
       email: user.email,
       subject: process.env.CLIENT_EMAIL_SUBJECT.replace(
@@ -51,8 +51,7 @@ const recoveryRequest = async (req, res) => {
       await DB.Token.findByIdAndDelete({ _id: token._id });
       mailer.sendEmail(clientOptions);  
       res.status(201).json({
-        recoveryUrl,
-        fullname,
+        recoveryUrl, 
         message: "We have sent a password recover instructions to your email.",
       });
     } else {
@@ -75,7 +74,8 @@ const recoveryRequest = async (req, res) => {
 const resetNow = async (req, res) => {
   try {
     const { staff_id, token, password } = req.body;
-    const passwordResetToken = await DB.Token.findOne({ staff: staff_id });
+    console.log({staff_id})
+    const passwordResetToken = await DB.Token.findOne({ staff: staff_id }); 
     if (!passwordResetToken) {
       res
         .status(401)
@@ -86,15 +86,16 @@ const resetNow = async (req, res) => {
     if (!isValid) {
       res
         .status(401)
-        .json({ message: "Invalid or expired password reset token" });
+        .json({ error: "Invalid or expired password reset token" });
     }
 
     const salt = genSaltSync();
     const hash = hashSync(password, salt);
     const data = {
       password: hash,
-    };
-    const user_record = await DB.User.findOneAndUpdate(staff_id, data);
+    };  
+    const filter = {_id: staff_id};
+    const user_record = await DB.User.findOneAndUpdate(filter, data);  
     if (user_record) {
       res.status(200).json({ message: "Password changed  successfully" });
     } else {

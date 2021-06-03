@@ -113,6 +113,7 @@ const ResetPassword = (props) => {
   };
 
   useEffect(() => {
+    console.log({passwordChanged})
     if (passwordChanged) {
       toast({
         title: "Server Response.",
