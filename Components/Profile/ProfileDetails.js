@@ -89,6 +89,11 @@ function ProfileDetails(props) {
                 Phone:
                 <Text as="span" fontWeight="normal"> {data.phone_number || 'Nil'}</Text>
               </Text>
+              <Text fontSize="md" as="span" fontWeight="bolder">
+                {" "}
+                Dob:
+                <Text as="span" fontWeight="normal"> {data.dob || 'Nil'}</Text>
+              </Text>
             </Stack>
             <Stack  direction={["column", "row"]} spacing="44px">
               <Text fontSize="md" as="span" fontWeight="bolder">

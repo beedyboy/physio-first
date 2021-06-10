@@ -3,8 +3,7 @@ import {
   Stack,
   Text,
   Badge, 
-  Divider,
-  Button, 
+  Divider, 
 } from "@chakra-ui/react";
 import React, { Fragment } from "react"; 
 import shortId from "short-id";
@@ -79,6 +78,11 @@ function StaffProfile(props) {
                 {" "}
                 Phone:
                 <Text as="span" fontWeight="normal"> {data.phone_number || 'Nil'}</Text>
+              </Text>
+                 <Text fontSize="md" as="span" fontWeight="bolder">
+                {" "}
+                Dob:
+                <Text as="span" fontWeight="normal"> {data.dob || 'Nil'}</Text>
               </Text>
             </Stack>
             <Stack  direction={["column", "row"]} spacing="44px">

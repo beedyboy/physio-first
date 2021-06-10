@@ -83,6 +83,7 @@ const updateAccount = async (req, res) => {
         doc.phone_number = data.phone_number;
         doc.staffId = data.staffId;
         doc.branch = data.branch;
+        doc.dob = data.dob;
 
         doc.address = data.address;
         doc.status = data.status;

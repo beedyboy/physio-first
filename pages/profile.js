@@ -15,7 +15,7 @@ import { useMobxStores } from "../stores/stores";
 import { observer } from "mobx-react-lite";
 import ProfileDetails from "../Components/Profile/ProfileDetails";
 import CeoStory from "../Components/Profile/CeoStory";
-function profile(props) {
+function profile() {
   const { userStore } = useMobxStores();
   const {
     error,

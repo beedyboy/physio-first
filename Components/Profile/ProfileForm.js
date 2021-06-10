@@ -69,6 +69,7 @@ const ProfileForm = (props) => {
       staffId: "",
       email: "",
       branch: "",
+      dob: "",
       phone: "",
       address: "",
       emergency_phone: "",
@@ -90,6 +91,7 @@ const ProfileForm = (props) => {
           firstname: data && data.firstname,
           lastname: data && data.lastname,
           staffId: data && data.staffId,
+          dob: data && data.dob,
           branch: data && data.branch && data.branch.name,
           email: data && data.email,
           phone: data && data.phone_number,
@@ -110,6 +112,7 @@ const ProfileForm = (props) => {
           lastname: "",
           staffId: "",
           branch: "",
+          dob: "",
           email: "",
           phone: "",
           address: "",
@@ -206,6 +209,7 @@ const ProfileForm = (props) => {
         lastname: "",
         staffId: "",
         branch: "",
+        dob: "",
         email: "",
         phone: "",
         address: "",
@@ -273,6 +277,22 @@ const ProfileForm = (props) => {
                         ? errors.lastname && errors.lastname.message
                         : null}
                     </FormErrorMessage>
+                  </FormControl>
+                </Box>
+
+                <Box>
+                  <FormControl 
+                    my="3" 
+                  >
+                    <FormLabel htmlFor="staffId">Dob</FormLabel>
+                    <Input
+                      type="date"
+                      value={values.dob || ""}
+                      name="dob"
+                      id="dob"
+                      onChange={handleChange} 
+                    />
+                    
                   </FormControl>
                 </Box>
 

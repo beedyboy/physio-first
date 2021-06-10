@@ -46,6 +46,7 @@ const updateProfile = Authenticated(async (req, res) => {
       doc.firstname = data.firstname;
       doc.lastname = data.lastname;
       doc.phone_number = data.phone;
+      doc.dob = data.dob;
       doc.staffId = data.staffId;
 
       doc.emergency_contact = data.emergency_contact;
