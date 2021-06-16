@@ -16,8 +16,8 @@ const CancelledApplication = ({ data }) => {
       cell: (row) => (
         <Fragment>
           <Link href={`/staff/${row._id}`}>
-            <a> {row.staff.firstname + " " + row.staff.lastname}</a>
-          </Link>
+          <a> {row.staff && row.staff.firstname + " " + row.staff && row.staff.lastname}</a>
+            </Link>
         </Fragment>
       ),
     }, 

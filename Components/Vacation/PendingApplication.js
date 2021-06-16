@@ -25,7 +25,7 @@ const PendingApplication = ({
       cell: (row) => (
         <Fragment>
           <Link href={`/staff/${row._id}`}>
-            <a> {row.staff.firstname + " " + row.staff.lastname}</a>
+          <a> {row.staff && row.staff.firstname + " " + row.staff && row.staff.lastname}</a>
           </Link>
         </Fragment>
       ),
