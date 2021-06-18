@@ -27,7 +27,7 @@ const LeaveExist = async (req, res) => {
 };
 
 const removeLeave = async (req, res) => {
-  const {  id } = req.query;
+  const { id } = req.query;
   await DB.Leave.findByIdAndRemove(id, (err, doc) => {
     if (err) {
       return res.status(400).send({

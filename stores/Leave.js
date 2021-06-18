@@ -1,23 +1,23 @@
-import { makeObservable, observable, action, computed } from "mobx";  
-import backend from "../services/APIService"; 
+import { makeObservable, observable, action, computed } from "mobx";
+import backend from "../services/APIService";
 class Leave {
-  error = false; 
+  error = false;
   exist = false;
   saved = false;
   loading = false;
   removed = false;
   sending = false;
-  checking = false; 
+  checking = false;
   leaves = [];
   message = "";
- 
+
   constructor() {
     makeObservable(this, {
       message: observable,
-      sending: observable, 
-      removed: observable, 
-      saved: observable,  
-      checking: observable,  
+      sending: observable,
+      removed: observable,
+      saved: observable,
+      checking: observable,
       error: observable,
       exist: observable,
       info: computed,
@@ -40,15 +40,15 @@ class Leave {
       this.loading = false;
     });
   };
-  confirmName = (leave) => { 
+  confirmName = (leave) => {
     try {
       this.checking = true;
       this.exist = false;
       backend.get(`leave/${leave}`).then((res) => {
         this.checking = false;
-        if (res.status === 200) { 
+        if (res.status === 200) {
           this.message = res.data.message;
-          this.exist = res.data.exist; 
+          this.exist = res.data.exist;
         } else {
           this.message = res.data.error;
           this.error = true;
@@ -88,27 +88,29 @@ class Leave {
   updateLeave = (data) => {
     try {
       this.sending = true;
-      backend.put("leave", data).then((res) => {
-        this.sending = false;
-        if (res.status === 200) {
-          this.getLeaves();
-          this.message = res.data.message;
-          this.saved = true;
-        } else {
-          this.message = res.data.error;
-          this.error = true;
-        }
-      }).catch((err) => {
-        this.sending = false;
-        console.log({err});
-      if(err && err.response) {
-      console.log('status', err.response.status)
-      }
-      })
+      backend
+        .put("leave", data)
+        .then((res) => {
+          this.sending = false;
+          if (res.status === 200) {
+            this.getLeaves();
+            this.message = res.data.message;
+            this.saved = true;
+          } else {
+            this.message = res.data.error;
+            this.error = true;
+          }
+        })
+        .catch((err) => {
+          this.sending = false;
+          console.log({ err });
+          if (err && err.response) {
+            console.log("status", err.response.status);
+          }
+        });
     } catch (error) {
-      
       this.sending = false;
-      console.log({error});
+      console.log({ error });
     }
   };
   removeLeave = (id) => {
