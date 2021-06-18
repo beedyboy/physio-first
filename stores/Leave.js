@@ -28,7 +28,7 @@ class Leave {
       confirmName: action,
       addLeave: action,
       updateLeave: action,
-      removeCategory: action,
+      removeLeave: action,
       resetProperty: action,
     });
   }
@@ -111,10 +111,10 @@ class Leave {
       console.log({error});
     }
   };
-  removeCategory = (leave) => {
+  removeLeave = (id) => {
     try {
       this.removed = false;
-      backend.delete(`leave/${leave}`).then((res) => {
+      backend.delete(`leave/${id}`).then((res) => {
         if (res.status === 200) {
           this.getLeaves();
           this.message = res.data.message;
