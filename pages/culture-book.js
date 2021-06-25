@@ -4,11 +4,17 @@ import {
   Stack, 
 } from "@chakra-ui/react";
 import Iframe from 'react-iframe' 
+import Head from "next/head";
+import Layout from "../templates/Private/Layout"; 
 
-const CEOSTORY = () => { 
+const CultureBook = () => { 
  
   return (
     <>
+     <Head>
+        <title>Physio First | Culture Book</title>
+      </Head>
+      <Layout>
       <Stack
         direction="column"
         spacing="24px"
@@ -27,7 +33,10 @@ const CEOSTORY = () => {
         position="relative"/>
         </Box>
  </Stack>
-    </>
+   
+        
+      </Layout>
+       </>
   );
 };
-export default CEOSTORY;
+export default CultureBook;

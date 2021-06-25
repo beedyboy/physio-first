@@ -10,6 +10,7 @@ import { MdDashboard, MdSettings } from "react-icons/md";
 import { TiTicket } from "react-icons/ti";
 import { RiAdminFill } from "react-icons/ri";
 import { FaUmbrellaBeach } from "react-icons/fa";
+import { GoBook } from "react-icons/go";
 import { GrTicket, GrResources, GrIntegration } from "react-icons/gr";
 import Utility from "../../services/UtilityService";
 
@@ -48,6 +49,11 @@ const router  = useRouter();
       label: "Onboarding",
       href: "/onboarding",
       icon: <GrIntegration />,
+    },
+    {
+      label: "Culture Book",
+      href: "/culture-book",
+      icon: <GoBook />,
     },
     {
       label: "Ticket",
