@@ -1,20 +1,16 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import Head from "next/head";
 import Layout from "../templates/Private/Layout";
 import {
   Flex,
-  Box,
-  FormControl,
-  FormLabel,
-  Heading,
-  Switch,
+  Box, 
+  Heading, 
   SkeletonCircle,
   SkeletonText,
 } from "@chakra-ui/react";
 import { useMobxStores } from "../stores/stores";
 import { observer } from "mobx-react-lite";
-import ProfileDetails from "../Components/Profile/ProfileDetails";
-import CeoStory from "../Components/Profile/CeoStory";
+import ProfileDetails from "../Components/Profile/ProfileDetails"; 
 function profile() {
   const { userStore } = useMobxStores();
   const {
@@ -28,14 +24,10 @@ function profile() {
     myProfile,
     updateProfile,
     resetProperty,
-  } = userStore;
-  const [page, setPage] = useState(true);
+  } = userStore; 
   useEffect(() => {
     getProfile();
-  }, []);
-  const handlePage = (e) => {
-    setPage(!page);
-  };
+  }, []); 
   useEffect(() => {
     if (error && action === "logout") {
       toast({
@@ -64,16 +56,9 @@ function profile() {
         <Flex direction="column" w="100%" justifyContent="space-between">
           <Flex direction="row">
             <Box mb={3}>
-              <Heading>{page ? "Profile Information" : "CEO Story"}</Heading>
+              <Heading>Profile Information</Heading>
             </Box>
-            <Box mt={3} mx="auto" mr={3} align="right" mb={3}>
-              <FormControl display="flex" alignItems="center">
-                <FormLabel htmlFor="email-alerts" mb="0">
-                  Culture book
-                </FormLabel>
-                <Switch id="page" isChecked={page} onChange={handlePage} />
-              </FormControl>
-            </Box>
+            
           </Flex>{" "}
           {profileLoading ? (
             <>
@@ -84,8 +69,7 @@ function profile() {
             </>
           ) : (
             <>
-              <Box w="100%">
-                {page ? (
+              <Box w="100%"> 
                   <Fragment>
                     <ProfileDetails
                       data={myProfile}
@@ -96,13 +80,7 @@ function profile() {
                       sending={sending}
                       reset={resetProperty}
                     />
-                  </Fragment>
-                ) : (
-                  <CeoStory
-                    id={myProfile && myProfile._id}
-                    signed={myProfile && myProfile.signed}
-                  />
-                )}
+                  </Fragment> 
               </Box>
             </>
           )}

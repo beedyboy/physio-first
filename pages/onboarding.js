@@ -12,6 +12,7 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import Layout from "../templates/Private/Layout";
+import CeoStory from "../Components/Profile/CeoStory";
 import { useMobxStores } from "../stores/stores";
 import { observer } from "mobx-react-lite";
 import DirectorCard from "../Components/Director/DirectorCard"; 
@@ -33,6 +34,7 @@ function onboarding(props) {
         <Tabs>
           <TabList>
             <Tab>Executives</Tab>
+            <Tab>Culture Book</Tab>
             <Tab>Document</Tab>
           </TabList>
           <TabPanels>
@@ -54,6 +56,9 @@ function onboarding(props) {
                   </SimpleGrid>
                 </Skeleton>
               </Box>
+            </TabPanel>
+            <TabPanel>
+            <CeoStory  />
             </TabPanel>
             <TabPanel>
               Document
