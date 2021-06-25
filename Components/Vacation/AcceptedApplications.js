@@ -4,11 +4,15 @@ import PerfectScrollBar from "react-perfect-scrollbar";
 import Link from "next/link";
 
 const AcceptedApplications = ({ data }) => {
-  const columns = [ 
-    {
-      name: "Type",
-      selector: "leave.leave_type",
+  const columns = [  
+     {
+      name: "Type", 
       sortable: true,
+      cell: (row) => (
+        <Fragment>
+          {(row.leave && row.leave.leave_type) || 'Not available' } 
+          </Fragment>
+      ),
     }, 
     {
       name: "Fullname", 

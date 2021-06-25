@@ -15,10 +15,14 @@ const PendingApplication = ({
 }) => {
   const columns = [
     {
-      name: "Type",
-      selector: "leave.leave_type",
+      name: "Type", 
       sortable: true,
-    },
+      cell: (row) => (
+        <Fragment>
+          {(row.leave && row.leave.leave_type) || 'Not available' } 
+          </Fragment>
+      ),
+    }, 
     {
       name: "Fullname",
       sortable: true,
