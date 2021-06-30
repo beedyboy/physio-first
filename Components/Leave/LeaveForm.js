@@ -129,7 +129,6 @@ const LeaveForm = ({
       handleClose();
     };
   }, [error]);
- 
 
   const handleChange = (event) => {
     event.persist();
@@ -152,9 +151,7 @@ const LeaveForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mode === "Add"
-      ? addLeave(formState.values)
-      : updateLeave(formState.values);
+    mode === "Add" ? addLeave(formState.values) : updateLeave(formState.values);
   };
   const resetForm = () => {
     setFormState((prev) => ({
@@ -188,7 +185,11 @@ const LeaveForm = ({
             <DrawerBody>
               <Stack spacing="24px">
                 <Box>
-                  <FormControl isRequired my="3" isInvalid={hasError("leave_type") || exist}>
+                  <FormControl
+                    isRequired
+                    my="3"
+                    isInvalid={hasError("leave_type") || exist}
+                  >
                     <FormLabel htmlFor="leave_type">Leave Type</FormLabel>
                     <Input
                       type="text"
@@ -203,14 +204,13 @@ const LeaveForm = ({
                       {hasError("leave_type")
                         ? errors.leave_type && errors.leave_type.message
                         : null}
-                    
                     </FormErrorMessage>
                     <FormHelperText color={checking ? "blue" : "red"}>
-                    {exist
-                          ? message
-                          : checking
-                          ? "checking server for duplicate"
-                          : null}
+                      {exist
+                        ? message
+                        : checking
+                        ? "checking server for duplicate"
+                        : null}
                     </FormHelperText>
                   </FormControl>
                 </Box>
@@ -219,12 +219,12 @@ const LeaveForm = ({
                     <FormLabel htmlFor="allowed_days">Days allowed</FormLabel>
                     <Input
                       type="number"
-                      value={values.allowed_days || ""} 
+                      value={values.allowed_days || ""}
                       name="allowed_days"
                       id="allowed_days"
                       onChange={handleChange}
                       placeholder="Days allowed"
-                    /> 
+                    />
                   </FormControl>
                 </Box>
 

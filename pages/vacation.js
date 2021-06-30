@@ -9,6 +9,8 @@ import { MdAdd } from "react-icons/md";
 import { observer } from "mobx-react-lite";
 
 function Vacation(props) {
+  const { access } = props;
+  const leaveApply = access && access.leave && access.leave.apply;
   const { leaveStore, vacationStore } = useMobxStores();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { leaves, getLeaves } = leaveStore;
@@ -46,14 +48,16 @@ function Vacation(props) {
           <Box d="flex" justifyContent="space-between">
             <Heading mb={4}> Vacation</Heading>
 
-            <Button
-              leftIcon={<MdAdd />}
-              colorScheme="teal"
-              p="2rem"
-              onClick={apply}
-            >
-              Apply
-            </Button>
+            {leaveApply ? (
+              <Button
+                leftIcon={<MdAdd />}
+                colorScheme="teal"
+                p="2rem"
+                onClick={apply}
+              >
+                Apply
+              </Button>
+            ) : null}
           </Box>
           <Box>
             <MyVacations data={myApplications} />

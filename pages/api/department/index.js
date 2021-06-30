@@ -43,7 +43,6 @@ const saveDepartment = async (req, res) => {
 };
 const updateDepartment = async (req, res) => { 
   const data = req.body; 
-  console.log({ data });
   const nameRegex = new RegExp(data.name, "i");
   const check_record = await DB.Department.findOne({ name: nameRegex });  
   const exist = check_record

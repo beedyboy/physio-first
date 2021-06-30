@@ -33,8 +33,7 @@ const CultureBook = () => {
         position="relative"/>
         </Box>
  </Stack>
-   
-        
+    
       </Layout>
        </>
   );

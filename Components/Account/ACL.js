@@ -35,7 +35,7 @@ const ACLForm = ({
     company: { manage: false },
     department: { add: false, view: false, del: false },
     director: { add: false, view: false, del: false },
-    leave: { add: false, view: false, del: false },
+    leave: { apply: false, add: false, view: false, del: false },
     pos: { sell: false, view: false, modify: false },
     product: { add: false, view: false, del: false },
     staff: { add: false, view: false, del: false, modify: false },
@@ -82,6 +82,7 @@ const ACLForm = ({
           del: (data && data.director  && data.director.del) || false,
         },
         leave: {
+          apply: (data && data.leave && data.leave.apply) || false,
           add: (data && data.leave && data.leave.add) || false,
           view: (data && data.leave && data.leave.view) || false,
           del: (data && data.leave && data.leave.del) || false,
@@ -189,7 +190,7 @@ const ACLForm = ({
         company: { manage: false },
         department: { add: false, view: false, del: false },
         director: { add: false, view: false, del: false },
-        leave: { add: false, view: false, del: false },
+        leave: { apply: false, add: false, view: false, del: false },
         pos: { sell: false, view: false, modify: false },
         product: { add: false, view: false, del: false },
         staff: { add: false, view: false, del: false, modify: false },
@@ -414,6 +415,15 @@ const ACLForm = ({
           <FormControl id="leave">
             <FormLabel>Vacation</FormLabel>
             <Wrap spacing="20px">
+              <WrapItem>
+                <Checkbox
+                  isChecked={priviledges.leave.apply || false}
+                  name="apply"
+                  onChange={(event) => handleRoleChange(event, "leave")}
+                >
+                  Apply
+                </Checkbox>
+              </WrapItem>
               <WrapItem>
                 <Checkbox
                   isChecked={priviledges.leave.add || false}

@@ -44,8 +44,10 @@ const saveLeave = async (req, res) => {
 };
 const updateLeave = async (req, res) => {
   const data = req.body;
+  console.log({ data });
   const leave_typeRegex = new RegExp(data.leave_type, "i");
   const check_record = await DB.Leave.findOne({ leave_type: leave_typeRegex });
+
   const exist = check_record
     ? check_record && check_record._id.toString() === data.id
       ? false
@@ -55,7 +57,7 @@ const updateLeave = async (req, res) => {
   if (exist === false) {
     await DB.Leave.findById(data.id, (error, doc) => {
       if (!error) {
-        if (check_record.leave_type !== data.leave_type) {
+        if (doc && doc.leave_type !== data.leave_type) {
           doc.leave_type = data.leave_type;
         }
         doc.allowed_days = data.allowed_days;

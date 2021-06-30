@@ -77,9 +77,14 @@ class Leave {
         }
       });
     } catch (err) {
-      if (err.response.status === 500) {
+      this.sending = false;
+      if (err && err.response && (err.response.status === 401 || err.response.status === 500)) {
+        this.message = err.response.data.error;
+        this.error = true;
         console.log("There was a problem with the server");
-      } else {
+        // this.action = "logout";
+      } 
+      else {
         console.log(err.response.data.msg);
       }
     }
@@ -108,9 +113,17 @@ class Leave {
             console.log("status", err.response.status);
           }
         });
-    } catch (error) {
+    }  catch (err) {
       this.sending = false;
-      console.log({ error });
+      if (err && err.response && (err.response.status === 401 || err.response.status === 500)) {
+        this.message = err.response.data.error;
+        this.error = true;
+        console.log("There was a problem with the server");
+        // this.action = "logout";
+      } 
+      else {
+        console.log(err.response.data.msg);
+      }
     }
   };
   removeLeave = (id) => {

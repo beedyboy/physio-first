@@ -74,6 +74,11 @@ class Vacation {
         }
       });
     } catch (err) {
+      if (err && err.response && err.response.status === 401) {
+        this.message = err.response.data.error;
+        this.error = true;
+        this.action = "logout";
+      } 
       if (err.response && err.response.status === 500) {
         console.log("There was a problem with the server");
       } else {
