@@ -40,7 +40,7 @@ function onboarding(props) {
               <Box>
                 <Skeleton isLoaded={!loading}>
                   {/* <SimpleGrid columns={{ sm: 2, md: 3, xl: 4 }} spacing="10px"> */}
-                  <SimpleGrid columns={[2, null, 3]} spacing="10px">
+                  <SimpleGrid columns={[2, null, 2]} spacing="10px">
                     {directors && directors.length < 1 ? (
                       <Text as="p" fontWeight="bolder">
                         No record found!

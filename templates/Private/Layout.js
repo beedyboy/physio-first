@@ -30,7 +30,7 @@ if(loggedIn === false) {
 } 
 const router  = useRouter();
   const { pathname } = useRouter();
-  const company = "Capture Therapeutic"
+  const company = "Capture Therapeutics"
   const { isOpen, onOpen, onClose } = useDisclosure();
   const showOnBreakpoint = useBreakpointValue({ base: true, lg: false });
 

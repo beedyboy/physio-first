@@ -17,6 +17,8 @@ const getById = async (req, res) => {
   try {
     const { id } = req.query; 
     const check_record = await DB.Vacation.findById(id) 
+    .populate("leave", "leave_type")
+      .populate("staff", "firstname lastname _id");
     res.status(200).json(check_record);
   } catch (err) {
     console.log(err);

@@ -17,23 +17,16 @@ import { useMobxStores } from "../../stores/stores";
 import AcceptedApplications from "../../Components/Vacation/AcceptedApplications";
 import PendingApplication from "../../Components/Vacation/PendingApplication";
 import CancelledApplication from "../../Components/Vacation/CancelledApplication";
-import AdminStatusAction from "../../Components/Vacation/AdminStatusAction";
-import NoAccess from "../../widgets/NoAccess";
+ import NoAccess from "../../widgets/NoAccess";
 const Vacation = (props) => {
   const { pageAccess } = props;
   const toast = useToast();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [mode, setMode] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure(); 
   const [rowData, setRowData] = useState();
   const { vacationStore } = useMobxStores();
-  const {
-    error,
-    saved,
-    action,
+  const { 
     message,
-    removed,
-    sending,
-    adminUpdate,
+    removed, 
     delVacation,
     pendingApplications,
     approvedApplications,
@@ -88,11 +81,8 @@ const Vacation = (props) => {
                   <TabPanel>
                     <PendingApplication
                       data={pendingApplications}
-                     {...props}
-                      toggle={onOpen}
-                      removeData={delVacation}
-                      rowData={setRowData}
-                      // setModal={toggleModal}
+                     {...props} 
+                      removeData={delVacation} 
                     />
                   </TabPanel>
                   <TabPanel>
@@ -111,18 +101,7 @@ const Vacation = (props) => {
           <NoAccess page="vacation management" />
         )}{" "}
       </Flex>
-      <AdminStatusAction
-        open={isOpen}
-        action={action}
-        saved={saved}
-        error={error}
-        message={message}
-        sending={sending}
-        handleClose={onClose}
-        initial_data={rowData}
-        reset={resetProperty}
-        updateApp={adminUpdate}
-      />
+      
     </Fragment>
   );
 };

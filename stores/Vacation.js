@@ -5,6 +5,7 @@ class Vacation {
   error = false;
   saved = false;
   removed = false;
+  fetching = false;
   loading = false;
   sending = false;
   application = [];
@@ -21,6 +22,7 @@ class Vacation {
       message: observable,
       sending: observable,
       action: observable,
+      fetching: observable,
       loading: observable,
       removed: observable,
       history: observable,
@@ -31,6 +33,7 @@ class Vacation {
       getApplications: action,
       getMyApplications: action,
       getApplicationById: action,
+      getApplicationStat: action,
       adminUpdate: action,
       delVacation: action,
       resetProperty: action,
@@ -97,13 +100,35 @@ class Vacation {
           if (res.data.status === 500) {
             Utility.logout();
           } else if (res.status === 200) {
-            this.application = res.data[0];
+            this.application = res.data;
           }
         })
         .catch((err) => {
           console.log("getApplicationById", err.code);
           console.log("getApplicationById", err.message);
           console.log("getApplicationById", err.stack);
+        });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  getApplicationStat = (data) => {
+    try {
+      this.fetching = true;
+      backend
+        .post("application" , data)
+        .then((res) => {
+          this.fetching = false;
+          if (res.data.status === 500) {
+            Utility.logout();
+          } else if (res.status === 200) {
+            this.history = res.data;
+          }
+        })
+        .catch((err) => {
+          console.log("getApplicationStat", err.code);
+          console.log("getApplicationStat", err.message);
+          console.log("getApplicationStat", err.stack);
         });
     } catch (e) {
       console.error(e);

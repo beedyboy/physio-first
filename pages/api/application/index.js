@@ -9,6 +9,9 @@ export default async (req, res) => {
     case "GET":
       await getAllVacations(req, res);
       break;
+    case "POST":
+      await getHistory(req, res);
+      break;
     case "PUT":
       await updateVacation(req, res);
       break;
@@ -20,6 +23,19 @@ const getAllVacations = Authenticated(async (req, res) => {
     const vacations = await DB.Vacation.find({})
       .populate("leave", "leave_type")
       .populate("staff", "firstname lastname _id");
+    res.status(200).json(vacations);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+const getHistory = Authenticated(async (req, res) => {
+  try {
+    const { leave_type, staff } = req.body;
+    const vacations = await DB.Vacation.find({leave_type: leave_type,  staff: staff})
+      .populate("leave", "leave_type")
+      .populate("staff", "firstname lastname _id");
+      console.log({vacations})
     res.status(200).json(vacations);
   } catch (err) {
     console.log(err);

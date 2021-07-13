@@ -7,21 +7,25 @@ import Link from "next/link";
 
 const PendingApplication = ({
   data,
-  canDel,
-  canAdd,
-  removeData,
-  rowData,
-  toggle,
+  canDel, 
+  removeData, 
 }) => {
   const columns = [
     {
       name: "Type", 
       sortable: true,
-      cell: (row) => (
-        <Fragment>
-          {(row.leave && row.leave.leave_type) || 'Not available' } 
-          </Fragment>
-      ),
+      cell: (row) => 
+        (<Fragment>{
+          row.leave && row.leave.leave_type ?
+         <Fragment>
+         <Link href={`/admin/vacation/${row._id}`}>
+         <a> {row.leave && row.leave.leave_type}</a>
+        </Link>
+         </Fragment>
+         :
+         'Not available'
+        }
+        </Fragment>) 
     }, 
     {
       name: "Fullname",
@@ -49,21 +53,7 @@ const PendingApplication = ({
       sortable: true,
       cell: (row) => (
         <Wrap spacing="20px">
-          {canAdd ? (
-            <>
-              {" "}
-              <WrapItem>
-                <IconButton
-                  variant="outline"
-                  colorScheme="teal"
-                  aria-label="Edit Status"
-                  fontSize="20px"
-                  icon={<MdEdit />}
-                  onClick={(e) => editData(e, row)}
-                />
-              </WrapItem>
-            </>
-          ) : null}
+           
           {canDel ? (
             <>
               <WrapItem>
@@ -86,11 +76,7 @@ const PendingApplication = ({
       ),
     },
   ];
-  const editData = (e, row) => {
-    e.persist();
-    rowData(row);
-    toggle(true);
-  };
+  
   const deleteData = (id) => {
     removeData(id);
   };

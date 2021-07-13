@@ -10,7 +10,7 @@ const DirectorCard = ({ data }) => {
       <Stack
         mt="5px"
         mb="2rem"
-        height="340px"
+        height="410px"
         backgroundColor="white"
         // w={[250, 300, 400]}
         borderWidth="1px"
@@ -23,7 +23,8 @@ const DirectorCard = ({ data }) => {
           <Image top
                   width="100%"
             src={data.images[0]}
-            style={{ height: "280px", maxHeight: "280px"}}
+            objectFit="fit"
+            style={{ height: "350px", maxHeight: "350px"}}
             alt={data._id}
           />
         {/* </Box> */}
