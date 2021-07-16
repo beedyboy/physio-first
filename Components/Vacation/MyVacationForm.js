@@ -146,7 +146,7 @@ const MyVacationForm = ({
     );
   };
   const validateDate = () => {
-    alert("calling")
+    // alert("calling")
     const val = getDaysDiff(values.leave_start_date, values.leave_end_date);
       setFormState((formState) => ({
         ...formState,
@@ -155,7 +155,7 @@ const MyVacationForm = ({
           dateError: val < 0 ? true : false,
         }
       })); 
-    alert(val);
+    // alert(val);
   };
   const hasError = (field) => touched[field] && errors[field].error;
 

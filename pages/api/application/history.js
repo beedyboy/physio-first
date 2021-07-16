@@ -23,36 +23,18 @@ const historyAggregate = Authenticated(async (req, res) => {
     const status = "Accepted";
     const pipeline = [
       {
-        // $match: { $and: [{ leave_start_date: { $year: date } }, { staff: staff }] },
-        // $project: { leave_start_date: { $year: date },  staff: staff },
-        $project: {
-          leave_start_date: { $substr: [date, 0, 4] },
-          staff: staff,
-          status: status,
-          leave: leave_type,
-        },
-      },
-      {
-        $group: {
-          _id: "$keyword",
-          llcId: { $first: "$llcId" },
-          days: { $sum: 1 },
-        },
-      },
-    ];
-    const stats = await DB.Vacation.aggregate([
-      {
         $match: {
           $and: [
             { staff: ObjectId(staff) },
             { leave_start_date: {$regex: date,  "$options": "i"}},
             { leave: ObjectId(leave_type) },
-            { status: "Pending" },
+            { status: "Accepted" },
           ],
         },
       },
       { $group: { "_id": staff, days: { $sum: "$days" }, } }
-    ]);
+    ];
+    const stats = await DB.Vacation.aggregate(pipeline);
     console.log({ stats });
     res.status(200).json(stats);
   } catch (err) {

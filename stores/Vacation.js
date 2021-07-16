@@ -80,6 +80,11 @@ class Vacation {
         }
       });
     } catch (err) {
+      this.sending = false;
+      if (err && err.response && err.response.status === 400) {
+        this.message = err.response.data.error;
+        this.error = true;  
+      } 
       if (err && err.response && err.response.status === 401) {
         this.message = err.response.data.error;
         this.error = true;
@@ -164,8 +169,7 @@ class Vacation {
     try {
       this.sending = true;
       this.action = "";
-      backend.put("application", data).then((res) => {
-        console.log({res})
+      backend.put("application", data).then((res) => { 
         this.sending = false;
         if (res.status === 200) {
           this.getApplications();

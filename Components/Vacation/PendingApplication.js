@@ -23,7 +23,7 @@ const PendingApplication = ({
         </Link>
          </Fragment>
          :
-         'Not available'
+         'N/A'
         }
         </Fragment>) 
     }, 

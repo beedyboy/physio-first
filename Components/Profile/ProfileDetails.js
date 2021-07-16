@@ -69,48 +69,48 @@ function ProfileDetails(props) {
               <Text fontSize="md" as="span" fontWeight="bolder">
                 {" "}
                 Firstname:
-                <Text as="span" fontWeight="normal"> {data.firstname || 'Nil'}</Text>
+                <Text as="span" fontWeight="normal"> {data && data.firstname || 'N/A'}</Text>
               </Text>
 
               <Text fontSize="md" as="span" fontWeight="bolder">
                 {" "}
                 Lastname:
-                <Text as="span" fontWeight="normal"> {data.lastname || 'Nil'}</Text>
+                <Text as="span" fontWeight="normal"> {data && data.lastname || 'N/A'}</Text>
               </Text>
             </Stack>
             <Stack  direction={["column", "row"]} spacing="44px">
               <Text fontSize="md" as="span" fontWeight="bolder">
                 {" "}
                 Email:
-                <Text as="span" fontWeight="normal"> {data.email || 'Nil'}</Text>
+                <Text as="span" fontWeight="normal"> {data && data.email || 'N/A'}</Text>
               </Text>
               <Text fontSize="md" as="span" fontWeight="bolder">
                 {" "}
                 Phone:
-                <Text as="span" fontWeight="normal"> {data.phone_number || 'Nil'}</Text>
+                <Text as="span" fontWeight="normal"> {data && data.phone_number || 'N/A'}</Text>
               </Text>
               <Text fontSize="md" as="span" fontWeight="bolder">
                 {" "}
                 Dob:
-                <Text as="span" fontWeight="normal"> {data.dob || 'Nil'}</Text>
+                <Text as="span" fontWeight="normal"> {data && data.dob || 'N/A'}</Text>
               </Text>
             </Stack>
             <Stack  direction={["column", "row"]} spacing="44px">
               <Text fontSize="md" as="span" fontWeight="bolder">
                 {" "}
                 StaffId:
-                <Text as="span" fontWeight="normal"> {data.staffId || 'Nil'}</Text>
+                <Text as="span" fontWeight="normal"> {data && data.staffId || 'N/A'}</Text>
               </Text>
               <Text fontSize="md" as="span" fontWeight="bolder">
                 {" "}
                 Branch:
-                <Text as="span" fontWeight="normal"> {data.branch && data.branch.name || 'Nil'}</Text>
+                <Text as="span" fontWeight="normal"> {data && data.branch && data.branch.name || 'N/A'}</Text>
               </Text>
             </Stack>
             <Text fontSize="md" as="span" fontWeight="bolder">
                 {" "}
                 Address:
-                <Text as="span" fontWeight="normal"> {data.address && data.address|| 'Nil'}</Text>
+                <Text as="span" fontWeight="normal"> {data && data.address && data.address|| 'N/A'}</Text>
               </Text>
           </Stack>
 
@@ -121,12 +121,12 @@ function ProfileDetails(props) {
                <Text fontSize="md" as="span" fontWeight="bolder">
                 {" "}
                 Emergency contact:
-                <Text as="span" fontWeight="normal"> {data.emergency_contact || 'Nil'}</Text>
+                <Text as="span" fontWeight="normal"> {data && data.emergency_contact || 'N/A'}</Text>
               </Text>
               <Text fontSize="md" as="span" fontWeight="bolder">
                 {" "}
                 Phone:
-                <Text as="span" fontWeight="normal"> {data.emergency_phone || 'Nil'}</Text>
+                <Text as="span" fontWeight="normal"> {data && data.emergency_phone || 'N/A'}</Text>
               </Text> 
             
          

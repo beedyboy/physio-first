@@ -41,7 +41,7 @@ const DirectorCard = ({ data }) => {
             {data.lastname + " " + data.firstname}
             <br />
             <span style={{ paddingLeft: "5px", fontSize: "11px" }}>
-              ({data.position || "not available"}){" "}
+              ({data.position || "N/A"}){" "}
             </span>
           </Text>
             </Center>
@@ -78,7 +78,7 @@ const DirectorCard = ({ data }) => {
                   <br />
                   <span style={{ paddingLeft: "25px", fontSize: "11px" }}>
                     {" "}
-                    ({data.position || "not available"}){" "}
+                    ({data.position || "N/A"}){" "}
                   </span>
                 </Text>
 

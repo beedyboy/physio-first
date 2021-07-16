@@ -10,7 +10,7 @@ const CancelledApplication = ({ data }) => {
       sortable: true,
       cell: (row) => (
         <Fragment>
-          {(row.leave && row.leave.leave_type) || 'Not available' } 
+          {(row.leave && row.leave.leave_type) || 'N/A' } 
           </Fragment>
       ),
     }, 

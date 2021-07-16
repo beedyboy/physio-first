@@ -43,6 +43,9 @@ const saveVacation = Authenticated(async (req, res) => {
       return res.status(422).json({ error: "Please add all the fields" });
     }
     const days = await Assistant.getDaysDiff(leave_start_date, leave_end_date);
+    if(days < 0) {
+      res.status(400).json({ error: "Start date must be before the end date" });
+    }
     await DB.Vacation({
       days,
       leave,
@@ -65,8 +68,7 @@ const saveVacation = Authenticated(async (req, res) => {
             "We have received your application. The final decision will be sent to you soon",
         };
         const adminData = {
-          email: [process.env.LEAVE_ADMIN_EMAIL, process.env.LEAVE_ADMIN_EMAIL2],
-          bcc: process.env.LEAVE_BCC,
+          email: process.env.LEAVE_ADMIN_EMAIL,   
           subject: process.env.ADMIN_EMAIL_SUBJECT.replace(
             "{{SUBJECT}}",
             "New Vacation Application"

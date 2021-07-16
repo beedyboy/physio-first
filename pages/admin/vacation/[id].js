@@ -59,6 +59,8 @@ const VacationDetails = (props) => {
     staffId: "",
     createdAt: "",
     status: "",
+    leave_end_date: "",
+    leave_start_date: "",
   });
   useEffect(() => {
     const { id } = query;
@@ -76,8 +78,10 @@ const VacationDetails = (props) => {
         leaveId: application && application.leave && application.leave._id,
         leave_type: application && application.leave && application.leave.leave_type,
         days: application && application.days,
-        createdAt: application && application.createdAt,
+        createdAt:  moment(application && application.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a"),
         status: application && application.status,
+        leave_end_date: application && application.leave_end_date,
+        leave_start_date: application && application.leave_start_date,
       }));
       getHistory();
     }
@@ -92,6 +96,8 @@ const VacationDetails = (props) => {
         staffId: "",
         createdAt: "",
         status: "",
+        leave_end_date: "",
+        leave_start_date: "",
       }));
     };
   }, [application]);
@@ -188,6 +194,18 @@ console.log({staffStat})
                     <Text as="p" fontWeight="bolder">
                       No  of Days Applied for?: 
                     <Text as="span" fontWeight="normal"> {`${ data && data.days} ${ data && data.days > 1 ? 'days': 'day'}`}</Text>
+                    </Text>
+                  </Box>
+                  <Box>
+                    <Text as="p" fontWeight="bolder">
+                     Start Date: 
+                    <Text as="span" fontWeight="normal"> { data && data.leave_start_date}</Text>
+                    </Text>
+                  </Box>
+                  <Box>
+                    <Text as="p" fontWeight="bolder">
+                     End Date: 
+                    <Text as="span" fontWeight="normal"> { data && data.leave_end_date}</Text>
                     </Text>
                   </Box>
                   <Box>
