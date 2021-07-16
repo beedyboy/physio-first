@@ -12,7 +12,8 @@ const DirectorCard = ({ data }) => {
         mb="2rem"
         height="410px"
         backgroundColor="white"
-        // w={[250, 300, 400]}
+        // w={["40%", 300, "40%"]} 
+        w="100%"
         borderWidth="1px"
         borderRadius="lg"
         overflow="hidden"
@@ -20,10 +21,16 @@ const DirectorCard = ({ data }) => {
         direction="column"
       >
         {/* <Box boxSize="sm"> */}
-          <Image top
+          {/* <Image top
                   width="100%"
             src={data.images[0]}
             objectFit="fit"
+            style={{ height: "350px", maxHeight: "350px"}}
+            alt={data._id}
+          /> */}
+          <img  
+                  width="100%"
+            src={data.images[0]} 
             style={{ height: "350px", maxHeight: "350px"}}
             alt={data._id}
           />

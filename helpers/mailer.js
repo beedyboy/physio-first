@@ -13,10 +13,11 @@ const mailer = {
     });
   },
 
-  getMailOptions: ({ email, subject, message }) => { 
+  getMailOptions: ({ email, bcc, subject, message }) => { 
     return {
       from: `${process.env.EMAIL_FROM_NAME} <${process.env.EMAIL_FROM_EMAIL}>`,
       to: email,
+      ...(bcc && {bcc: bcc}),
       subject: subject,
       html: message,
     };

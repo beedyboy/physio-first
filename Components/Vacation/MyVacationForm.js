@@ -21,7 +21,7 @@ import {
   FormErrorMessage,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-const schema = { 
+const schema = {
   leave: {
     isEmpty: false,
     min: 1,
@@ -37,38 +37,45 @@ const schema = {
     message: "End date is required",
   },
 };
-const MyVacationForm = ({ 
+const MyVacationForm = ({
   open,
   reset,
   saved,
-  error, 
+  error,
   sending,
-  message, 
+  message,
   leaves,
-   createVacation,
-  handleClose, 
+  createVacation,
+  handleClose,
 }) => {
   const dateFormat = "YYYY/MM/DD";
   const toast = useToast();
-  const [title] = useState("Add Vacation");  
+  const [title] = useState("Add Vacation");
   const [formState, setFormState] = useState({
     values: {
       id: "",
-      leave: "",  
+      leave: "",
       leave_start_date: moment().format(dateFormat),
       leave_end_date: moment().format(dateFormat),
+      dateError: false,
       description: "",
     },
     touched: {},
     errors: {},
   });
   const { touched, errors, values, isValid } = formState;
-  
+
   useEffect(() => {
     const errors = dataHero.validate(schema, values);
     setFormState((formState) => ({
       ...formState,
-      isValid: errors.leave.error || errors.leave_start_date.error || errors.leave_end_date.error ? false : true,
+      isValid:
+        errors.leave.error ||
+        errors.leave_start_date.error ||
+        errors.leave_end_date.error ||
+        values.dateError
+          ? false
+          : true,
       errors: errors || {},
     }));
   }, [values]);
@@ -125,32 +132,55 @@ const MyVacationForm = ({
         ...formState.touched,
         [event.target.name]: true,
       },
-    })); 
+    }));
+    if (event.target.name === "leave_end_date") {
+      validateDate();
+    }
+  };
+  const getDaysDiff = (start_date, end_date, date_format = "YYYY-MM-DD") => {
+    const getDateAsArray = (date) => {
+      return moment(date.split(/\D+/), date_format);
+    };
+    return (
+      getDateAsArray(end_date).diff(getDateAsArray(start_date), "days") + 1
+    );
+  };
+  const validateDate = () => {
+    alert("calling")
+    const val = getDaysDiff(values.leave_start_date, values.leave_end_date);
+      setFormState((formState) => ({
+        ...formState,
+        values: {
+          ...formState.values,
+          dateError: val < 0 ? true : false,
+        }
+      })); 
+    alert(val);
   };
   const hasError = (field) => touched[field] && errors[field].error;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-     createVacation(values);
+    createVacation(values);
   };
-  
+
   const resetForm = () => {
     setFormState((formState) => ({
       ...formState,
       values: {
         ...formState.values,
         id: "",
-      leave: "",  
-      leave_start_date: "",
-      leave_end_date: "",
-      description: "",
+        leave: "",
+        leave_start_date: "",
+        leave_end_date: "",
+        description: "",
       },
       touched: {
-        ...formState.touched, 
+        ...formState.touched,
         leave: false,
         leave_start_date: false,
-        leave_end_date: false, 
-        description: false 
+        leave_end_date: false,
+        description: false,
       },
     }));
   };
@@ -172,11 +202,7 @@ const MyVacationForm = ({
             <DrawerBody>
               <Stack spacing="24px">
                 <Box>
-                  <FormControl
-                    isRequired
-                    my="3"
-                    isInvalid={hasError("leave")}
-                  >
+                  <FormControl isRequired my="3" isInvalid={hasError("leave")}>
                     <FormLabel htmlFor="leave">Vacation Type</FormLabel>
                     <Select
                       value={values.leave || ""}
@@ -185,10 +211,12 @@ const MyVacationForm = ({
                       name="leave"
                       id="leave"
                       onChange={handleChange}
-                    > 
+                    >
                       {leaves &&
                         leaves.map((val, index) => (
-                          <option value={val._id} key={index}>{val.leave_type}</option>
+                          <option value={val._id} key={index}>
+                            {val.leave_type}
+                          </option>
                         ))}
                     </Select>
 
@@ -204,14 +232,14 @@ const MyVacationForm = ({
                   <FormControl
                     isRequired
                     my="3"
-                    isInvalid={hasError("leave_start_date")}
+                    isInvalid={hasError("leave_start_date") || values.dateError}
                   >
                     <FormLabel htmlFor="leave_start_date">Start Date</FormLabel>
                     <Input
                       type="date"
                       defaultValue={
-                        formState.values.start_date
-                          ? moment(formState.values.leave_start_date, dateFormat)
+                        values.start_date
+                          ? moment(values.leave_start_date, dateFormat)
                           : moment().format(dateFormat)
                       }
                       name="leave_start_date"
@@ -221,10 +249,18 @@ const MyVacationForm = ({
                     />
                     <FormErrorMessage>
                       {hasError("leave_start_date")
-                        ? errors.leave_start_date && errors.leave_start_date.message
+                        ? errors.leave_start_date &&
+                          errors.leave_start_date.message
+                        : null}
+                      {values.dateError
+                        ? "Start date must be before the end date"
                         : null}
                     </FormErrorMessage>
-                    
+                    <FormHelperText>
+                      {values.dateError
+                        ? "Start date must be before the end date"
+                        : null}
+                    </FormHelperText>
                   </FormControl>
                 </Box>
 
@@ -238,8 +274,8 @@ const MyVacationForm = ({
                     <Input
                       type="date"
                       defaultValue={
-                        formState.values.leave_end_date
-                          ? moment(formState.values.leave_end_date, dateFormat)
+                        values.leave_end_date
+                          ? moment(values.leave_end_date, dateFormat)
                           : moment().format(dateFormat)
                       }
                       name="leave_end_date"
@@ -252,13 +288,12 @@ const MyVacationForm = ({
                         ? errors.leave_end_date && errors.leave_end_date.message
                         : null}
                     </FormErrorMessage>
-                    
                   </FormControl>
                 </Box>
 
                 <Box>
                   <FormControl my="3">
-                    <FormLabel htmlFor="description">Description</FormLabel> 
+                    <FormLabel htmlFor="description">Description</FormLabel>
                     <Textarea
                       value={values.description || ""}
                       name="description"

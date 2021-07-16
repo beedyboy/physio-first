@@ -32,8 +32,9 @@ const getAllVacations = Authenticated(async (req, res) => {
 const getHistory = Authenticated(async (req, res) => {
   try {
     const { leave_type, staff } = req.body;
-    const vacations = await DB.Vacation.find({leave_type: leave_type,  staff: staff})
-      .populate("leave", "leave_type")
+    const leave = new RegExp(leave_type, "i") 
+    const vacations = await DB.Vacation.find({leave: leave_type,  staff: staff})
+          .populate("leave", "leave_type")
       .populate("staff", "firstname lastname _id");
       console.log({vacations})
     res.status(200).json(vacations);

@@ -9,7 +9,7 @@ const VacationHistory = ({ data }) => {
       sortable: true,
       cell: (row) => (
         <Fragment>
-          {(row.leave && row.leave.leave_type) || 'Not available' } 
+          {(row.leave && row.leave.leave_type) || 'N/A' } 
           </Fragment>
       ),
     }, 
@@ -21,6 +21,11 @@ const VacationHistory = ({ data }) => {
     {
       name: "End date",
       selector: "leave_end_date",
+      sortable: true,
+    }, 
+    {
+      name: "Days",
+      selector: "days",
       sortable: true,
     }, 
     {

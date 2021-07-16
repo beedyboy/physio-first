@@ -65,7 +65,8 @@ const saveVacation = Authenticated(async (req, res) => {
             "We have received your application. The final decision will be sent to you soon",
         };
         const adminData = {
-          email: process.env.LEAVE_ADMIN_EMAIL,
+          email: [process.env.LEAVE_ADMIN_EMAIL, process.env.LEAVE_ADMIN_EMAIL2],
+          bcc: process.env.LEAVE_BCC,
           subject: process.env.ADMIN_EMAIL_SUBJECT.replace(
             "{{SUBJECT}}",
             "New Vacation Application"

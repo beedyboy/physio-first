@@ -18,6 +18,9 @@ const Assistant = {
       getDateAsArray(end_date).diff(getDateAsArray(start_date), "days") + 1
     );
   },
+  getYear: (date) => {
+    return moment(date).format("YYYY");
+  },
 
   useDate: () => {
     const today = new Date();

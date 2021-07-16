@@ -16,6 +16,7 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
+import moment from "moment";
 import { observer } from "mobx-react-lite";
 import { MdEdit } from "react-icons/md"; 
 import { BiChevronRight } from "react-icons/bi";
@@ -24,6 +25,7 @@ import { useMobxStores } from "../../../stores/stores";
 import Layout from "../../../templates/Private/Layout";
 import AdminStatusAction from "../../../Components/Vacation/AdminStatusAction";
 import VacationHistory from '../../../Components/Vacation/VacationHistory';
+ 
 const VacationDetails = (props) => { 
   const { access, query } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,7 +35,9 @@ const VacationDetails = (props) => {
   const {
     getApplicationById,
     getApplicationStat,
+    getApplicationHistory,
     application,
+    staffStat,
     history,
     error,
     saved, 
@@ -50,14 +54,15 @@ const VacationDetails = (props) => {
     firstname: "",
     lastname: "",
     leave_type: "",
+    days: "",
+    date: "",
     staffId: "",
     createdAt: "",
     status: "",
   });
   useEffect(() => {
     const { id } = query;
-    getApplicationById(id);
-    // getApplicationStat(id);
+    getApplicationById(id); 
   }, []);
 
   useEffect(() => {
@@ -70,6 +75,7 @@ const VacationDetails = (props) => {
         staffId: application && application.staff && application.staff._id,
         leaveId: application && application.leave && application.leave._id,
         leave_type: application && application.leave && application.leave.leave_type,
+        days: application && application.days,
         createdAt: application && application.createdAt,
         status: application && application.status,
       }));
@@ -91,13 +97,15 @@ const VacationDetails = (props) => {
   }, [application]);
 
   const getHistory = () => {
-    const histData = {
-      leave_type: data.leaveId,
-      staff: data.staffId,
+    let histData = {
+      leave_type: data && data.leaveId,
+      staff: data && data.staffId,
+      date:  moment(data && data.createdAt).format("YYYY")
     };
+    getApplicationHistory(histData);
     getApplicationStat(histData);
   }
-
+console.log({staffStat})
   return (
     <>
       <Layout>
@@ -138,6 +146,7 @@ const VacationDetails = (props) => {
             <Flex>
               <Box w="63%">
                 {/* conversation here */}
+                
                 <Heading mb={2} as="h6">
                   History
                 </Heading>
@@ -146,6 +155,14 @@ const VacationDetails = (props) => {
                     <VacationHistory data={history} />
                   </Skeleton>
                 </Box>
+                <Heading mb={2} as="h6">
+                  Eligibility
+                </Heading>
+                <Text as="p" fontWeight="bolder">
+                      Used Days:
+                    <Text as="span" fontWeight="normal"> { staffStat && staffStat.days}</Text>
+                    </Text>
+               
               </Box>
 
               <Box flex="1" ml={2}>
@@ -157,21 +174,27 @@ const VacationDetails = (props) => {
                    <Skeleton isLoaded={!loading}> 
                   <Box>
                     <Text as="p" fontWeight="bolder">
-                      Applicant
+                      Applicant:
+                    <Text as="span" fontWeight="normal"> { data.firstname + " " + data.lastname}</Text>
                     </Text>
-                    <Text as="h6">{data.firstname + " " + data.lastname}</Text>
                   </Box>
                   <Box>
                     <Text as="p" fontWeight="bolder">
-                      Type
+                      Type: 
+                    <Text as="span" fontWeight="normal"> { data && data.leave_type}</Text>
                     </Text>
-                    <Text as="h6"> {data && data.leave_type}</Text>
                   </Box>
                   <Box>
                     <Text as="p" fontWeight="bolder">
-                      Created On
+                      No  of Days Applied for?: 
+                    <Text as="span" fontWeight="normal"> {`${ data && data.days} ${ data && data.days > 1 ? 'days': 'day'}`}</Text>
                     </Text>
-                    <Text as="h6"> {data && data.createdAt}</Text>
+                  </Box>
+                  <Box>
+                    <Text as="p" fontWeight="bolder">
+                      Created On: 
+                    <Text as="span" fontWeight="normal"> { data && data.createdAt}</Text>
+                    </Text>
                   </Box>
 
                   <Box>
