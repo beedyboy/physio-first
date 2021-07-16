@@ -15,7 +15,7 @@ export default async (req, res) => {
 const myProfile = Authenticated(async (req, res) => {
   try {
     const { id } = req.query;
-    await DB.User.findById(id, (error, doc) => {
+    await DB.User.findById(id, (error, doc) => {  
       if (error) {
         res
           .status(401)

@@ -32,7 +32,7 @@ const PendingApplication = ({
       sortable: true,
       cell: (row) => (
         <Fragment>
-          <Link href={`/staff/${row._id}`}>
+          <Link href={`/staff/${row.staff && row.staff._id}`}>
           <a> {row.staff && row.staff.firstname + " " + row.staff && row.staff.lastname}</a>
           </Link>
         </Fragment>
