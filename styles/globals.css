@@ -1,6 +1,7 @@
 html,
 body {
   padding: 0;
+  height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
@@ -13,4 +14,28 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.img-container {
+  width: 200px;
+  height: 180px;
+  max-height: 180px;
+  max-width: 200px;
+  /* display: block;  */
+  /* background-color: blue; */
+}
+
+.img-resize {
+  max-width: 100%;
+    height: 180px;
+    width: 100%;
+    /* width: auto\9; ie8 */
+  /* object-fit: cover; */
+  /* object-position: 100%; */
+}
+
+.img-resize:hover {
+  /* -webkit-box-reflect: below; */
+  filter: grayscale(100%);
+  transition: filter 2s;
 }

@@ -10,31 +10,33 @@ const DirectorCard = ({ data }) => {
       <Stack
         mt="5px"
         mb="2rem"
-        height="410px"
+        height="230px"
         backgroundColor="white"
         // w={["40%", 300, "40%"]} 
-        w="100%"
+        // w="200px"
         borderWidth="1px"
         borderRadius="lg"
-        overflow="hidden"
+        // overflow="hidden"
         spacing="10px"
         direction="column"
       >
-        {/* <Box boxSize="sm"> */}
+       <Box className="img-container">
           {/* <Image top
-                  width="100%"
+                  // width="100%"
+                  // borderRadius="full"
             src={data.images[0]}
-            objectFit="fit"
-            style={{ height: "350px", maxHeight: "350px"}}
-            alt={data._id}
+            //  boxSize="150px"
+            // objectFit="cover"
+            className="img-resize" 
+             alt={data._id}
           /> */}
-          <img  
-                  width="100%"
+          <img   
             src={data.images[0]} 
-            style={{ height: "350px", maxHeight: "350px"}}
+            className="img-resize" 
+            // width="200" height="180" 
             alt={data._id}
           />
-        {/* </Box> */}
+        </Box>
         <Box bg="teal" style={{ height: "40px", maxHeight: "40px", width: "100%", color: 'white' }}>
           <Center>
           <Text>

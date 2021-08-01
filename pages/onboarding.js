@@ -7,6 +7,7 @@ import {
   Tab,
   TabPanel,
   Text,
+  Flex,
   Box,
   Skeleton,
   SimpleGrid,
@@ -39,8 +40,8 @@ function onboarding(props) {
             <TabPanel>
               <Box>
                 <Skeleton isLoaded={!loading}>
-                  {/* <SimpleGrid columns={{ sm: 2, md: 3, xl: 4 }} spacing="10px"> */}
-                  <SimpleGrid columns={[2, null, 3]} spacing="10px">
+                    <SimpleGrid columns={[3, null, 4]} spacing="10px">
+                  {/* <SimpleGrid minChildWidth="180px" spacing="10px"> */}
                     {directors && directors.length < 1 ? (
                       <Text as="p" fontWeight="bolder">
                         No record found!

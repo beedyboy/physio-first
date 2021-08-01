@@ -5,14 +5,21 @@ import Link from "next/link";
 
 const AcceptedApplications = ({ data }) => {
   const columns = [  
-     {
+    {
       name: "Type", 
       sortable: true,
-      cell: (row) => (
-        <Fragment>
-          {(row.leave && row.leave.leave_type) || 'N/A' } 
-          </Fragment>
-      ),
+      cell: (row) => 
+        (<Fragment>{
+          row.leave && row.leave.leave_type ?
+         <Fragment>
+         <Link href={`/admin/vacation/${row._id}`}>
+         <a> {row.leave && row.leave.leave_type}</a>
+        </Link>
+         </Fragment>
+         :
+         'N/A'
+        }
+        </Fragment>) 
     }, 
     {
       name: "Fullname", 

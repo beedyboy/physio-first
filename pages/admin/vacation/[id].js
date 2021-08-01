@@ -223,7 +223,7 @@ console.log({staffStat})
                       <WrapItem>
                         <Badge>{data && data.status}</Badge>
                       </WrapItem>
-                  {leaveAdd ?  <>  <WrapItem>
+                  {leaveAdd && (data && data.status === "Pending") ?  <>  <WrapItem>
                         <IconButton
                           variant="outline"
                           colorScheme="teal"
