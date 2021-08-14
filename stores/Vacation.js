@@ -1,6 +1,6 @@
-import { makeObservable, observable, action, computed } from "mobx";
+import { makeObservable, observable, runInAction,action, computed } from "mobx";
 import backend from "../services/APIService";
-import Utility from "../services/UtilityService";
+import Utility from "../services/UtilityService"; 
 class Vacation {
   error = false;
   saved = false;
@@ -59,8 +59,11 @@ class Vacation {
   getApplications = () => {
     this.loading = true;
     backend.get("application").then((res) => {
-      this.applications = res.data;
-      this.loading = false;
+      runInAction(() => {
+        this.applications = res.data;
+        this.loading = false;
+        
+        }) 
     });
   };
 
@@ -222,11 +225,11 @@ class Vacation {
       uid: key,
     }));
   }
-  get pendingApplications() {
-    return this.applications.filter((d) => d.status === "Pending");
+  get pendingApplications() { 
+    return JSON.stringify(this.applications.filter((d) => d.status === "Pending"));
   }
   get approvedApplications() {
-    return this.applications.filter((d) => d.status === "Accepted");
+    return JSON.stringify(this.applications.filter((d) => d.status === "Accepted"));
   }
   get rejectedApplications() {
     return this.applications.filter((d) => d.status === "Rejected");

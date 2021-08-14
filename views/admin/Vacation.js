@@ -12,7 +12,7 @@ import {
   Tab,
   TabPanel,
 } from "@chakra-ui/react";
-import { useMobxStores } from "../../stores/stores";
+import { useMobxStores } from "../../stores/stores"; 
 
 import AcceptedApplications from "../../Components/Vacation/AcceptedApplications";
 import PendingApplication from "../../Components/Vacation/PendingApplication";
@@ -54,8 +54,7 @@ const Vacation = (props) => {
       resetProperty("removed", false);
       resetProperty("message", "");
     };
-  }, [removed]);
-
+  }, [removed]); 
   return (
     <Fragment>
       <Flex
@@ -80,7 +79,7 @@ const Vacation = (props) => {
                 <TabPanels>
                   <TabPanel>
                     <PendingApplication
-                      data={pendingApplications}
+                     payload={pendingApplications}
                      {...props} 
                       removeData={delVacation} 
                     />
