@@ -7,6 +7,7 @@ import {
   Heading, 
   SkeletonCircle,
   SkeletonText,
+  Tabs, TabList, TabPanels, Tab, TabPanel 
 } from "@chakra-ui/react";
 import { useMobxStores } from "../stores/stores";
 import { observer } from "mobx-react-lite";
@@ -53,6 +54,24 @@ function profile() {
         <title>Physio First | Profile</title>
       </Head>
       <Layout>
+      {/* <Tabs>
+          <TabList>
+            <Tab>Profile</Tab>
+             
+                <Tab>Sick Exeat</Tab>
+                <Tab>Bereavement Exeat</Tab> 
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Help />
+            </TabPanel> 
+            <TabPanel>
+              <Marketing />  
+            </TabPanel>
+            
+          </TabPanels>
+        </Tabs> */}
+
         <Flex direction="column" w="100%" justifyContent="space-between">
           <Flex direction="row">
             <Box mb={3}>

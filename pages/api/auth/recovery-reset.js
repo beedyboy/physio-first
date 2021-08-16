@@ -65,10 +65,10 @@ const recoveryRequest = async (req, res) => {
         message: "We have sent a password recover instructions to your email.",
       });
     }
-  } catch (error) {
+  } catch (err) {
     return res
       .status(401)
-      .json({ error: "request error! please try again later..." });
+      .json({ error: "request error! please try again later...", err });
   }
 };
 const resetNow = async (req, res) => {

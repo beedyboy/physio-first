@@ -8,7 +8,7 @@ import Layout from "../../templates/Private/Layout";
 import StaffProfile from "../../Components/Profile/StaffProfile";
 const Staff = (props) => {
   const { query } = props;
-  const { userStore } = useMobxStores();
+  const { userStore, exeatStore } = useMobxStores();
   const { getProfileById, profile, profileLoading } = userStore;
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Staff = (props) => {
                 </Box>
               </>
             ) : (
-              <StaffProfile data={profile} />
+              <StaffProfile data={profile} store={exeatStore} />
             )}
           </Flex>
         </PerfectScrollBar>

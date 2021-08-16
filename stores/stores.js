@@ -5,6 +5,7 @@ import React from "react";
 import User from "./User";
 import Auth from "./Auth";
 import Asset from "./Asset";
+import Exeat from "./Exeat";
 import Leave from "./Leave";
 import Ticket from "./Ticket";
 import Branch from "./Branch";
@@ -26,6 +27,7 @@ export function getStores(
   initialData = {
     authStore: {},
     userStore: {},
+    exeatStore: {},
     leaveStore: {},
     assetStore: {},
     ticketStore: {},
@@ -44,6 +46,7 @@ export function getStores(
       userStore: new User(initialData.userStore),
       authStore: new Auth(initialData.authStore),
       leaveStore: new Leave(initialData.leaveStore),
+      exeatStore: new Exeat(initialData.exeatStore),
       assetStore: new Asset(initialData.assetStore),
       branchStore: new Branch(initialData.branchStore),
       ticketStore: new Ticket(initialData.ticketStore),
@@ -61,6 +64,7 @@ export function getStores(
     store = {
       userStore: new User(initialData.userStore),
       authStore: new Auth(initialData.authStore),
+      exeatStore: new Exeat(initialData.exeatStore),
       leaveStore: new Leave(initialData.leaveStore),
       assetStore: new Asset(initialData.assetStore),
       branchStore: new Branch(initialData.branchStore),

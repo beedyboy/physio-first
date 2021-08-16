@@ -3,6 +3,7 @@ import Branch from './Branch';
 import Category from './Category';
 import Department from './Department'; 
 import User from './User';
+import Exeat from './Exeat';
 import Marketing from './Marketing';
 import SubCategory from './SubCategory';
 import Token from './Token';
@@ -17,6 +18,7 @@ import Document from './Document';
 
 export default {
     User,
+    Exeat,
     Asset,
     Leave,
     Token,
