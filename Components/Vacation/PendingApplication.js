@@ -4,8 +4,7 @@ import PerfectScrollBar from "react-perfect-scrollbar";
 import { IconButton, Wrap, WrapItem, Button } from "@chakra-ui/react";
 import { MdDelete } from "react-icons/md";
 import Link from "next/link";
-import styled from "styled-components";
-import { toJS } from "mobx";
+import styled from "styled-components"; 
   const TextField = styled.input`
     height: 32px;
     width: 200px;
@@ -158,15 +157,7 @@ const PendingApplication = ({ payload, canDel, removeData }) => {
       />
     );
   }, [filterText, resetPaginationToggle]);
-
-  const ft =
-    data &&
-    data.filter(
-      (item) =>
-        item &&
-        item.staff &&
-        item.staff.firstname.includes("Rachel")
-    );
+ 
     
   // const bd = payload
   return (

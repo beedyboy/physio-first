@@ -9,7 +9,7 @@ import {
   IconButton,
   InputRightElement,
 } from "@chakra-ui/react";
-const SickRecord = ({ data, user, setMode, rowData, toggle }) => { 
+const BereavementRecord = ({ data, user, setMode, rowData, toggle }) => { 
   const [filterText, setFilterText] = React.useState("");
   const [resetPaginationToggle, setResetPaginationToggle] = React.useState(
     false
@@ -95,7 +95,7 @@ const SickRecord = ({ data, user, setMode, rowData, toggle }) => {
     <Fragment>
       <PerfectScrollBar>
         <DataTable
-          title="Sick Record"
+          title="Bereavement Record"
           columns={columns}
           data={filteredItems}
           pagination={true}
@@ -108,4 +108,4 @@ const SickRecord = ({ data, user, setMode, rowData, toggle }) => {
   );
 };
 
-export default SickRecord;
+export default BereavementRecord;

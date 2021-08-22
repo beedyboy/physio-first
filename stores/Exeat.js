@@ -39,17 +39,22 @@ class Exeat {
     try {
       this.sending = true;
       this.action = "";
-      backend.post("Exeat", data).then((res) => {
+      backend.post("exeat", data).then((res) => {
         this.sending = false;
         if (res.status === 201) {
-          this.getMyexeats();
           this.message = res.data.message;
           this.saved = true;
+          this.getExeatByType(data.staffId, data.leave, data.leave === "Sick" ? 'sickHistory': 'bereavementHistory');
         } else {
           this.message = res.data.error;
           this.error = true;
         }
-      });
+      }).catch((error) => { 
+        this.sending = false; 
+        if (error && error.response) {
+          console.log("status", err.response.status);
+        }
+      })
     } catch (err) {
       this.sending = false;
       if (err && err.response && err.response.status === 400) {
@@ -70,6 +75,7 @@ class Exeat {
   };
 
   getExeatByType = (id, key, field) => {
+    console.log(id, key, field)
     try {
       this.loading = true;
       backend
@@ -99,11 +105,10 @@ class Exeat {
       backend.put("exeat", data).then((res) => { 
         this.sending = false;
         if (res.status === 200) {
-          this.getexeats();
           this.message = res.data.message;
-          this.action = "adminUpdate";
           this.saved = true;
-        } else {
+          this.getExeatByType(data.staffId, data.leave, data.leave === "Sick" ? 'sickHistory': 'bereavementHistory');
+            } else {
           this.message = res.data.error;
           this.error = true;
         }

@@ -48,11 +48,12 @@ const ExeatForm = ({
   mode,
   accountId,
   createExeat,
+  updateExeat,
   handleClose,
 }) => {
   const dateFormat = "YYYY/MM/DD";
   const toast = useToast();
-  const [title] = useState("Add Exeat");
+  const [title, setTitle] = useState("Add Exeat");
   const [formState, setFormState] = useState({
     values: {
       id: "",
@@ -66,8 +67,7 @@ const ExeatForm = ({
     touched: {},
     errors: {},
   });
-  const { touched, errors, values, isValid } = formState;
-
+  const { touched, errors, values, isValid } = formState; 
   useEffect(() => {
     if (mode === "Edit") {
       setTitle("Edit Exeat");
@@ -78,12 +78,12 @@ const ExeatForm = ({
           ...state,
           values: {
             ...state.values,
-            id: data && data._id,
-            staffId: data && data.staff && data.staff._id,
-            leave: data && data.leave,
-            leave_start_date: data && data.leave_start_date,
-            leave_end_date: data && data.leave_end_date,
-            description: data && data.description,
+            id: data?._id,
+            staffId: data?.staff,
+            leave: data?.leave,
+            leave_start_date:  data?.leave_start_date,
+            leave_end_date: data?.leave_end_date,
+            description: data?.description,
           },
         }));
       }
@@ -91,8 +91,8 @@ const ExeatForm = ({
       setFormState((state) => ({
         ...state,
         values: {
-          ...state.values, 
-          staffId: accountId
+          ...state.values,
+          staffId: accountId,
         },
       }));
     }
@@ -102,12 +102,12 @@ const ExeatForm = ({
         values: {
           ...prev.values,
           id: "",
-      staffId: "",
-      leave: "",
-      leave_start_date: moment().format(dateFormat),
-      leave_end_date: moment().format(dateFormat),
-      dateError: false,
-      description: "",
+          staffId: "",
+          leave: "",
+          leave_start_date: moment().format(dateFormat),
+          leave_end_date: moment().format(dateFormat),
+          dateError: false,
+          description: "",
         },
       }));
     };
@@ -195,20 +195,20 @@ const ExeatForm = ({
   const validateDate = () => {
     // alert("calling")
     const val = getDaysDiff(values.leave_start_date, values.leave_end_date);
-      setFormState((formState) => ({
-        ...formState,
-        values: {
-          ...formState.values,
-          dateError: val < 0 ? true : false,
-        }
-      })); 
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        dateError: val < 0 ? true : false,
+      },
+    }));
     // alert(val);
   };
   const hasError = (field) => touched[field] && errors[field].error;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createExeat(values);
+   mode === "Add"? createExeat(values) :  updateExeat(values);
   };
 
   const resetForm = () => {
@@ -261,7 +261,6 @@ const ExeatForm = ({
                     >
                       <option value="Sick">Sick</option>
                       <option value="Bereavement">Bereavement</option>
-                     
                     </Select>
 
                     <FormErrorMessage>
@@ -279,7 +278,7 @@ const ExeatForm = ({
                     isInvalid={hasError("leave_start_date") || values.dateError}
                   >
                     <FormLabel htmlFor="leave_start_date">Start Date</FormLabel>
-                    <Input
+                    {/* <Input
                       type="date"
                       defaultValue={
                         values.start_date
@@ -290,6 +289,13 @@ const ExeatForm = ({
                       id="leave_start_date"
                       onChange={handleChange}
                       placeholder="Starting date"
+                    /> */}
+                    <Input
+                      type="date"
+                      value={values.leave_start_date || ""}
+                      name="leave_start_date"
+                      id="leave_start_date"
+                      onChange={handleChange}
                     />
                     <FormErrorMessage>
                       {hasError("leave_start_date")
@@ -317,15 +323,10 @@ const ExeatForm = ({
                     <FormLabel htmlFor="leave_end_date">End Date</FormLabel>
                     <Input
                       type="date"
-                      defaultValue={
-                        values.leave_end_date
-                          ? moment(values.leave_end_date, dateFormat)
-                          : moment().format(dateFormat)
-                      }
+                      value={values.leave_end_date || ""}
                       name="leave_end_date"
                       id="leave_end_date"
                       onChange={handleChange}
-                      placeholder="End date"
                     />
                     <FormErrorMessage>
                       {hasError("leave_end_date")

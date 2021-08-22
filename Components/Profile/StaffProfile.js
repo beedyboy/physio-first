@@ -1,10 +1,12 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Flex,
   Stack,
   Text,
   Badge,
   Divider,
+  Box,
+  Heading,
   Tabs,
   TabList,
   TabPanels,
@@ -16,6 +18,10 @@ import {
 import shortId from "short-id";
 import ExeatForm from "./ExeatForm";
 import SickRecord from "../Exeat/SickRecord";
+import BereavementRecord from "../Exeat/BereavementRecord";
+import { observer } from "mobx-react-lite";
+import { MdAdd } from "react-icons/md";
+import { toJS } from "mobx";
 
 function StaffProfile(props) {
   const { data, store } = props;
@@ -24,6 +30,7 @@ function StaffProfile(props) {
   const [rowData, setRowData] = useState();
   const {
     createExeat,
+    updateExeat,
     getExeatByType,
     sickHistory,
     bereavementHistory,
@@ -50,19 +57,17 @@ function StaffProfile(props) {
   };
 
   useEffect(() => {
-    const { id } = query;
-    getExeatByType(data && data._id, 'Sick', 'sickHistory');
-    getExeatByType(data && data._id, 'Bereavement', 'bereavementHistory');
-  }, []);
+    if (data && toJS(data)._id !== undefined) {
+      getExeatByType(data && toJS(data)._id, "Sick", "sickHistory");
+      getExeatByType(
+        data && toJS(data)._id,
+        "Bereavement",
+        "bereavementHistory"
+      );
+    }
+  }, [data]);
 
-  const editExeat = (e, row) => {
-    e.persist();
-    setMode("Edit");
-    rowData(row);
-    onOpen();
-  };
-  const renderRoles = () => {
-    // console.log("suggestions :",suggestions);
+  const renderRoles = () => { 
     if (access && access.length === 0) {
       return null;
     }
@@ -201,30 +206,62 @@ function StaffProfile(props) {
                   Roles
                 </Text>
                 <Divider />
-                <Button
-                  leftIcon={<MdAdd />}
-                  colorScheme="teal"
-                  p="2rem"
-                  onClick={onOpen}
-                >
-                  Add Exeat
-                </Button>
+
                 {renderRoles()}
               </Flex>
             </Stack>
           </TabPanel>
+      
           <TabPanel>
-            <SickRecord
-              data={sickHistory}
-              setMode={setMode}
-              toggle={onOpen}
-              rowData={setRowData}
-            />
+            <Box d="flex" justifyContent="space-between">
+              <Heading mb={4}>Sick Exeat</Heading>
+
+              <Button
+                leftIcon={<MdAdd />}
+                colorScheme="teal"
+                p="2rem"
+                onClick={onOpen}
+              >
+                Add Exeat
+              </Button>
+            </Box>
+            <Box>
+              <SickRecord
+                data={toJS(sickHistory)}
+                setMode={setMode}
+                toggle={onOpen}
+                user="admin"
+                rowData={setRowData}
+              />
+            </Box>
           </TabPanel>
+        
+      
           <TabPanel>
-            Coming soon
+            <Box d="flex" justifyContent="space-between">
+              <Heading mb={4}>Bereavement Exeat</Heading>
+
+              <Button
+                leftIcon={<MdAdd />}
+                colorScheme="teal"
+                p="2rem"
+                onClick={onOpen}
+              >
+                Add Exeat
+              </Button>
+            </Box>
+            <Box>
+              <BereavementRecord
+                data={toJS(bereavementHistory)}
+                setMode={setMode}
+                toggle={onOpen}
+                user="admin"
+                rowData={setRowData}
+              />
+            </Box>
           </TabPanel>
-        </TabPanels>
+        
+          </TabPanels>
       </Tabs>
       <ExeatForm
         mode={mode}
@@ -238,10 +275,10 @@ function StaffProfile(props) {
         handleClose={onClose}
         initial_data={rowData}
         createExeat={createExeat}
-        updateBranch={updateBranch}
+        updateExeat={updateExeat}
       />
     </Fragment>
   );
 }
 
-export default StaffProfile;
+export default observer(StaffProfile);
