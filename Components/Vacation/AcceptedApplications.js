@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import DataTable from "react-data-table-component";
 import PerfectScrollBar from "react-perfect-scrollbar"; 
 import Link from "next/link";
-import { toJS } from "mobx";
+// import { toJS } from "mobx";
 import { Input, InputGroup, Button, InputRightElement } from "@chakra-ui/react"
 const AcceptedApplications = ({ data: payload }) => {
 
@@ -78,11 +78,8 @@ const AcceptedApplications = ({ data: payload }) => {
     data &&
     data.filter(
       (item) =>
-      (item &&
-        item.staff &&
-        item.staff.firstname.toLowerCase().includes(filterText.toLowerCase())) || (item &&
-        item.staff &&
-        item.staff.lastname.toLowerCase().includes(filterText.toLowerCase())) || item.days === filterText
+      (   item?.staff?.firstname.toLowerCase().includes(filterText.toLowerCase())) || (item &&
+        item?.staff?.lastname.toLowerCase().includes(filterText.toLowerCase())) || item.days === filterText
     );
 
   const subHeaderComponentMemo = React.useMemo(() => {

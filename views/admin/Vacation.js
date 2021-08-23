@@ -69,7 +69,7 @@ const Vacation = (props) => {
         </Box>
         {pageAccess ? (
           <>
-            <Box>
+            <Box w="100%">
               <Tabs>
                 <TabList>
                   <Tab>Pending</Tab>
