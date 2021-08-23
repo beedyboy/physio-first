@@ -17,6 +17,31 @@ export default async (req, res) => {
   }
 };
 
+// const historyAggregate = Authenticated(async (req, res) => {
+//   try {
+//     const { date, staff, leave_type } = req.body;
+//     const status = "Accepted";
+//     const pipeline = [
+//       {
+//         $match: {
+//           $and: [
+//             { staff: ObjectId(staff) },
+//             { leave_start_date: {$regex: date,  "$options": "i"}},
+//             { leave: ObjectId(leave_type) },
+//             { status: "Accepted" },
+//           ],
+//         },
+//       },
+//       { $group: { "_id": staff, days: { $sum: "$days" }, } }
+//     ];
+//     const stats = await DB.Vacation.aggregate(pipeline);
+//     console.log({ stats });
+//     res.status(200).json(stats);
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
+
 const historyAggregate = Authenticated(async (req, res) => {
   try {
     const { date, staff, leave_type } = req.body;
@@ -27,7 +52,7 @@ const historyAggregate = Authenticated(async (req, res) => {
           $and: [
             { staff: ObjectId(staff) },
             { leave_start_date: {$regex: date,  "$options": "i"}},
-            { leave: ObjectId(leave_type) },
+            // { leave: ObjectId(leave_type) },
             { status: "Accepted" },
           ],
         },

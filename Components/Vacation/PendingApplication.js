@@ -38,68 +38,40 @@ const PendingApplication = ({ payload, canDel, removeData }) => {
   const [resetPaginationToggle, setResetPaginationToggle] = React.useState(
     false
   );
-  let data = JSON.parse(payload);
-  const FilterComponent = ({ filterText, onFilter, onClear }) => (
-    <>
-      <TextField
-        id="search"
-        type="text"
-        placeholder="Filter By fullname"
-        aria-label="Search Input"
-        value={filterText}
-        onChange={onFilter}
-      />
-      <ClearButton type="button" onClick={onClear}>
-        X
-      </ClearButton>
-    </>
-  ); 
-
-  const filteredItems =
-    data &&
-    data.filter(
-      (item) =>
-      (item &&
-        item.staff &&
-        item.staff.firstname.toLowerCase().includes(filterText.toLowerCase())) || (item &&
-        item.staff &&
-        item.staff.lastname.toLowerCase().includes(filterText.toLowerCase())) || item.days === filterText
-    );
+  let data = [];
+  if (typeof payload !== 'undefined') {
+    data = JSON.parse(payload);
+  }
 
   const columns = [
+    
     {
-      name: "Type",
+      name: "Type", 
+      sortable: true,
+      cell: (row) => 
+        (<Fragment>{
+          row?.leave?.leave_type ?
+         <Fragment>
+         <Link href={`/admin/vacation/${row._id}`}>
+         <a> {row?.leave?.leave_type}</a>
+        </Link>
+         </Fragment>
+         :
+         'N/A'
+        }
+        </Fragment>) 
+    }, 
+    {
+      name: "Fullname", 
       sortable: true,
       cell: (row) => (
         <Fragment>
-          {row.leave && row.leave.leave_type ? (
-            <Fragment>
-              <Link href={`/admin/vacation/${row._id}`}>
-                <a> {row.leave && row.leave.leave_type}</a>
-              </Link>
-            </Fragment>
-          ) : (
-            "N/A"
-          )}
-        </Fragment>
-      ),
-    },
-    {
-      name: "Fullname",
-      sortable: true,
-      cell: (row) => (
-        <Fragment>
-          <Link href={`/staff/${row.staff && row.staff._id}`}>
-            <a>
-              {" "}
-              {row.staff &&
-                row.staff.firstname + " " + row.staff &&
-                row.staff.lastname}
-            </a>
+          <Link href={`/staff/${row._id}`}>
+            <a> {row?.staff?.firstname + " " + row?.staff?.lastname}</a>
           </Link>
         </Fragment>
       ),
-    },
+    }, 
     {
       name: "Start date",
       selector: "leave_start_date",
@@ -137,6 +109,33 @@ const PendingApplication = ({ payload, canDel, removeData }) => {
       ),
     },
   ];
+
+  const FilterComponent = ({ filterText, onFilter, onClear }) => (
+    <>
+      <TextField
+        id="search"
+        type="text"
+        placeholder="Filter By fullname"
+        aria-label="Search Input"
+        value={filterText}
+        onChange={onFilter}
+      />
+      <ClearButton type="button" onClick={onClear}>
+        X
+      </ClearButton>
+    </>
+  ); 
+
+  const filteredItems =
+    data &&
+    data.filter(
+      (item) =>
+      (item &&
+        item.staff &&
+        item.staff.firstname.toLowerCase().includes(filterText.toLowerCase())) || (item &&
+        item.staff &&
+        item.staff.lastname.toLowerCase().includes(filterText.toLowerCase())) || item.days === filterText
+    );
 
   const deleteData = (id) => {
     removeData(id);

@@ -72,16 +72,16 @@ const VacationDetails = (props) => {
       setData((state) => ({
         ...state,
         id: data && application._id,
-        firstname: application &&  application.staff && application.staff.firstname,
-        lastname: application &&  application.staff && application.staff.lastname,
-        staffId: application && application.staff && application.staff._id,
-        leaveId: application && application.leave && application.leave._id,
-        leave_type: application && application.leave && application.leave.leave_type,
-        days: application && application.days,
-        createdAt:  moment(application && application.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a"),
-        status: application && application.status,
-        leave_end_date: application && application.leave_end_date,
-        leave_start_date: application && application.leave_start_date,
+        firstname: application?.staff?.firstname,
+        lastname: application?.staff?.lastname,
+        staffId: application?.staff?._id,
+        leaveId: application?.leave?._id,
+        leave_type: application?.leave?.leave_type,
+        days: application?.days,
+        createdAt:  moment(application?.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a"),
+        status: application?.status,
+        leave_end_date: application?.leave_end_date,
+        leave_start_date: application?.leave_start_date,
       }));
       getHistory();
     }
@@ -104,9 +104,9 @@ const VacationDetails = (props) => {
 
   const getHistory = () => {
     let histData = {
-      leave_type: data && data.leaveId,
-      staff: data && data.staffId,
-      date:  moment(data && data.createdAt).format("YYYY")
+      leave_type: data?.leaveId,
+      staff: data?.staffId,
+      date:  moment(data?.createdAt).format("YYYY")
     };
     getApplicationHistory(histData);
     getApplicationStat(histData);
@@ -181,37 +181,37 @@ console.log({staffStat})
                   <Box>
                     <Text as="p" fontWeight="bolder">
                       Applicant:
-                    <Text as="span" fontWeight="normal"> { data.firstname + " " + data.lastname}</Text>
+                    <Text as="span" fontWeight="normal"> { data?.firstname + " " + data?.lastname}</Text>
                     </Text>
                   </Box>
                   <Box>
                     <Text as="p" fontWeight="bolder">
                       Type: 
-                    <Text as="span" fontWeight="normal"> { data && data.leave_type}</Text>
+                    <Text as="span" fontWeight="normal"> { data?.leave_type}</Text>
                     </Text>
                   </Box>
                   <Box>
                     <Text as="p" fontWeight="bolder">
                       No  of Days Applied for?: 
-                    <Text as="span" fontWeight="normal"> {`${ data && data.days} ${ data && data.days > 1 ? 'days': 'day'}`}</Text>
+                    <Text as="span" fontWeight="normal"> {`${ data?.days} ${ data?.days > 1 ? 'days': 'day'}`}</Text>
                     </Text>
                   </Box>
                   <Box>
                     <Text as="p" fontWeight="bolder">
                      Start Date: 
-                    <Text as="span" fontWeight="normal"> { data && data.leave_start_date}</Text>
+                    <Text as="span" fontWeight="normal"> { data?.leave_start_date}</Text>
                     </Text>
                   </Box>
                   <Box>
                     <Text as="p" fontWeight="bolder">
                      End Date: 
-                    <Text as="span" fontWeight="normal"> { data && data.leave_end_date}</Text>
+                    <Text as="span" fontWeight="normal"> { data?.leave_end_date}</Text>
                     </Text>
                   </Box>
                   <Box>
                     <Text as="p" fontWeight="bolder">
                       Created On: 
-                    <Text as="span" fontWeight="normal"> { data && data.createdAt}</Text>
+                    <Text as="span" fontWeight="normal"> { data?.createdAt}</Text>
                     </Text>
                   </Box>
 
@@ -221,9 +221,9 @@ console.log({staffStat})
                     </Text>
                     <Wrap spacing="20px">
                       <WrapItem>
-                        <Badge>{data && data.status}</Badge>
+                        <Badge>{data?.status}</Badge>
                       </WrapItem>
-                  {leaveAdd && (data && data.status === "Pending") ?  <>  <WrapItem>
+                  {leaveAdd && (data?.status === "Pending") ?  <>  <WrapItem>
                         <IconButton
                           variant="outline"
                           colorScheme="teal"

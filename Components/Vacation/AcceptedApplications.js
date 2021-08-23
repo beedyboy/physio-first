@@ -10,17 +10,20 @@ const AcceptedApplications = ({ data: payload }) => {
   const [resetPaginationToggle, setResetPaginationToggle] = React.useState(
     false
   );
-  let data = JSON.parse(payload);
+  let data = [];
+  if (typeof payload !== 'undefined') {
+    data = JSON.parse(payload);
+  }
   const columns = [  
     {
       name: "Type", 
       sortable: true,
       cell: (row) => 
         (<Fragment>{
-          row.leave && row.leave.leave_type ?
+          row?.leave?.leave_type ?
          <Fragment>
          <Link href={`/admin/vacation/${row._id}`}>
-         <a> {row.leave && row.leave.leave_type}</a>
+         <a> {row?.leave?.leave_type}</a>
         </Link>
          </Fragment>
          :
@@ -34,7 +37,7 @@ const AcceptedApplications = ({ data: payload }) => {
       cell: (row) => (
         <Fragment>
           <Link href={`/staff/${row._id}`}>
-            <a> {row.staff && row.staff.firstname + " " + row.staff && row.staff.lastname}</a>
+            <a> {row?.staff?.firstname + " " + row?.staff?.lastname}</a>
           </Link>
         </Fragment>
       ),

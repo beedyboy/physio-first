@@ -25,7 +25,7 @@ const AccountList = ({
       cell: (row) => (
         <Fragment>
           <Link href={`/staff/${row._id}`}>
-            <a> {row.firstname + " " + row.lastname}</a>
+            <a> {row?.firstname + " " + row?.lastname}</a>
           </Link>
         </Fragment>
       ),

@@ -8,14 +8,14 @@ import Vacation from "../../views/admin/Vacation";
 
 function admin(props) {
   const { access } = props;
-  const leaveAdd = access && access.leave && access.leave.add;
-  const leaveView = access && access.leave && access.leave.view;
-  const leaveDel = access && access.leave && access.leave.del;
+  const leaveAdd = access?.leave?.add;
+  const leaveView = access?.leave?.view;
+  const leaveDel = access?.leave?.del;
 
-  const staffAdd = access && access.staff && access.staff.add;
-  const staffView = access && access.staff && access.staff.view;
-  const staffDel = access && access.staff && access.staff.del;
-  const staffModify = access && access.staff && access.staff.modify;
+  const staffAdd = access?.staff?.add;
+  const staffView = access?.staff?.view;
+  const staffDel = access?.staff?.del;
+  const staffModify = access?.staff?.modify;
 
   let totalLeave = leaveAdd || leaveView || leaveDel;
   let totalStaff = staffAdd || staffView || staffDel || staffModify;
