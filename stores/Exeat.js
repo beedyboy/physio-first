@@ -82,19 +82,23 @@ class Exeat {
         .get(`exeat/dynamic/${id}/${key}`)
         .then((res) => {
           this.loading = false;
-          if (res.data.status === 500) {
+          if (res.status === 500) {
             Utility.logout();
-          } else if (res.status === 200) {
+          } 
+          else if (res.status === 422) {
+           console.log({res})
+          }
+          else if (res.status === 200) {
             this[field] = res.data;
           }
         })
         .catch((err) => {
-          console.log("getExeatByType", err.code);
+          console.log("getExeatByType code", err.code);
           console.log("getExeatByType", err.message);
           console.log("getExeatByType", err.stack);
         });
     } catch (e) {
-      console.error(e);
+      console.error('catch error', e);
     }
   }; 
 

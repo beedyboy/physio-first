@@ -26,7 +26,7 @@ import { toJS } from "mobx";
 function StaffProfile(props) {
   const { data, store } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [mode, setMode] = useState("");
+  const [mode, setMode] = useState("Add");
   const [rowData, setRowData] = useState();
   const {
     createExeat,

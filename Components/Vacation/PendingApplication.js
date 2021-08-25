@@ -161,7 +161,7 @@ const PendingApplication = ({ payload, canDel, removeData }) => {
   // const bd = payload
   return (
     <Fragment>
-      {/* <PerfectScrollBar>  */}
+      <PerfectScrollBar> 
         <DataTable
           title="Pending List"
           columns={columns}
@@ -171,7 +171,7 @@ const PendingApplication = ({ payload, canDel, removeData }) => {
           subHeaderComponent={subHeaderComponentMemo}
           theme="solarized"
         />
-      {/* </PerfectScrollBar> */}
+      </PerfectScrollBar>
     </Fragment>
   );
 };
