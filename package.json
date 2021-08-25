@@ -11,6 +11,7 @@
     "@chakra-ui/react": "^1.6.0",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@sentry/nextjs": "^6.11.0",
     "aos": "^2.3.4",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",

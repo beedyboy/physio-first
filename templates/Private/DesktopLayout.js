@@ -10,7 +10,7 @@ const DesktopLayout = (props) => {
       <Flex w="100%">
          <Box
           as="nav"
-          aria-label="Main Navigation"
+          aria-label={user}
           pos="sticky"
           top="0rem"
           w="220px"
