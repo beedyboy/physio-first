@@ -51,8 +51,7 @@ const historyAggregate = Authenticated(async (req, res) => {
         $match: {
           $and: [
             { staff: ObjectId(staff) },
-            { leave_start_date: {$regex: date,  "$options": "i"}},
-            // { leave: ObjectId(leave_type) },
+            { leave_start_date: {$regex: date,  "$options": "i"}}, 
             { status: "Accepted" },
           ],
         },
