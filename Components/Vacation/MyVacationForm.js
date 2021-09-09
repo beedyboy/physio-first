@@ -133,21 +133,23 @@ const MyVacationForm = ({
         [event.target.name]: true,
       },
     }));
-    if (event.target.name === "leave_end_date") {
-      validateDate();
-    }
+     
   };
+
+  useEffect(() => {
+    validateDate();
+  }, [values.leave_start_date, values.leave_end_date]);
+
   const getDaysDiff = (start_date, end_date, date_format = "YYYY-MM-DD") => {
     const getDateAsArray = (date) => {
       return moment(date.split(/\D+/), date_format);
     };
     return (
-      getDateAsArray(end_date).diff(getDateAsArray(start_date), "days") + 1
+      getDateAsArray(end_date).diff(getDateAsArray(start_date), "days")
     );
   };
   const validateDate = () => {
-    // alert("calling")
-    const val = getDaysDiff(values.leave_start_date, values.leave_end_date);
+    const val = getDaysDiff(values.leave_start_date, values.leave_end_date); 
       setFormState((formState) => ({
         ...formState,
         values: {

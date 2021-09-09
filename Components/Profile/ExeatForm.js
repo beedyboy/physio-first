@@ -67,7 +67,7 @@ const ExeatForm = ({
     touched: {},
     errors: {},
   });
-  const { touched, errors, values, isValid } = formState; 
+  const { touched, errors, values, isValid } = formState;
   useEffect(() => {
     if (mode === "Edit") {
       setTitle("Edit Exeat");
@@ -81,7 +81,7 @@ const ExeatForm = ({
             id: data?._id,
             staffId: data?.staff,
             leave: data?.leave,
-            leave_start_date:  data?.leave_start_date,
+            leave_start_date: data?.leave_start_date,
             leave_end_date: data?.leave_end_date,
             description: data?.description,
           },
@@ -180,21 +180,23 @@ const ExeatForm = ({
         [event.target.name]: true,
       },
     }));
-    if (event.target.name === "leave_end_date") {
-      validateDate();
-    }
   };
+
+  useEffect(() => {
+    validateDate();
+  }, [values.leave_start_date, values.leave_end_date]);
+
   const getDaysDiff = (start_date, end_date, date_format = "YYYY-MM-DD") => {
     const getDateAsArray = (date) => {
       return moment(date.split(/\D+/), date_format);
     };
     return (
-      getDateAsArray(end_date).diff(getDateAsArray(start_date), "days") + 1
+      getDateAsArray(end_date).diff(getDateAsArray(start_date), "days")
     );
   };
   const validateDate = () => {
-    // alert("calling")
     const val = getDaysDiff(values.leave_start_date, values.leave_end_date);
+    // alert(`${values.leave_start_date} "-" ${values.leave_end_date} " = " ${val}`)
     setFormState((formState) => ({
       ...formState,
       values: {
@@ -208,7 +210,7 @@ const ExeatForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   mode === "Add"? createExeat(values) :  updateExeat(values);
+    mode === "Add" ? createExeat(values) : updateExeat(values);
   };
 
   const resetForm = () => {
@@ -278,18 +280,6 @@ const ExeatForm = ({
                     isInvalid={hasError("leave_start_date") || values.dateError}
                   >
                     <FormLabel htmlFor="leave_start_date">Start Date</FormLabel>
-                    {/* <Input
-                      type="date"
-                      defaultValue={
-                        values.start_date
-                          ? moment(values.leave_start_date, dateFormat)
-                          : moment().format(dateFormat)
-                      }
-                      name="leave_start_date"
-                      id="leave_start_date"
-                      onChange={handleChange}
-                      placeholder="Starting date"
-                    /> */}
                     <Input
                       type="date"
                       value={values.leave_start_date || ""}
