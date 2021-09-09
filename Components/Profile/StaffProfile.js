@@ -92,8 +92,8 @@ function StaffProfile(props) {
         <TabList>
           <Tab>Profile</Tab>
 
-          <Tab>Sick Exeat</Tab>
-          <Tab>Bereavement Exeat</Tab>
+          {/* <Tab>Sick</Tab> */}
+          <Tab>Bereavement</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -211,10 +211,10 @@ function StaffProfile(props) {
               </Flex>
             </Stack>
           </TabPanel>
-      
+{/*       
           <TabPanel>
             <Box d="flex" justifyContent="space-between">
-              <Heading mb={4}>Sick Exeat</Heading>
+              <Heading mb={4}>Sick</Heading>
 
               <Button
                 leftIcon={<MdAdd />}
@@ -222,7 +222,7 @@ function StaffProfile(props) {
                 p="2rem"
                 onClick={onOpen}
               >
-                Add Exeat
+                Add
               </Button>
             </Box>
             <Box>
@@ -235,11 +235,11 @@ function StaffProfile(props) {
               />
             </Box>
           </TabPanel>
-        
+         */}
       
           <TabPanel>
             <Box d="flex" justifyContent="space-between">
-              <Heading mb={4}>Bereavement Exeat</Heading>
+              <Heading mb={4}>Bereavement</Heading>
 
               <Button
                 leftIcon={<MdAdd />}
@@ -247,7 +247,7 @@ function StaffProfile(props) {
                 p="2rem"
                 onClick={onOpen}
               >
-                Add Exeat
+                Add
               </Button>
             </Box>
             <Box>

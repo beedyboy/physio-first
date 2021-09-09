@@ -53,7 +53,7 @@ const ExeatForm = ({
 }) => {
   const dateFormat = "YYYY/MM/DD";
   const toast = useToast();
-  const [title, setTitle] = useState("Add Exeat");
+  const [title, setTitle] = useState("Add");
   const [formState, setFormState] = useState({
     values: {
       id: "",
@@ -70,7 +70,7 @@ const ExeatForm = ({
   const { touched, errors, values, isValid } = formState;
   useEffect(() => {
     if (mode === "Edit") {
-      setTitle("Edit Exeat");
+      setTitle("Edit");
       let shouldSetData = typeof initial_data !== "undefined" ? true : false;
       if (shouldSetData) {
         const data = initial_data;
@@ -261,7 +261,7 @@ const ExeatForm = ({
                       id="leave"
                       onChange={handleChange}
                     >
-                      <option value="Sick">Sick</option>
+                      {/* <option value="Sick">Sick</option> */}
                       <option value="Bereavement">Bereavement</option>
                     </Select>
 
