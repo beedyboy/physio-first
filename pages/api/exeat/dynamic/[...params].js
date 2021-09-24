@@ -24,7 +24,7 @@ const { ObjectId } = mongoose.Types;
           },
         ];
         const stats = await DB.Exeat.aggregate(pipeline);
-        console.log({ stats });
+        // console.log({ stats });
         res.status(200).json(stats);
       } catch (err) {
         throw new Error(err)

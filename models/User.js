@@ -59,7 +59,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       maxlength: 30,
     },
-    alergies: {
+    allergies: {
       type: Array,
     },
     pre_contract: {

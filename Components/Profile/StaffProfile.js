@@ -182,7 +182,7 @@ function StaffProfile(props) {
                       Allergies:{" "}
                     </Text>
                     <HStack spacing={4}>
-                      {data?.alergies?.map?.((item) => (
+                      {data?.allergies?.map?.((item) => (
                         <Tag
                           size="sm"
                           key={item}

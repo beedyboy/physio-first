@@ -118,7 +118,7 @@ function ProfileDetails(props) {
             Allergies:
                       </Text>
             <HStack spacing={4}>
-              {data?.alergies?.map?.((item) => (
+              {data?.allergies?.map?.((item) => (
                 <Tag size="sm" key={item} variant="solid" colorScheme="teal">
                 {item}
                 </Tag>

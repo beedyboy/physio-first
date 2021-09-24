@@ -7,12 +7,6 @@ import {
   Button,
   Drawer,
   Select,
-  HStack,
-  Tag,
-  TagLabel,
-  TagLeftIcon,
-  TagRightIcon,
-  TagCloseButton,
   useToast,
   Textarea,
   FormLabel,
@@ -65,7 +59,7 @@ const AccountForm = ({
   sending,
   message,
   checking,
-   addStaff,
+  addStaff,
   branches,
   updateStaff,
   handleClose,
@@ -82,7 +76,7 @@ const AccountForm = ({
       email: "",
       branch: "",
       position: "",
-      alergies: [],
+      allergies: [],
       phone: "",
       address: "",
     },
@@ -104,7 +98,7 @@ const AccountForm = ({
             firstname: data && data.firstname,
             lastname: data && data.lastname,
             staffId: data && data.staffId,
-            alergies: data && data.alergies,
+            allergies: data && data.allergies,
             position: data && data.position,
             branch: data && data.branch,
             email: data && data.email,
@@ -126,7 +120,7 @@ const AccountForm = ({
           branch: "",
           email: "",
           position: "",
-          alergies: [],
+          allergies: [],
           phone: "",
           address: "",
         },
@@ -207,35 +201,33 @@ const AccountForm = ({
       handleClose();
     };
   }, [error]);
-  const addChip = value => {
-    const chips = values.alergies.slice();
+  const addChip = (value) => {
+    const chips = values.allergies.slice();
     chips.push(value);
-     setFormState((formState) => ({
+    setFormState((formState) => ({
       ...formState,
       values: {
         ...formState.values,
-       alergies: chips
-      }, 
-    })); 
+        allergies: chips,
+      },
+    }));
   };
-  const removeChip = index => {
-    const chips = values.alergies.slice();
+  const removeChip = (index) => {
+    const chips = values.allergies.slice();
     chips.splice(index, 1);
     setFormState((formState) => ({
       ...formState,
       values: {
         ...formState.values,
-       alergies: chips
-      }, 
-    })); 
+        allergies: chips,
+      },
+    }));
   };
   const hasError = (field) => touched[field] && errors[field].error;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mode === "Add"
-      ? addStaff(values)
-      : updateStaff(values);
+    mode === "Add" ? addStaff(values) : updateStaff(values);
   };
   const resetForm = () => {
     setFormState((prev) => ({
@@ -249,7 +241,7 @@ const AccountForm = ({
         branch: "",
         email: "",
         position: "",
-        alergies: [],
+        allergies: [],
         phone: "",
         address: "",
       },
@@ -425,48 +417,33 @@ const AccountForm = ({
                 </Box>
 
                 <Box>
-          <FormControl my="3">
-            <FormLabel htmlFor="phone">Position</FormLabel>
-            <Input
-              type="text"
-              value={values.position || ""}
-              name="position"
-              id="position"
-              onChange={handleChange}
-              placeholder="Staff Position"
-            />
-          </FormControl>
-        </Box>
+                  <FormControl my="3">
+                    <FormLabel htmlFor="phone">Position</FormLabel>
+                    <Input
+                      type="text"
+                      value={values.position || ""}
+                      name="position"
+                      id="position"
+                      onChange={handleChange}
+                      placeholder="Staff Position"
+                    />
+                  </FormControl>
+                </Box>
 
-        <Box>
-          <Stack>
-            <HStack spacing={4}>
-              {/* {values.alergies.map((item) => (
-                <Tag size={size} key="sm" variant="solid" colorScheme="teal">
-                  {item}
-                </Tag>
-              ))} */}
-              <Tag>{values.alergies}</Tag>
-            </HStack>
-            <FormControl my="3">
-              <FormLabel htmlFor="phone">Alergies</FormLabel>
-              <ReactChipInput
-        classes="class1 class2"
-        chips={values.alergies}
-        onSubmit={value => addChip(value)}
-        onRemove={index => removeChip(index)}
-      />
-              {/* <Input
-                type="text" 
-                name="alergies"
-                id="alergies"
-                onChange={handleChange}
-                placeholder="Staff alergies"
-              /> */}
-            </FormControl>
-          </Stack>
-        </Box>
-       
+                <Box>
+                  <Stack>
+                    <FormControl my="3">
+                      <FormLabel htmlFor="phone">Allergies</FormLabel>
+                      <ReactChipInput
+                        classes="tag"
+                        chips={values.allergies}
+                        onSubmit={(value) => addChip(value)}
+                        onRemove={(index) => removeChip(index)}
+                      />
+                    </FormControl>
+                  </Stack>
+                </Box>
+
                 <Box>
                   <FormControl my="3">
                     <FormLabel htmlFor="address">Address</FormLabel>
