@@ -80,8 +80,8 @@ function profile() {
           <TabList>
             <Tab>Profile</Tab>
 
-            <Tab>Sick Exeat</Tab>
-            <Tab>Bereavement Exeat</Tab>
+            <Tab>Sick</Tab>
+            <Tab>Bereavement</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>

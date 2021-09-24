@@ -2,6 +2,8 @@ import {
   Flex, 
   Stack,
   Text,
+  Tag,
+  HStack, 
   Badge, 
   Divider,
   Button,
@@ -106,8 +108,24 @@ function ProfileDetails(props) {
                 Branch:
                 <Text as="span" fontWeight="normal"> {data && data.branch && data.branch.name || 'N/A'}</Text>
               </Text>
+              <Text fontSize="md" as="span" fontWeight="bolder">
+                {" "}
+                Position:
+                <Text as="span" fontWeight="normal"> {data?.position || 'N/A'}</Text>
+              </Text>
             </Stack>
-            <Text fontSize="md" as="span" fontWeight="bolder">
+            <Stack> <Text fontSize="md" as="span" fontWeight="bolder">
+            Allergies:
+                      </Text>
+            <HStack spacing={4}>
+              {data?.alergies?.map?.((item) => (
+                <Tag size="sm" key={item} variant="solid" colorScheme="teal">
+                {item}
+                </Tag>
+              )) || 'N/A'}
+            </HStack>
+              </Stack>
+              <Text fontSize="md" as="span" fontWeight="bolder">
                 {" "}
                 Address:
                 <Text as="span" fontWeight="normal"> {data && data.address && data.address|| 'N/A'}</Text>

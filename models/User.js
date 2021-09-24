@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema(
     dob: {
       type: String, 
     },  
+    position: {
+      type: String, 
+    },  
     address: {
       type: String,
       maxlength: 200,
@@ -55,6 +58,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       maxlength: 30,
+    },
+    alergies: {
+      type: Array,
     },
     pre_contract: {
       type: Array,

@@ -34,6 +34,8 @@ const addAccount = async (req, res) => {
     staffId,
     branch,
     address,
+    alergies,
+    position
   } = req.body;
   try {
     if (
@@ -52,6 +54,8 @@ const addAccount = async (req, res) => {
       phone_number,
       staffId,
       branch,
+      position,
+      alergies,
       address,
     }).save();
     res.status(201).json({ message: "New account added successfully" });
@@ -83,6 +87,8 @@ const updateAccount = async (req, res) => {
         doc.phone_number = data.phone_number;
         doc.staffId = data.staffId;
         doc.branch = data.branch;
+        doc.position = data.position;
+        doc.alergies = data.alergies;
         doc.dob = data.dob;
 
         doc.address = data.address;

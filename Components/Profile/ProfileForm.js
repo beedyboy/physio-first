@@ -1,23 +1,18 @@
 import React, { useEffect, useState, Fragment } from "react";
 import dataHero from "data-hero";
+import ReactChipInput from "react-chip-input";
 import {
   Box,
   Input,
   Stack,
-  Button,
-  Drawer,
+  Button, 
+  HStack,
   Divider,
   useToast,
   Textarea,
   FormLabel,
-  DrawerBody,
   FormControl,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
   FormErrorMessage,
-  DrawerCloseButton,
 } from "@chakra-ui/react";
 const schema = {
   firstname: {
@@ -71,6 +66,8 @@ const ProfileForm = (props) => {
       branch: "",
       dob: "",
       phone: "",
+      position: "",
+      alergies: [],
       address: "",
       emergency_phone: "",
       emergency_contact: "",
@@ -94,6 +91,8 @@ const ProfileForm = (props) => {
           dob: data && data.dob,
           branch: data && data.branch && data.branch.name,
           email: data && data.email,
+          alergies: data && data.alergies,
+          position: data && data.position,
           phone: data && data.phone_number,
           address: data && data.address,
           emergency_phone: data && data.emergency_phone,
@@ -115,6 +114,8 @@ const ProfileForm = (props) => {
           dob: "",
           email: "",
           phone: "",
+          alergies: "",
+          position: "",
           address: "",
           emergency_phone: "",
           emergency_contact: "",
@@ -213,6 +214,8 @@ const ProfileForm = (props) => {
         email: "",
         phone: "",
         address: "",
+        alergies: [],
+        position: "",
       },
       touched: {
         ...prev.touched,
@@ -227,201 +230,224 @@ const ProfileForm = (props) => {
       errors: {},
     }));
   };
+
+const  addChip = (value) => {
+    const chips = values.alergies.slice();
+    chips.push(value);
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        alergies: chips,
+      },
+    }));
+  };
+ const removeChip = (index) => {
+    const chips = values.alergies.slice();
+    chips.splice(index, 1);
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        alergies: chips,
+      },
+    }));
+  };
   const firstField = React.useRef();
 
   return (
     <Fragment>
-    
-              <Stack spacing="24px">
-                <Box>
-                  <FormControl
-                    isRequired
-                    my="3"
-                    isInvalid={hasError("firstname")}
-                  >
-                    <FormLabel htmlFor="firstname">Firstname</FormLabel>
-                    <Input
-                      type="text"
-                      value={values.firstname || ""}
-                      name="firstname"
-                      id="firstname"
-                      ref={firstField}
-                      onChange={handleChange}
-                      placeholder="Firstname"
-                    />
-                    <FormErrorMessage>
-                      {hasError("firstname")
-                        ? errors.firstname && errors.firstname.message
-                        : null}
-                    </FormErrorMessage>
-                  </FormControl>
-                </Box>
+      <Stack spacing="24px">
+        <Box>
+          <FormControl isRequired my="3" isInvalid={hasError("firstname")}>
+            <FormLabel htmlFor="firstname">Firstname</FormLabel>
+            <Input
+              type="text"
+              value={values.firstname || ""}
+              name="firstname"
+              id="firstname"
+              ref={firstField}
+              onChange={handleChange}
+              placeholder="Firstname"
+            />
+            <FormErrorMessage>
+              {hasError("firstname")
+                ? errors.firstname && errors.firstname.message
+                : null}
+            </FormErrorMessage>
+          </FormControl>
+        </Box>
 
-                <Box>
-                  <FormControl
-                    isRequired
-                    my="3"
-                    isInvalid={hasError("lastname")}
-                  >
-                    <FormLabel htmlFor="lastname">Lastname</FormLabel>
-                    <Input
-                      type="text"
-                      value={values.lastname || ""}
-                      name="lastname"
-                      id="lastname"
-                      onChange={handleChange}
-                      placeholder="Lastname"
-                    />
-                    <FormErrorMessage>
-                      {hasError("lastname")
-                        ? errors.lastname && errors.lastname.message
-                        : null}
-                    </FormErrorMessage>
-                  </FormControl>
-                </Box>
+        <Box>
+          <FormControl isRequired my="3" isInvalid={hasError("lastname")}>
+            <FormLabel htmlFor="lastname">Lastname</FormLabel>
+            <Input
+              type="text"
+              value={values.lastname || ""}
+              name="lastname"
+              id="lastname"
+              onChange={handleChange}
+              placeholder="Lastname"
+            />
+            <FormErrorMessage>
+              {hasError("lastname")
+                ? errors.lastname && errors.lastname.message
+                : null}
+            </FormErrorMessage>
+          </FormControl>
+        </Box>
 
-                <Box>
-                  <FormControl 
-                    my="3" 
-                  >
-                    <FormLabel htmlFor="staffId">Dob</FormLabel>
-                    <Input
-                      type="date"
-                      value={values.dob || ""}
-                      name="dob"
-                      id="dob"
-                      onChange={handleChange} 
-                    />
-                    
-                  </FormControl>
-                </Box>
+        <Box>
+          <FormControl my="3">
+            <FormLabel htmlFor="staffId">Dob</FormLabel>
+            <Input
+              type="date"
+              value={values.dob || ""}
+              name="dob"
+              id="dob"
+              onChange={handleChange}
+            />
+          </FormControl>
+        </Box>
 
-                <Box>
-                  <FormControl
-                    isRequired
-                    my="3"
-                    isInvalid={hasError("staffId")}
-                  >
-                    <FormLabel htmlFor="staffId">StaffId</FormLabel>
-                    <Input
-                      type="text"
-                      value={values.staffId || ""}
-                      name="staffId"
-                      id="staffId"
-                      onChange={handleChange}
-                      placeholder="StaffId"
-                    />
-                    <FormErrorMessage>
-                      {hasError("staffId")
-                        ? errors.staffId && errors.staffId.message
-                        : null}
-                    </FormErrorMessage>
-                  </FormControl>
-                </Box>
+        <Box>
+          <FormControl isRequired my="3" isInvalid={hasError("staffId")}>
+            <FormLabel htmlFor="staffId">StaffId</FormLabel>
+            <Input
+              type="text"
+              value={values.staffId || ""}
+              name="staffId"
+              id="staffId"
+              onChange={handleChange}
+              placeholder="StaffId"
+            />
+            <FormErrorMessage>
+              {hasError("staffId")
+                ? errors.staffId && errors.staffId.message
+                : null}
+            </FormErrorMessage>
+          </FormControl>
+        </Box>
 
-                <Box>
-                  <FormControl
-                    isRequired
-                    isReadOnly
-                    my="3"
-                    isInvalid={hasError("email")}
-                  >
-                    <FormLabel htmlFor="email">Email</FormLabel>
-                    <Input
-                      type="email"
-                      value={values.email || ""}
-                      name="email"
-                      id="email"
-                      placeholder="Email"
-                    />
-                  </FormControl>
-                </Box>
+        <Box>
+          <FormControl
+            isRequired
+            isReadOnly
+            my="3"
+            isInvalid={hasError("email")}
+          >
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <Input
+              type="email"
+              value={values.email || ""}
+              name="email"
+              id="email"
+              placeholder="Email"
+            />
+          </FormControl>
+        </Box>
 
-                <Box>
-                  <FormControl my="3">
-                    <FormLabel htmlFor="phone">Phone</FormLabel>
-                    <Input
-                      type="text"
-                      value={values.phone || ""}
-                      name="phone"
-                      id="phone"
-                      onChange={handleChange}
-                      placeholder="Phone"
-                    />
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl my="3">
-                    <FormLabel htmlFor="address">Address</FormLabel>
+        <Box>
+          <FormControl my="3">
+            <FormLabel htmlFor="phone">Phone</FormLabel>
+            <Input
+              type="text"
+              value={values.phone || ""}
+              name="phone"
+              id="phone"
+              onChange={handleChange}
+              placeholder="Phone"
+            />
+          </FormControl>
+        </Box>
 
-                    <Textarea
-                      value={values.address || ""}
-                      name="address"
-                      id="address"
-                      onChange={handleChange}
-                      placeholder="Enter address"
-                    />
-                  </FormControl>
-                </Box>
-                <Divider />
-                <Box>
-                  <FormControl my="3">
-                    <FormLabel htmlFor="emergency_phone">
-                      Emergency phone
-                    </FormLabel>
-                    <Input
-                      type="text"
-                      value={values.emergency_phone || ""}
-                      name="emergency_phone"
-                      id="emergency_phone"
-                      onChange={handleChange}
-                      placeholder="emergency_phone"
-                    />
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl my="3">
-                    <FormLabel htmlFor="emergency_contact">
-                      Emergency Contact
-                    </FormLabel>
-                    <Input
-                      type="text"
-                      value={values.emergency_contact || ""}
-                      name="emergency_contact"
-                      id="emergency_contact"
-                      onChange={handleChange}
-                      placeholder="emergency_contact"
-                    />
-                  </FormControl>
-                </Box>
-              </Stack>
-              <Button
-                variant="outline"
-                disabled={sending}
-                mr={3}
-                onClick={toggle}
-              >
-                Cancel
-              </Button>
-              <Button
-                disabled={!isValid || sending}
-                colorScheme="blue"
-                onClick={handleSubmit}
-                isLoading={sending}
-                bg="brand.mainAccent"
-                color="brand.white"
-                variant="ghost"
-                _hover={{
-                  borderColor: "brand.mainAccent",
-                  bg: "brand.white",
-                  color: "brand.mainAccent",
-                  boxShadow: "md",
-                }}
-                _focus={{}}
-              >
-                Save Changes
-              </Button>
-           
+        <Box>
+          <FormControl my="3">
+            <FormLabel htmlFor="phone">Position</FormLabel>
+            <Input
+              type="text"
+              value={values.position || ""}
+              name="position"
+              id="position"
+              onChange={handleChange}
+              placeholder="Staff Position"
+            />
+          </FormControl>
+        </Box>
+
+        <Box> 
+            <FormControl my="3">
+              <FormLabel htmlFor="phone">Allergies</FormLabel>
+              <ReactChipInput
+                classes="class1 class2"
+                chips={values.alergies}
+                onSubmit={(value) => addChip(value)}
+                onRemove={(index) => removeChip(index)}
+              />
+            </FormControl> 
+        </Box>
+        <Box>
+          <FormControl my="3">
+            <FormLabel htmlFor="address">Address</FormLabel>
+
+            <Textarea
+              value={values.address || ""}
+              name="address"
+              id="address"
+              onChange={handleChange}
+              placeholder="Enter address"
+            />
+          </FormControl>
+        </Box>
+        <Divider />
+        <Box>
+          <FormControl my="3">
+            <FormLabel htmlFor="emergency_phone">Emergency phone</FormLabel>
+            <Input
+              type="text"
+              value={values.emergency_phone || ""}
+              name="emergency_phone"
+              id="emergency_phone"
+              onChange={handleChange}
+              placeholder="emergency_phone"
+            />
+          </FormControl>
+        </Box>
+        <Box>
+          <FormControl my="3">
+            <FormLabel htmlFor="emergency_contact">Emergency Contact</FormLabel>
+            <Input
+              type="text"
+              value={values.emergency_contact || ""}
+              name="emergency_contact"
+              id="emergency_contact"
+              onChange={handleChange}
+              placeholder="emergency_contact"
+            />
+          </FormControl>
+        </Box>
+      </Stack>
+      <Button variant="outline" disabled={sending} mr={3} onClick={toggle}>
+        Cancel
+      </Button>
+      <Button
+        disabled={!isValid || sending}
+        colorScheme="blue"
+        onClick={handleSubmit}
+        isLoading={sending}
+        bg="brand.mainAccent"
+        color="brand.white"
+        variant="ghost"
+        _hover={{
+          borderColor: "brand.mainAccent",
+          bg: "brand.white",
+          color: "brand.mainAccent",
+          boxShadow: "md",
+        }}
+        _focus={{}}
+      >
+        Save Changes
+      </Button>
     </Fragment>
   );
 };

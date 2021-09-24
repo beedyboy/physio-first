@@ -46,12 +46,16 @@ const updateProfile = Authenticated(async (req, res) => {
       doc.firstname = data.firstname;
       doc.lastname = data.lastname;
       doc.phone_number = data.phone;
+      doc.position = data.position;
+      doc.alergies = data.alergies;
       doc.dob = data.dob;
       doc.staffId = data.staffId;
 
       doc.emergency_contact = data.emergency_contact;
       doc.emergency_phone = data.emergency_phone;
       doc.address = data.address;
+      doc.position = data.position;
+      doc.alergies = data.alergies;
       doc.status = data.status;
       doc.save();
       res.status(200).json({

@@ -5,6 +5,8 @@ import {
   Text,
   Badge,
   Divider,
+  Tag,
+  HStack,
   Box,
   Heading,
   Tabs,
@@ -67,7 +69,7 @@ function StaffProfile(props) {
     }
   }, [data]);
 
-  const renderRoles = () => { 
+  const renderRoles = () => {
     if (access && access.length === 0) {
       return null;
     }
@@ -166,6 +168,31 @@ function StaffProfile(props) {
                         {(data && data.branch && data.branch.name) || "N/A"}
                       </Text>
                     </Text>
+                    <Text fontSize="md" as="span" fontWeight="bolder">
+                      {" "}
+                      Position:
+                      <Text as="span" fontWeight="normal">
+                        {" "}
+                        {data?.position || "N/A"}
+                      </Text>
+                    </Text>
+                  </Stack>
+                  <Stack>
+                    <Text fontSize="md" as="span" fontWeight="bolder">
+                      Allergies:{" "}
+                    </Text>
+                    <HStack spacing={4}>
+                      {data?.alergies?.map?.((item) => (
+                        <Tag
+                          size="sm"
+                          key={item}
+                          variant="solid"
+                          colorScheme="teal"
+                        >
+                          {item}
+                        </Tag>
+                      )) || "N/A"}
+                    </HStack>
                   </Stack>
                   <Text fontSize="md" as="span" fontWeight="bolder">
                     {" "}
@@ -211,7 +238,7 @@ function StaffProfile(props) {
               </Flex>
             </Stack>
           </TabPanel>
-{/*       
+          {/*       
           <TabPanel>
             <Box d="flex" justifyContent="space-between">
               <Heading mb={4}>Sick</Heading>
@@ -236,7 +263,7 @@ function StaffProfile(props) {
             </Box>
           </TabPanel>
          */}
-      
+
           <TabPanel>
             <Box d="flex" justifyContent="space-between">
               <Heading mb={4}>Bereavement</Heading>
@@ -260,8 +287,7 @@ function StaffProfile(props) {
               />
             </Box>
           </TabPanel>
-        
-          </TabPanels>
+        </TabPanels>
       </Tabs>
       <ExeatForm
         mode={mode}

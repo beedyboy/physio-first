@@ -7,6 +7,12 @@ import {
   Button,
   Drawer,
   Select,
+  HStack,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  TagRightIcon,
+  TagCloseButton,
   useToast,
   Textarea,
   FormLabel,
@@ -20,6 +26,7 @@ import {
   FormErrorMessage,
   DrawerCloseButton,
 } from "@chakra-ui/react";
+import ReactChipInput from "react-chip-input";
 const schema = {
   firstname: {
     isEmpty: false,
@@ -74,6 +81,8 @@ const AccountForm = ({
       staffId: "",
       email: "",
       branch: "",
+      position: "",
+      alergies: [],
       phone: "",
       address: "",
     },
@@ -95,6 +104,8 @@ const AccountForm = ({
             firstname: data && data.firstname,
             lastname: data && data.lastname,
             staffId: data && data.staffId,
+            alergies: data && data.alergies,
+            position: data && data.position,
             branch: data && data.branch,
             email: data && data.email,
             phone: data && data.phone_number,
@@ -114,6 +125,8 @@ const AccountForm = ({
           staffId: "",
           branch: "",
           email: "",
+          position: "",
+          alergies: [],
           phone: "",
           address: "",
         },
@@ -194,7 +207,28 @@ const AccountForm = ({
       handleClose();
     };
   }, [error]);
-
+  const addChip = value => {
+    const chips = values.alergies.slice();
+    chips.push(value);
+     setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+       alergies: chips
+      }, 
+    })); 
+  };
+  const removeChip = index => {
+    const chips = values.alergies.slice();
+    chips.splice(index, 1);
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+       alergies: chips
+      }, 
+    })); 
+  };
   const hasError = (field) => touched[field] && errors[field].error;
 
   const handleSubmit = (e) => {
@@ -214,6 +248,8 @@ const AccountForm = ({
         staffId: "",
         branch: "",
         email: "",
+        position: "",
+        alergies: [],
         phone: "",
         address: "",
       },
@@ -388,6 +424,49 @@ const AccountForm = ({
                   </FormControl>
                 </Box>
 
+                <Box>
+          <FormControl my="3">
+            <FormLabel htmlFor="phone">Position</FormLabel>
+            <Input
+              type="text"
+              value={values.position || ""}
+              name="position"
+              id="position"
+              onChange={handleChange}
+              placeholder="Staff Position"
+            />
+          </FormControl>
+        </Box>
+
+        <Box>
+          <Stack>
+            <HStack spacing={4}>
+              {/* {values.alergies.map((item) => (
+                <Tag size={size} key="sm" variant="solid" colorScheme="teal">
+                  {item}
+                </Tag>
+              ))} */}
+              <Tag>{values.alergies}</Tag>
+            </HStack>
+            <FormControl my="3">
+              <FormLabel htmlFor="phone">Alergies</FormLabel>
+              <ReactChipInput
+        classes="class1 class2"
+        chips={values.alergies}
+        onSubmit={value => addChip(value)}
+        onRemove={index => removeChip(index)}
+      />
+              {/* <Input
+                type="text" 
+                name="alergies"
+                id="alergies"
+                onChange={handleChange}
+                placeholder="Staff alergies"
+              /> */}
+            </FormControl>
+          </Stack>
+        </Box>
+       
                 <Box>
                   <FormControl my="3">
                     <FormLabel htmlFor="address">Address</FormLabel>
