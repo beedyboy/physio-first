@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from "react";
-import dataHero from "data-hero";
-import ReactChipInput from "react-chip-input";
+import dataHero from "data-hero"; 
+import {Chips} from 'primereact/chips';
 import {
   Box,
   Input,
@@ -231,27 +231,15 @@ const ProfileForm = (props) => {
   };
 
   const addChip = (value) => {
-    const chips = values.allergies.slice();
-    chips.push(value);
+  
     setFormState((formState) => ({
       ...formState,
       values: {
         ...formState.values,
-        allergies: chips,
+        allergies: value,
       },
     }));
-  };
-  const removeChip = (index) => {
-    const chips = values.allergies.slice();
-    chips.splice(index, 1);
-    setFormState((formState) => ({
-      ...formState,
-      values: {
-        ...formState.values,
-        allergies: chips,
-      },
-    }));
-  };
+  }; 
   const firstField = React.useRef();
 
   return (
@@ -377,12 +365,8 @@ const ProfileForm = (props) => {
         <Box>
           <FormControl my="3">
             <FormLabel htmlFor="phone">Allergies</FormLabel>
-            <ReactChipInput
-              classes="tag"
-              chips={values.allergies}
-              onSubmit={(value) => addChip(value)}
-              onRemove={(index) => removeChip(index)}
-            />
+            <Chips value={values.allergies} onChange={(e) => addChip(e.value)} separator="," />
+            
           </FormControl>
         </Box>
         <Box>
