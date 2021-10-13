@@ -36,7 +36,7 @@ const AcceptedApplications = ({ data: payload }) => {
       sortable: true,
       cell: (row) => (
         <Fragment>
-          <Link href={`/staff/${row._id}`}>
+          <Link href={`/staff/${row.staff?._id}`}>
             <a> {row?.staff?.firstname + " " + row?.staff?.lastname}</a>
           </Link>
         </Fragment>

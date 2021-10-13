@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Fragment } from "react";
 import dataHero from "data-hero";
+import {Chips} from 'primereact/chips';
 import {
   Box,
   Input,
@@ -19,8 +20,7 @@ import {
   FormHelperText,
   FormErrorMessage,
   DrawerCloseButton,
-} from "@chakra-ui/react";
-import ReactChipInput from "react-chip-input";
+} from "@chakra-ui/react"; 
 const schema = {
   firstname: {
     isEmpty: false,
@@ -201,28 +201,16 @@ const AccountForm = ({
       handleClose();
     };
   }, [error]);
-  const addChip = (value) => {
-    const chips = values.allergies.slice();
-    chips.push(value);
+ 
+  const addChip = (value) => { 
     setFormState((formState) => ({
       ...formState,
       values: {
         ...formState.values,
-        allergies: chips,
+        allergies: value,
       },
     }));
-  };
-  const removeChip = (index) => {
-    const chips = values.allergies.slice();
-    chips.splice(index, 1);
-    setFormState((formState) => ({
-      ...formState,
-      values: {
-        ...formState.values,
-        allergies: chips,
-      },
-    }));
-  };
+  }; 
   const hasError = (field) => touched[field] && errors[field].error;
 
   const handleSubmit = (e) => {
@@ -431,18 +419,12 @@ const AccountForm = ({
                 </Box>
 
                 <Box>
-                  <Stack>
-                    <FormControl my="3">
-                      <FormLabel htmlFor="phone">Allergies</FormLabel>
-                      <ReactChipInput
-                        classes="tag"
-                        chips={values.allergies}
-                        onSubmit={(value) => addChip(value)}
-                        onRemove={(index) => removeChip(index)}
-                      />
-                    </FormControl>
-                  </Stack>
-                </Box>
+          <FormControl my="3">
+            <FormLabel htmlFor="phone">Allergies</FormLabel>
+            <Chips value={values.allergies} onChange={(e) => addChip(e.value)} separator="," />
+            
+          </FormControl>
+        </Box>
 
                 <Box>
                   <FormControl my="3">

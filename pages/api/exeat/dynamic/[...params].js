@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/nextjs'
+// import * as Sentry from '@sentry/nextjs'
 import DB from "../../../../models";
 import connectDB from "../../../../services/database"; 
 import mongoose from "mongoose";
@@ -29,7 +29,7 @@ const { ObjectId } = mongoose.Types;
       } catch (err) {
         throw new Error(err)
         // console.log(err);
-        Sentry.captureException(error)
+        // Sentry.captureException(error)
       }
       break 
 
@@ -50,7 +50,7 @@ const { ObjectId } = mongoose.Types;
       try {
         throw new Error('Default Server Error')
       } catch (error) {
-        Sentry.captureException(error)
+        // Sentry.captureException(error)
       }
       // res.status(400).json({ success: false })
       break
@@ -69,4 +69,5 @@ const { ObjectId } = mongoose.Types;
 //   res.status(200).json({ name: 'John Doe' })
 // }
 
-export default Sentry.withSentry(handler)
+// export default Sentry.withSentry(handler)
+export default handler;

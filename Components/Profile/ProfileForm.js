@@ -230,8 +230,7 @@ const ProfileForm = (props) => {
     }));
   };
 
-  const addChip = (value) => {
-  
+  const addChip = (value) => { 
     setFormState((formState) => ({
       ...formState,
       values: {
