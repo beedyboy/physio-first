@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Assistant from "../helpers/Assistant";
 const { ObjectId } = mongoose.Schema.Types;
 
 const userSchema = new mongoose.Schema(
@@ -20,7 +21,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       lowercase: true,
-      trim: true
+      trim: true,
     },
     password: {
       type: String,
@@ -30,11 +31,11 @@ const userSchema = new mongoose.Schema(
       default: "-",
     },
     dob: {
-      type: String, 
-    },  
+      type: String,
+    },
     position: {
-      type: String, 
-    },  
+      type: String,
+    },
     address: {
       type: String,
       maxlength: 200,
@@ -109,6 +110,11 @@ const userSchema = new mongoose.Schema(
     can_login: { type: Boolean, default: false },
     signed: { type: Boolean, default: false },
     onboarded: { type: Boolean, default: false },
+    sin: { type: String },
+    cheque: {
+      type: String,
+      get: Assistant.imageArray,
+    },
   },
   {
     timestamps: true,

@@ -46,6 +46,9 @@ const Assistant = {
 
     return reply;
   },
+  imageArray: (data) => {
+    return JSON.parse(data);
+  },
 };
 
 module.exports = Assistant;
