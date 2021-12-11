@@ -39,6 +39,7 @@ class User {
       getUsers: action,
       removeStaff: action,
       updateStaff: action,
+      updateAccountProfile: action,
       getProfile: action,
       signStory: action,
       updateProfile: action,
@@ -369,12 +370,53 @@ class User {
         this.profileLoading = false;
         this.error = true;
         if (err && err.response && err.response.status === 422) {
-          this.message = err.response.data.error;
           this.action = "profileUpdateError";
+          this.message = err.response.data.error;
         } else {
           this.message = "Network Connection seems slow.";
         }
       });
+  };
+
+
+  updateAccountProfile = (data) => {
+    try {
+      this.sending = true;
+      backend
+        .put("account/bank", data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          this.sending = false;
+          if (res.status === 200) {
+            this.saved = true;
+            this.getProfile();
+            this.message = res.data.message;
+            this.action = "payslipUpdated";
+          } else {
+            this.action = "payslipUpdateError";
+            this.message = res.data.error;
+            this.error = true;
+          }
+        })
+        .catch((err) => {
+          this.sending = false;
+          console.log({ err });
+          if (err && err.response) {
+            console.log("status", err.response.status);
+          }
+        });
+    } catch (err) {
+      if (err.response.status === 500) {
+        console.log("There was a problem with the server");
+      } else {
+          this.message = err.response.data.error;
+        this.action = "payslipUpdateError";
+        console.log(err.response.data.msg);
+      }
+    }
   };
   get stats() {
     return this.users.length;

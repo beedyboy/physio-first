@@ -25,11 +25,11 @@ const recoveryRequest = async (req, res) => {
       res.end("Error");
       return;
     }
-    const { email } = req.body; 
+    const { email } = req.body;
     const user = await DB.User.findOne({ email });
     if (!user) {
       return res.status(404).json({ error: "user doesn't exist" });
-    } 
+    }
     // check if there is a token already
     const token = await DB.Token.findOne({ staff: user._id });
     let resetToken = crypto.randomBytes(32).toString("hex");
@@ -37,7 +37,7 @@ const recoveryRequest = async (req, res) => {
     const hash = hashSync(resetToken, salt);
     const recoveryUrl = `${clientURL}/auth/${resetToken}/${user._id}`;
     const fullname = user.lastname + " " + user.firstname;
-    const msgBody = {fullname, email, recoveryUrl};
+    const msgBody = { fullname, email, recoveryUrl };
     let clientOptions = {
       email: user.email,
       subject: process.env.CLIENT_EMAIL_SUBJECT.replace(
@@ -49,9 +49,9 @@ const recoveryRequest = async (req, res) => {
     if (token) {
       //    delete or send available
       await DB.Token.findByIdAndDelete({ _id: token._id });
-      mailer.sendEmail(clientOptions);  
+      mailer.sendEmail(clientOptions);
       res.status(201).json({
-        recoveryUrl, 
+        recoveryUrl,
         message: "We have sent a password recover instructions to your email.",
       });
     } else {
@@ -74,8 +74,8 @@ const recoveryRequest = async (req, res) => {
 const resetNow = async (req, res) => {
   try {
     const { staff_id, token, password } = req.body;
-    console.log({staff_id})
-    const passwordResetToken = await DB.Token.findOne({ staff: staff_id }); 
+    console.log({ staff_id });
+    const passwordResetToken = await DB.Token.findOne({ staff: staff_id });
     if (!passwordResetToken) {
       res
         .status(401)
@@ -93,9 +93,9 @@ const resetNow = async (req, res) => {
     const hash = hashSync(password, salt);
     const data = {
       password: hash,
-    };  
-    const filter = {_id: staff_id};
-    const user_record = await DB.User.findOneAndUpdate(filter, data);  
+    };
+    const filter = { _id: staff_id };
+    const user_record = await DB.User.findOneAndUpdate(filter, data);
     if (user_record) {
       res.status(200).json({ message: "Password changed  successfully" });
     } else {

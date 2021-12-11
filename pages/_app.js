@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Head from "next/head";
 import { getStores, StoreProvider } from "../stores/stores";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import { ChakraProvider } from "@chakra-ui/react"; 
+import { ChakraProvider } from "@chakra-ui/react";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";

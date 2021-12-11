@@ -1,8 +1,5 @@
 import mongoose from "mongoose"; 
-
-function imageArray(data) {
-  return JSON.parse(data);
-}
+import Assistant from "../helpers/Assistant";
 const directorSchema = new mongoose.Schema(
   {
     firstname: {
@@ -26,7 +23,7 @@ const directorSchema = new mongoose.Schema(
     },
     images: {
       type: String,
-      get: imageArray
+      get: Assistant.imageArray,
     },
     status: {
       type: String,

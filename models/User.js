@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Assistant from "../helpers/Assistant";
 const { ObjectId } = mongoose.Schema.Types;
 
 const userSchema = new mongoose.Schema(
@@ -113,7 +112,6 @@ const userSchema = new mongoose.Schema(
     sin: { type: String },
     cheque: {
       type: String,
-      get: Assistant.imageArray,
     },
   },
   {

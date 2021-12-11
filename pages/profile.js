@@ -19,6 +19,7 @@ import { toJS } from "mobx";
 import SickRecord from "../Components/Exeat/SickRecord";
 import BereavementRecord from "../Components/Exeat/BereavementRecord";
 import ProfileDetails from "../Components/Profile/ProfileDetails";
+import Bank from "../Components/Profile/Bank";
 function profile() {
   const { userStore, exeatStore } = useMobxStores();
   const {
@@ -31,6 +32,7 @@ function profile() {
     getProfile,
     myProfile,
     updateProfile,
+    updateAccountProfile,
     resetProperty,
   } = userStore;
   const {
@@ -82,6 +84,7 @@ function profile() {
 
             <Tab>Sick</Tab>
             <Tab>Bereavement</Tab>
+            <Tab>Account</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -137,6 +140,42 @@ function profile() {
                   user="staff"
                 />
               </Box>
+            </TabPanel>
+        
+            <TabPanel>
+              
+            <Flex direction="column" w="100%" justifyContent="space-between">
+                <Flex direction="row">
+                  <Box mb={3}>
+                    <Heading>Payment Information</Heading>
+                  </Box>
+                </Flex>{" "}
+                {profileLoading ? (
+                  <>
+                    <Box padding="6" boxShadow="lg" bg="white">
+                      <SkeletonCircle size="10" />
+                      <SkeletonText mt="4" noOfLines={6} spacing="4" />
+                    </Box>
+                  </>
+                ) : (
+                  <>
+                    <Box w="100%">
+                      <Fragment>
+                        <Bank
+                          data={myProfile}
+                          updateProfile={updateAccountProfile}
+                          action={action}
+                          error={error}
+                          message={message}
+                          sending={sending}
+                          reset={resetProperty}
+                        />
+                      </Fragment>
+                    </Box>
+                  </>
+                )}
+              </Flex>
+           
             </TabPanel>
           </TabPanels>
         </Tabs>

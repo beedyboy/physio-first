@@ -38,23 +38,7 @@ handler.post(async (req, res) => {
    
   const { firstname, lastname, position, story, date_joined } = req.body;
     let urls = [];
-    var image = JSON.parse(JSON.stringify(req.files)).image;
-console.log('image', image.path)
-    // var imageSize = Object.keys(image).length; 
-    // let count = 0;
-
-    // if (imageSize > 0) {
-       
-    //   for (const [key, value] of Object.entries(image)) {
-    //     console.log("path: ", key);
-    //     await Assistant.uploader(value.path).then((newPath) => {
-    //       console.log(newPath.url);
-    //       urls.push(newPath.url);
-    //       // fs.unlinkSync(value[0].path);
-    //     });
-    //     count += 1;
-    //   }
-    // }
+    var image = JSON.parse(JSON.stringify(req.files)).image; 
     await Assistant.uploader(image.path).then((newPath) => {
       console.log(newPath.url);
       urls.push(newPath.url);
