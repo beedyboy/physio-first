@@ -48,8 +48,8 @@ handler.put(Authenticated(async (req, res) => {
       const fullname = doc.lastname + " " + doc.firstname;
       const msgBody = { fullname, emergency_contact, sin, email, imgUrl };
       let clientOptions = {
-        email: process.env.ACCOUNT_ADMIN_EMAIL2,
-        bcc: process.env.LEAVE_ADMIN_EMAIL2,
+        email: process.env.ACCOUNT_ADMIN_EMAIL,
+        // bcc: process.env.LEAVE_ADMIN_EMAIL2,
         subject: process.env.CLIENT_EMAIL_SUBJECT.replace(
           "{{SUBJECT}}",
           "PaySlip Information"
