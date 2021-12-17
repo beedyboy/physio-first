@@ -21,10 +21,10 @@ handler.put(
       const { sin } = req.body;
       let img = "";
       if (Object.keys(req.files).length !== 0) {
-        console.log("present", req.files);
+        // console.log("present", req.files);
         var image = JSON.parse(JSON.stringify(req.files)).image;
         await Assistant.uploader(image.path).then((newPath) => {
-          console.log(newPath.url);
+          // console.log(newPath.url);
           img = newPath.url;
           // fs.unlinkSync(value[0].path);
         });
