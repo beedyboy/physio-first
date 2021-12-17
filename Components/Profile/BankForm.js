@@ -50,6 +50,7 @@ const BankForm = (props) => {
   const [uploadImage, setUploadImage] = useState({
     touched: false,
     preview: "",
+    status: "new",
     file: "choose file",
   });
   const { touched, errors, values, isValid } = formState;
@@ -69,6 +70,7 @@ const BankForm = (props) => {
         setUploadImage((state) => ({
           ...state,
           touched: true,
+          status: "old",
           preview: data.cheque,
           file: "",
         }));
@@ -163,6 +165,7 @@ const BankForm = (props) => {
         setUploadImage((state) => ({
           ...state,
           touched: true,
+          status: "new",
           preview: reader.result,
           file: files,
         }));
@@ -173,9 +176,12 @@ const BankForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const fd = new FormData();
-    for (var x = 0; x < uploadImage.file.length; x++) {
+    if(uploadImage.status === "old") {
+      fd.append("image", "");
+    } else
+   { for (var x = 0; x < uploadImage.file.length; x++) {
       fd.append("image", uploadImage.file[x]);
-    }
+    }}
     fd.append("sin", values.sin);
     updateProfile(fd);
   };
