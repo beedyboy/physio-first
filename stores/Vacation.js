@@ -1,4 +1,4 @@
-import { makeObservable, observable, runInAction,action, computed } from "mobx";
+import { makeAutoObservable, observable, runInAction,action, computed } from "mobx";
 import backend from "../services/APIService";
 import Utility from "../services/UtilityService"; 
 class Vacation {
@@ -17,7 +17,7 @@ class Vacation {
   action = "";
 
   constructor() {
-    makeObservable(this, {
+    makeAutoObservable(this, {
       saved: observable,
       error: observable,
       message: observable,
@@ -110,7 +110,7 @@ class Vacation {
           this.loading = false;
           if (res.data.status === 500) {
             Utility.logout();
-          } else if (res.status === 200) {
+          } else if (res.status === 200) { 
             this.application = res.data;
           }
         })
@@ -175,7 +175,7 @@ class Vacation {
       backend.put("application", data).then((res) => { 
         this.sending = false;
         if (res.status === 200) {
-          this.getApplications();
+          this.getApplicationById(data.id);
           this.message = res.data.message;
           this.action = "adminUpdate";
           this.saved = true;

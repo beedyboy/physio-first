@@ -111,7 +111,7 @@ const VacationDetails = (props) => {
     getApplicationHistory(histData);
     getApplicationStat(histData);
   }
-console.log({staffStat})
+// console.log({staffStat})
   return (
     <>
       <Layout>
@@ -246,6 +246,7 @@ console.log({staffStat})
                       handleClose={onClose}
                       initial_data={application}
                       reset={resetProperty}
+                      staffId={data.staffId}
                       updateApp={adminUpdate}
                     />
                   </Box>

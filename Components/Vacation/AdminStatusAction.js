@@ -31,6 +31,7 @@ const AdminStatusAction = ({
   reset,
   saved,
   error,
+  staffId,
   sending,
   message,
   updateApp,
@@ -138,6 +139,7 @@ const AdminStatusAction = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    values.staffId = staffId;
     updateApp(values);
   };
   const resetForm = () => {
